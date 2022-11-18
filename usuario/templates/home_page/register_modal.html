@@ -1,0 +1,44 @@
+<form action="{% url 'register' %}" class="signin-form" method="post">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+        <label class="label" for="name">Username</label>
+        <input type="text" class="form-control" placeholder="Username" required name="username">
+    </div>
+    <div class="form-group mb-3">
+        <label class="label" for="FisrtName">Primeiro Nome</label>
+        <input type="text" class="form-control" placeholder="Primeiro nome" required name="first_name">
+    </div>
+    <div class="form-group mb-3">
+        <label class="label" for="name">Sobrenome</label>
+        <input type="text" class="form-control" placeholder="Sobrenome" required name="last_name">
+    </div>
+    <div class="form-group mb-3">
+        <label class="label" for="email">Email</label>
+        <input type="text" class="form-control" placeholder="Email@email.com" required name="email">
+    </div>
+    <div class="form-group mb-3">
+        <label class="label" for="Telefone">Telefone</label>
+        <input type="number" class="form-control" placeholder="Telefone" required name="telefone">
+    </div>
+    <div class="form-group mb-3">
+        <label class="label" for="password">Senha</label>
+        <input type="password" class="form-control" placeholder="Senha" required name="password">
+    </div>
+    <div class="form-group mb-3">
+        <label class="label" for="Confirm_password">Confirar senha</label>
+        <input type="password" class="form-control" placeholder="Comfirmar senha" required name="ConfirmPassword">
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Criar
+        </button>
+    </div>
+
+</form>
+{% if form.errors %}
+<div style="padding: 5px;">
+    <p style="color:red">Por favor, verifique o Email e/ou Senha informados </p>
+</div>
+{% endif %}
+<p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>

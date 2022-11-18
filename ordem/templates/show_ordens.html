@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+
+<style>
+.hand-cursor {
+cursor: pointer;
+cursor: hand;
+}
+
+.table-hoverplus>tbody>tr:hover>td {
+ background-color: #eeeeee;
+}
+
+
+
+</style>
+<div class="card">
+    <div class="row">
+        <div class="col-auto mr-auto"><h3> Ordens </h3></div>
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="dropdown-toggle btn btn-danger btn-flat btn-addon m-b-10 m-l-5" type="button"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="ti-filter"></i>Filtro
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab menu -->
+    <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home7" role="tab">
+                <span class="hidden-sm-up"><i class="ti-pencil-alt"></i></span>
+                <span class="hidden-xs-down">Aguardando</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profile7" role="tab">
+                <span class="hidden-sm-up"> <i class="ti-truck"></i> </span>
+                <span class="hidden-xs-down">Em Andamento</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#messages7" role="tab">
+                <span class="hidden-sm-up"><i class="ti-close"></i></span>
+                <span class="hidden-xs-down">Finalizados</span></a>
+        </li>
+    </ul>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane p-20 active" id="home7" role="tabpanel">
+                {% include 'table_ordens.html' with ordens=aguardando tipo=1 %}
+            </div>
+            <div class="tab-pane p-20" id="profile7" role="tabpanel">
+                <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#home8" role="tab">
+                            <span class="hidden-sm-up"><i class="ti-pencil-alt"></i></span>
+                            <span class="hidden-xs-down">Aguardando inicio</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#messages8" role="tab">
+                            <span class="hidden-sm-up"><i class="ti-close"></i></span>
+                            <span class="hidden-xs-down">Em curso</span></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home8" role="tabpanel">
+                        <br>
+                        {% include 'table_ordens.html' with ordens=andamento_inicio tipo=2 %}
+                    </div>
+                    <div class="tab-pane p" id="messages8" role="tabpanel">
+                        <br>
+                        {% include 'table_ordens.html' with ordens=andamento_executando tipo=3 %}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-20" id="messages7" role="tabpanel">
+                {% include 'table_ordens.html' with ordens=ord_finalizdos tipo=4 %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,96 @@
+<style>
+.card-imgs{
+
+        min-width: 250px;
+        border-radius: 4px;
+        box-shadow: 0 -1px 1px 0 rgba(0,0,0,.05), 0 1px 2px 0 rgba(0,0,0,.2);
+        overflow: hidden;
+        display: inline-block;
+        margin: 1rem;
+        position: relative;
+        transition: all .2s ease;
+}
+
+.card-imgs:hover, .card-imgs.hover {
+		transform: translateY(-4px);
+		box-shadow: 0 4px 25px 0 rgba(0,0,0,.3), 0 0 1px 0 rgba(0,0,0,.25);
+		}
+
+.card-img-top-resp{
+    position: relative;
+	height: 224px;
+	width: 100%;
+	background-color: #fff;
+	transition: opacity .2s ease;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+.pb{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color:#42404099;
+
+}
+
+
+.text-t{
+color:white;
+margin:0;
+text-align: center;
+
+}
+.space-bt{
+margin:5px;
+
+}
+
+
+
+</style>
+
+
+<div class="card-imgs">
+    <div class="card-img-top-resp"
+         style="background-image:url(https://auto-drive.pt/wp-content/uploads/2020/08/1996-Fiat-Uno-11.jpg)">
+        <div class="pb ">
+            <ul class="row d-flex justify-content-between space-bt">
+                <li>
+                    <p class="text-t">Request</p>
+                    <p class="text-t">7</p>
+                </li>
+                <li>
+                    <p class="text-t">Carga</p>
+                    <p class="text-t">{{ veiculo.qtd_pessoas }}</p>
+                </li>
+                <li>
+                    <p class="text-t">Status </p>
+                    <p class="text-t">Ativo </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <h5 class="card-title" style="text-align: center;margin-top:10px">{{ veiculo.name }}</h5>
+        <hr style="width:80%">
+        <div class="row justify-content-between" style="margin:5px">
+            <div class="col-5">
+                <small>PLaca:</small>
+                <p>{{veiculo.placa}}</p>
+            </div>
+            <div class="col-5">
+                <small>Tipo:</small>
+                <p>{{veiculo.tipo.name}}</p>
+            </div>
+        </div>
+        <br>
+        <div class="text-center">
+            <a href="#" class="btn btn-primary" style="width:100%">Detalhes</a>
+        </div>
+    </div>
+</div>
+

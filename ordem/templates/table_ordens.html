@@ -1,0 +1,133 @@
+{% load static %}
+<style>
+.btn-showall-color {
+    background-color: #337AB7;
+    color: white;
+}
+
+
+
+
+
+</style>
+<table id="myTable{{tipo}}" class="table table-hover">
+
+    <thead>
+    <tr>
+        <th>Solicitante</th>
+        <th>Data pedido</th>
+        <th>status</th>
+        <th class="disable"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ordem in ordens %}
+    <tr>
+        <td>{{ ordem.solicitante.full_name }}</td>
+        <td>{{ ordem.data_solicitacao | date:"d/m/Y" }}</td>
+
+        {% if ordem.status.id == 1 %}
+        <td><span class="badge badge-success">Concluido</span></td>
+        {% endif %}
+        {% if ordem.status.id == 2 %}
+        <td><span class="badge badge-danger">Em Espera</span></td>
+        {% endif %}
+        {% if ordem.status.id == 3 %}
+        <td><span class="badge badge-primary">Aguardando Confirmação</span></td>
+        {% endif %}
+        {% if ordem.status.id == 4 %}
+        <td><span class="badge badge-primary">Em curso</span></td>
+        {% endif %}
+        <td class="color-primary">
+            <button class="btn btn-md btn-primary"
+                    data-target="#MOdalDetail3{{ordem.id}}"
+                    data-toggle="modal">
+                Detalhes
+            </button>
+        </td>
+
+        <div class="modal fade" data-backdrop="static" id="MOdalDetail3{{ordem.id}}"
+             tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detalhes da Solicitação</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="tab-content">
+                            <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#tabDetail{{ordem.id}}"
+                                       role="tab">
+                                        <span class="hidden-sm-up"><i class="ti-home"></i></span>
+                                        <span class="hidden-xs-down">Detalhes</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabGerencia{{ordem.id}}" role="tab">
+                                        <span class="hidden-sm-up"> <i class="ti-user"></i> </span>
+                                        <span class="hidden-xs-down">Gerenciar</span></a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-pane active" id="tabDetail{{ordem.id}}" role="tabpanel">
+                                <div class="p-20">
+                                    <h1> Solicitante: {{ ordem.solicitante.full_name }} </h1>
+                                    <h1> Descrição: {{ ordem.descricao }} </h1>
+                                    <h1> Data: {{ ordem.data_solicitacao }} </h1>
+                                    <h1> Status: {{ ordem.status.nome }} </h1>
+                                    <h1> Saida: {{ ordem.origem }} </h1>
+                                    <h1> Destino: {{ ordem.destino }} </h1>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabGerencia{{ordem.id}}" role="tabpanel">
+                                <div class="p-20" id="ordemGer{{ordem.id}}">
+                                    {% include 'Forms/gerenciar_ordem.html' with ordem=ordem %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <button type="button" class="btn btn-secondary ml-auto p-2" data-dismiss="modal">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tr>
+
+
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+	$(document).ready(function(){
+		$('#myTable{{tipo}}').dataTable({
+		"language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            }
+		});
+	});
+
+
+
+
+
+
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+  var stepper = new Stepper($('.bs-stepper')[0])
+})
+
+
+
+
+
+
+
+</script>

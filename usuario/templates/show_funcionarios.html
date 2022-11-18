@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+{% load static %}
+
+<style>
+    /*  Helper Styles */
+
+
+    a {
+        text-decoration: none;
+    }
+
+    /* Card Styles */
+
+    .card-sl {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .card-image img {
+        max-height: 100%;
+        max-width: 100%;
+        border-radius: 8px 8px 0px 0;
+    }
+
+    .card-action {
+        position: relative;
+        float: right;
+        margin-top: -25px;
+        margin-right: 20px;
+        z-index: 2;
+        color: #E26D5C;
+        background: #fff;
+        border-radius: 100%;
+        padding: 15px;
+        font-size: 15px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .card-action:hover {
+        color: #fff;
+        background: #E26D5C;
+        -webkit-animation: pulse 1.5s infinite;
+    }
+
+    .card-heading {
+        font-size: 18px;
+        font-weight: bold;
+        background: #fff;
+        padding: 10px 15px;
+    }
+
+    .card-text {
+        padding: 10px 15px;
+        background: #fff;
+        font-size: 14px;
+        color: #636262;
+    }
+
+    .card-button {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        width: 100%;
+        background-color: #1F487E;
+        color: #fff;
+        border-radius: 0 0 8px 8px;
+    }
+
+    .card-button:hover {
+        text-decoration: none;
+        background-color: #1D3461;
+        color: #fff;
+
+    }
+
+
+    @-webkit-keyframes pulse {
+        0% {
+            -moz-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+        }
+
+        70% {
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            box-shadow: 0 0 0 50px rgba(90, 153, 212, 0);
+        }
+
+        100% {
+            -moz-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+            box-shadow: 0 0 0 0 rgba(90, 153, 212, 0);
+        }
+    }
+
+.right
+{
+	position:absolute;
+	right:0px;
+	width:300px;
+	background-color:#b0e0e6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+<div class="card">
+    <div>
+        <form method="post" action="#" class="input-group" style="max-width: 300px; margin-left:auto; float:right ">
+            {% csrf_token %}
+            <input type="search" class="form-control rounded" placeholder="Buscar" aria-label="Search"
+                   aria-describedby="search-addon" required>
+            <button type="submit" class="btn btn-primary"><i class="ti-search"></i></button>
+        </form>
+    </div>
+</div>
+
+<div class="card" >
+    <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home7" role="tab">
+                <span class="hidden-sm-up"><i class="ti-home"></i></span>
+                <span class="hidden-xs-down">Funcionarios</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profile7" role="tab">
+                <span class="hidden-sm-up"> <i class="ti-user"></i> </span>
+                <span class="hidden-xs-down">Entrou</span></a>
+        </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="home7" role="tabpanel">
+            <div class="p-20">
+                <div class="recent-comment">
+                    {% for funcionario in funcionarios %}
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#ModalInfo{{ funcionario.usuario.id }}" data-toggle="modal">
+                                <img class="media-object" src="{% static 'images/avatar/2.jpg'%}" alt="...">
+                            </a>
+
+                            <!-- Modal Infos funcionario -->
+                            <div class="modal fade" data-backdrop="static" id="ModalInfo{{ funcionario.usuario.id }}"
+                                 tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Informações de {{ funcionario.usuario.name }}</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h2> Infos Aqui </h2>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">
+                                                Fechar
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" data-dismiss="modal">Save
+                                                changes
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ funcionario.usuario.name }}</h4>
+                            <p>{{ funcionario.cargo.nome }}</p>
+                            <div class="comment-action">
+                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#ModalChangeCargo{{ funcionario.usuario.id }}">Mudar cargo
+                                </button>
+                                <div class="badge badge-warning">Pending</div>
+                                <div class="badge badge-danger">Rejected</div>
+                                <span class="m-l-10"></span>
+
+                                <!-- Modal -->
+                                <div class="modal fade" data-backdrop="static"
+                                     id="ModalChangeCargo{{ funcionario.usuario.id }}" tabindex="-1"
+                                     role="dialog"
+                                     aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="veiculoModalCenterTitle">Selecione um
+                                                    cargo</h5>
+                                            </div>
+                                            <form method="POST"
+                                                  action="{% url 'change_cargo_func' pk=funcionario.instituicao.id %}">
+                                                {% csrf_token %}
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <select class="form-control" name="OptionSelectCargo">
+                                                            {% for cargo in cargos %}
+                                                            {% if cargo.id != funcionario.cargo.id %}
+                                                            <option>{{ cargo.nome }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">
+                                                        Fechar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Save changes
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="comment-date">October 21, 2017</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tab-pane  p-20" id="profile7" role="tabpanel">
+
+            <div class="recent-comment">
+                {% if solicitacoes %}
+                {% for funcionario in solicitacoes %}
+                {% if funcionario.cargo.id == 5 %}
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{% static 'images/avatar/2.jpg'%}" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">john doe</h4>
+                        <p>Cras sit amet nibh libero, in gravida nulla. </p>
+                        <div class="comment-action">
+                            <span class="m-l-10"></span>
+                            <a href="#ModalAceitar{{ funcionario.usuario.id }}" data-toggle="modal">
+                                <i class="ti-check color-success"></i>
+                            </a>
+                            <a href="#ModalReject{{ funcionario.usuario.id }}" data-toggle="modal">
+                                <i class="ti-close color-danger"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-reply color-primary"></i>
+                            </a>
+                            <!-- MOdal aceitar usuario-->
+                            <div class="modal fade" data-backdrop="static"
+                                 id="ModalReject{{ funcionario.usuario.id }}" tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header justify-content-center d-flex">
+                                            <h5 class="modal-title ">Remover?</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="btn-group d-flex justify-content-between">
+                                            <button class="btn btn-md btn-danger" type="button" data-dismiss="modal"> Cancelar</button>
+                                            <a class="btn btn-md btn-success" type="button" style="color:white"
+                                            href="{% url 'RejectJoin' pk=funcionario.id %}" data-dismiss="modal">Confirmar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal Rejeitar usuario-->
+                            <div class="modal fade" data-backdrop="static"
+                                 id="ModalAceitar{{ funcionario.usuario.id }}" tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Selecione um
+                                                cargo</h5>
+                                        </div>
+                                        <form method="POST"
+                                              action="{% url 'change_cargo_func' pk=funcionario.instituicao.id %}">
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <select class="form-control" name="OptionSelectCargo">
+                                                        {% for cargo in cargos %}
+                                                        {% if cargo.id != funcionario.cargo.id %}
+                                                        <option>{{ cargo.nome }}</option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">
+                                                    Fechar
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Save changes
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <p class="comment-date">October 21, 2017</p>
+                    </div>
+                </div>
+
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <h2> Sem solicitações </h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

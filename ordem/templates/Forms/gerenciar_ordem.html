@@ -1,0 +1,214 @@
+{% load static %}
+
+
+<div class="tab-content">
+    <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tabGerenciaVeiculo{{ordem.id}}"
+               role="tab">
+                <span class="hidden-sm-up"><i class="ti-home"></i></span>
+                <span class="hidden-xs-down">Veiculo</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabGerenciaMotorista{{ordem.id}}" role="tab">
+                <span class="hidden-sm-up"> <i class="ti-user"></i> </span>
+                <span class="hidden-xs-down">Motorista</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabGerenciaData{{ordem.id}}" role="tab">
+                <span class="hidden-sm-up"> <i class="ti-user"></i> </span>
+                <span class="hidden-xs-down">Data</span></a>
+        </li>
+    </ul>
+    <form method="post" action="{% url 'ordem_confirm'  pk=ordem.instituicao.id pk_2=ordem.id  %}"
+          name="FormGerencia{{ordem.id}}">
+    {% csrf_token %}
+        <div class="tab-pane active" id="tabGerenciaVeiculo{{ordem.id}}" role="tabpanel">
+            <div class="p-20">
+                <h5 class="row d-flex justify-content-center"> Escolha o Veiculo</h5>
+                <div class="form-group">
+                    <select id="select-state{{ordem.id}}" placeholder="Escolha um veiculo..." required="true"
+                            name="selectVeiculo{{ordem.id}}">
+                        <option value="" selected disabled></option>
+                        {% for veiculo in veiculos %}
+                        <option value="{{ veiculo.id }}">{{ veiculo.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="tabGerenciaMotorista{{ordem.id}}" role="tabpanel">
+            <div class="p-20">
+                <label>Escolha um Motorista</label>
+                <select id="select-state-{{ordem.id}}" placeholder="Escolha um Motorista..." required="true"
+                        name="selectMotorista{{ordem.id}}">
+                    <option value=""></option>
+                    {% for funcionario in motoristas %}
+                    <option value="{{ funcionario.usuario.id }}">{{ funcionario.usuario.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="tab-pane" id="tabGerenciaData{{ordem.id}}" role="tabpanel">
+            <div class="p-20">
+                <div class="form-group ">
+                    <label class="d-flex justify-content-start">Selecione a data marcada</label>
+                    <input type="date" class="form-control " id="dataSelect" required name="data{{ordem.id}}">
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label class="d-flex justify-content-start">Selecione a hora marcada</label>
+                    <input type="time" class="form-control" name="horaa{{ordem.id}}" required="true">
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-primary" style="width:100%">Enviar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--<div id="stepper1" class="bs-stepper linear"></div>-->
+<!--<div id="stepper2" class="bs-stepper">-->
+<!--    <div class="bs-stepper-header" role="tablist" id="a{{ordem.id}}">-->
+<!--        <div class="step active" data-target="#test-nl-1">-->
+<!--            <button type="button" class="step-trigger" role="tab" id="stepper2trigger1" aria-controls="test-nl-1"-->
+<!--                    aria-selected="true">-->
+<!--                <span class="bs-stepper-circle"><i class="ti-truck" aria-hidden="true"></i></span>-->
+<!--                <span class="bs-stepper-label">Veiculo</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--        <div class="bs-stepper-line"></div>-->
+<!--        <div class="step" data-target="#test-nl-2">-->
+<!--            <button type="button" class="step-trigger" role="tab" id="stepper2trigger2" aria-controls="test-nl-2"-->
+<!--                    aria-selected="false">-->
+<!--                <span class="bs-stepper-circle"><i class="ti-user" aria-hidden="true"></i></span>-->
+<!--                <span class="bs-stepper-label">Motorista</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--        <div class="bs-stepper-line"></div>-->
+<!--        <div class="step" data-target="#test-nl-3">-->
+<!--            <button type="button" class="step-trigger" role="tab" id="stepper2trigger3" aria-controls="test-nl-3"-->
+<!--                    aria-selected="false">-->
+<!--                <span class="bs-stepper-circle"><i class="fas ti-calendar" aria-hidden="true"></i></span>-->
+<!--                <span class="bs-stepper-label">Data</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <hr>-->
+<!--    <div class="bs-stepper-content" id="l{{ordem.id}}">-->
+<!--        <form method="post" action="{% url 'ordem_confirm'  pk=ordem.instituicao.id pk_2=ordem.id  %}"-->
+<!--              name="FormGerencia{{ordem.id}}">-->
+<!--            {% csrf_token %}-->
+<!--            <div id="test-nl-1" role="tabpanel" class="bs-stepper-pane active dstepper-block"-->
+<!--                 aria-labelledby="stepper2trigger1">-->
+<!--                <h5 class="row d-flex justify-content-center"> Escolha o Veiculo</h5>-->
+<!--                <div class="form-group">-->
+<!--                    <select id="select-state{{ordem.id}}" placeholder="Escolha um veiculo..." required="true"-->
+<!--                            name="selectVeiculo{{ordem.id}}">-->
+<!--                        <option value="0" selected disabled></option>-->
+<!--                        {% for veiculo in veiculos %}-->
+<!--                        <option value="{{ veiculo.id }}">{{ veiculo.name }}</option>-->
+
+<!--                        {% endfor %}-->
+<!--                    </select>-->
+
+
+<!--                    &lt;!&ndash;                        <select class="selectpicker form-control" data-live-search="true" data-size="5"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                name="selectVeiculo{{ordem.id}}" required="true" datatype="int">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <option value="0" selected disabled>Selecione um veiculo</option>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            {% for veiculo in veiculos %}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <option value="{{ veiculo.id }}" data-content="<img style='border-radius: 5px 5px 5px 5px' src='{% static 'images/avatar/2.jpg'%}'>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <span class='text-dark'>{{ veiculo.name }}</span>"></option>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            {% endfor %}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </select>&ndash;&gt;-->
+
+<!--                </div>-->
+<!--                <button class="btn btn-primary" onclick="stepper2.next()" style="width:100%">Próximo</button>-->
+<!--            </div>-->
+<!--            <div id="test-nl-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper2trigger2">-->
+<!--                <h5 class="row d-flex justify-content-center"> Escolha o motorista</h5>-->
+<!--                <div class="form-group">-->
+
+<!--                    <select id="select-state-{{ordem.id}}" placeholder="Escolha um Motorista..." required="true"-->
+<!--                            name="selectMotorista{{ordem.id}}">-->
+<!--                        <option value="0"></option>-->
+<!--                        {% for funcionario in motoristas %}-->
+<!--                        <option value="{{ funcionario.usuario.id }}">{{ funcionario.usuario.name }}</option>-->
+<!--                        {% endfor %}-->
+<!--                    </select>-->
+
+<!--                    &lt;!&ndash;                        <select class="selectpicker form-control required" data-live-search="true" data-size="5"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                name="selectMotorista{{ordem.id}}" required="true">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <option value="0" selected disabled></option>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            {% for funcionario in motoristas %}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <option value="{{ funcionario.usuario.id }}" data-content="<img style='border-radius: 5px 5px 5px 5px' src='{% static 'images/avatar/2.jpg'%}'>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <span class='text-dark'>{{ funcionario.usuario.name }}</span>"></option>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            {% endfor %}&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </select>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <button class="btn btn-primary" onclick="stepper2.next()" style="width:100%">Próximo</button>-->
+<!--                <button type="submit" class="btn btn-primary" style="width:100%">Enviar</button>-->
+<!--            </div>-->
+<!--            <div id="test-nl-3" role="tabpanel" class="bs-stepper-pane text-center"-->
+<!--                 aria-labelledby="stepper2trigger3">-->
+<!--                <div class="form-group ">-->
+<!--                    <label class="d-flex justify-content-start">Selecione a data marcada</label>-->
+<!--                    <input type="date" class="form-control " id="dataSelect" required name="data{{ordem.id}}">-->
+<!--                </div>-->
+<!--                <hr>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="d-flex justify-content-start">Selecione a hora marcada</label>-->
+<!--                    <input type="time" class="form-control" name="horaa{{ordem.id}}" required="true">-->
+<!--                    &lt;!&ndash;                    <script>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        $('#timepicker').timepicker({&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            uiLibrary: 'bootstrap4',&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            timeFormat: 'HH:MM',&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        });&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </script>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <hr>-->
+<!--                <button type="submit" class="btn btn-primary" style="width:100%">Enviar</button>-->
+<!--            </div>-->
+
+
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<script>
+function validateForm() {
+  let x = document.forms["FormGerencia"]["selectVeiculo"].value;
+  let z = document.forms["FormGerencia"]["selectMotorista"].value;
+  if (x == "0" || z == "0") {
+    alert("formulario imcompleto");
+    return false;
+  }
+}
+
+
+
+
+
+
+
+
+
+</script>
+
+<script>
+      $(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+
+  });
+
+
+
+
+
+
+
+</script>
