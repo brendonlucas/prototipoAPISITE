@@ -46,6 +46,7 @@ def show_ordems(request, pk):
     #
 
     ordens = Ordem.objects.filter(instituicao=pk)
+    instituicao = Instituicao.objects.get(id=pk)
 
     if CargosInstituicao.objects.get(instituicao_id=pk, usuario_id=get_user(request).id).cargo.id in (2, 3):
         ordens = Ordem.objects.filter(instituicao=pk)
@@ -55,18 +56,12 @@ def show_ordems(request, pk):
     func_motorista = CargosInstituicao.objects.filter(instituicao_id=pk, cargo_id=4)
     veiculos = Veiculo.objects.filter(instituicao_id=pk)
 
-    finalizados = Ordem.objects.filter(instituicao=pk, status=1)
     aguardando = Ordem.objects.filter(instituicao=pk, status=3)
-    andamento_inicio = Ordem.objects.filter(instituicao=pk, status=2)
-    andamento_executando = Ordem.objects.filter(instituicao=pk, status=4)
-
-    print(andamento_executando, "---------------------------------------------------------------------------------")
 
     return render(request, 'show_ordens.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'ordens': ordens,
-                   'motoristas': func_motorista, 'veiculos': veiculos, 'ord_finalizdos': finalizados,
-                   'aguardando': aguardando, 'andamento_inicio': andamento_inicio,
-                   'andamento_executando': andamento_executando})
+                   'motoristas': func_motorista, 'veiculos': veiculos, 'aguardando': aguardando,
+                   'instituicao': instituicao})
 
 
 def show_detail_ordem(request):
@@ -101,7 +96,7 @@ def confirm_ordem(request, pk, pk_2):
         form = ConfirmOrdem(request.POST)
         if form.is_valid():
             dados_form = form.data
-            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ",dados_form)
+            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", dados_form)
             print(dados_form['selectVeiculo' + str(pk_2)])
             print(dados_form['selectMotorista' + str(pk_2)])
             print(dados_form['data' + str(pk_2)])
@@ -112,3 +107,27 @@ def confirm_ordem(request, pk, pk_2):
 
 def recuse_ordem(request):
     pass
+
+
+def show_ordems_and_ini(request, pk):
+    instituicao = Instituicao.objects.get(id=pk)
+    andamento_inicio = Ordem.objects.filter(instituicao=pk, status=2)
+    return render(request, 'table_ordens_And_Ini.html',
+                  {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
+                   'andamento_inicio': andamento_inicio, })
+
+
+def show_ordems_and_cur(request, pk):
+    instituicao = Instituicao.objects.get(id=pk)
+    andamento_executando = Ordem.objects.filter(instituicao=pk, status=4)
+    return render(request, 'table_ordens_And_Cur.html',
+                  {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
+                   'andamento_executando': andamento_executando, })
+
+
+def show_ordems_final(request, pk):
+    instituicao = Instituicao.objects.get(id=pk)
+    finalizados = Ordem.objects.filter(instituicao=pk, status=1)
+    return render(request, 'table_ordens_finalizados.html',
+                  {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
+                   'ord_finalizdos': finalizados, })

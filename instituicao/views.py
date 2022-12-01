@@ -2,6 +2,7 @@ import string
 import random
 from django.shortcuts import render, redirect
 
+from django.contrib import messages
 from instituicao.forms import JoinRoomForm, CreateIntituicaoForm
 from instituicao.models import Instituicao, Cargo, CargosInstituicao
 from usuario.models import Usuario
@@ -36,6 +37,7 @@ def create_instituicao(request):
             cargo = Cargo.objects.get(id=2)
             cargoNaIns = CargosInstituicao(cargo=cargo, usuario=get_user(request), instituicao=instituicao).save()
 
+        messages.success(request, 'Criado com sucesso!')
         return redirect('inst_show')
 
 
@@ -51,7 +53,12 @@ def entrar_intituicao(request):
                 if CargosInstituicao.objects.filter(usuario=user, instituicao=instituicao).first() is None:
                     cargo = Cargo.objects.get(id=5)
                     CargosInstituicao(cargo=cargo, usuario=user, instituicao=instituicao).save()
-
+                    messages.success(request, 'Solicitaçãõ enviada!')
+                    return redirect('inst_show')
+                else:
+                    messages.error(request, 'ja esta!')
+            else:
+                messages.error(request, 'Não encontrado!')
         return redirect('inst_show')
 
     elif request.method == 'GET':

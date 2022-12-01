@@ -1,16 +1,6 @@
 {% load static %}
-<style>
-.btn-showall-color {
-    background-color: #337AB7;
-    color: white;
-}
 
-
-
-
-
-</style>
-<table id="myTable{{tipo}}" class="table table-hover">
+<table id="myTable{{tipo}}" class="table table-hover ">
 
     <thead>
     <tr>
@@ -39,9 +29,7 @@
         <td><span class="badge badge-primary">Em curso</span></td>
         {% endif %}
         <td class="color-primary">
-            <button class="btn btn-md btn-primary"
-                    data-target="#MOdalDetail3{{ordem.id}}"
-                    data-toggle="modal">
+            <button class="btn btn-md btn-primary" data-target="#MOdalDetail3{{ordem.id}}" data-toggle="modal">
                 Detalhes
             </button>
         </td>
@@ -110,12 +98,6 @@
 		});
 	});
 
-
-
-
-
-
-
 </script>
 
 
@@ -123,11 +105,6 @@
     $(document).ready(function () {
   var stepper = new Stepper($('.bs-stepper')[0])
 })
-
-
-
-
-
 
 
 </script>

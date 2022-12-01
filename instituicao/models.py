@@ -14,6 +14,8 @@ class Instituicao(models.Model):
     funcionarios = models.ManyToManyField(Usuario)
     codigo = models.CharField(max_length=10, null=True, default="12345")
 
+    # arquivado = models.BooleanField(default=False)
+
 
 class CargosInstituicao(models.Model):
     cargo = models.ForeignKey(Cargo, on_delete=models.CASCADE, null=True)

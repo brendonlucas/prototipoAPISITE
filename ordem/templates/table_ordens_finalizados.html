@@ -16,7 +16,7 @@ cursor: hand;
 <div class="card">
     <ul class="nav nav-tabs customtab2 nav-justified">
         <li class="nav-item">
-            <a class="nav-link active" href="{% url 'show_ordens' instituicao.id %}">
+            <a class="nav-link" href="{% url 'show_ordens' instituicao.id %}">
                 <span class="hidden-sm-up"><i class="ti-pencil-alt"></i></span>
                 <span class="hidden-xs-down">Aguardando</span>
             </a>
@@ -28,7 +28,7 @@ cursor: hand;
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'show_ordens_final' instituicao.id %}">
+            <a class="nav-link active" href="{% url 'show_ordens_final' instituicao.id %}">
                 <span class="hidden-sm-up"><i class="ti-close"></i></span>
                 <span class="hidden-xs-down">Finalizados</span>
             </a>
@@ -36,7 +36,7 @@ cursor: hand;
     </ul>
 
     <div class="p-10">
-        {% include 'table_ordens.html' with ordens=aguardando tipo=1 %}
+        {% include 'table_ordens.html' with ordens=ord_finalizdos tipo=4 %}
     </div>
 </div>
 

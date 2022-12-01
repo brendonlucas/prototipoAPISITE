@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+
+<style>
+.hand-cursor {
+cursor: pointer;
+cursor: hand;
+}
+
+.table-hoverplus>tbody>tr:hover>td {
+ background-color: #eeeeee;
+}
+
+
+
+</style>
+<div class="card">
+    <ul class="nav nav-tabs customtab2 nav-justified">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'show_ordens' instituicao.id %}">
+                <span class="hidden-sm-up"><i class="ti-pencil-alt"></i></span>
+                <span class="hidden-xs-down">Aguardando</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'show_ordens_and_ini' instituicao.id %}">
+                <span class="hidden-sm-up"> <i class="ti-truck"></i> </span>
+                <span class="hidden-xs-down">Em Andamento</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'show_ordens_final' instituicao.id %}">
+                <span class="hidden-sm-up"><i class="ti-close"></i></span>
+                <span class="hidden-xs-down">Finalizados</span>
+            </a>
+        </li>
+    </ul>
+    <div class="p-20">
+        <ul class="nav nav-tabs customtab2 nav-justified">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'show_ordens_and_ini' instituicao.id %}">
+                    <span class="hidden-sm-up"><i class="ti-pencil-alt"></i></span>
+                    <span class="hidden-xs-down">Aguardando inicio</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'show_ordens_and_cur' instituicao.id %}">
+                    <span class="hidden-sm-up"> <i class="ti-truck"></i> </span>
+                    <span class="hidden-xs-down">Em curso</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="">
+        {% include 'table_ordens.html' with ordens=andamento_executando tipo=3 %}
+    </div>
+</div>
+
+
+{% endblock %}
+

@@ -13,6 +13,10 @@ def get_user_logged(request):
     return request.user
 
 
+def get_user(request):
+    return Usuario.objects.get(user=get_user_logged(request))
+
+
 def show_home_page(request):
     user_logged = get_user_logged(request)
     if user_logged.is_authenticated:
@@ -111,6 +115,8 @@ def change_cargo_user(request, pk):
         return redirect('show_funcionario', pk)
 
 
+def my_profile(request):
+    return render(request, 'profile/profile.html', {'user': get_user_logged(request), 'usuario': get_user(request)})
 
 
 def handler404(request, exception):

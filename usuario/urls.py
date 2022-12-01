@@ -18,5 +18,6 @@ urlpatterns = [
 
     path('bancodados', views.criar_base_dados, name='create_bd'),
     path('<pk>/ccf', views.change_cargo_user, name='change_cargo_func'),
+    path('profile', views.my_profile, name='profile_user'),
 
 ]
