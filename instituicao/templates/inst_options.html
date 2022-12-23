@@ -11,8 +11,6 @@
 }
 
 
-
-
 </style>
 <h1> Instiruição </h1>
 <div class="card">
@@ -21,18 +19,15 @@
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#home7" role="tab">
                 <span class="hidden-sm-up"><i class="ti-home"></i></span>
-                <span class="hidden-xs-down">Criadas</span></a>
+                <span class="hidden-xs-down">Instituição</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#profile7" role="tab">
-                <span class="hidden-sm-up"> <i class="ti-user"></i> </span>
-                <span class="hidden-xs-down">Entrou</span></a>
-        </li>
+        {% if usuario.cargo == 1 %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#messages7" role="tab">
                 <span class="hidden-sm-up"><i class="ti-email"></i></span>
                 <span class="hidden-xs-down">Arquivado</span></a>
         </li>
+        {% endif %}
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -40,213 +35,10 @@
             <div class="p-20">
                 <!-- Instituições criadas-->
                 {% for instituicao in instituicoes %}
-                <div class="card">
-                    <div class="card-title">
-                        <h4>{{ instituicao.instituicao.nome }}</h4>
-                    </div>
-                    <div class="card-toggle-body">
-                        <p class="text-muted m-b-15">Descrição da instituição </p>
-                        <div class="button-list">
-                            {% if instituicao.cargo.id == 2 or instituicao.cargo.id == 3 %}
-                            <button type="button" class="btn btn-primary btn-flat btn-addon m-b-10 m-l-5"
-                                    data-toggle="modal"
-                                    data-target="#ModalFuncionario{{ instituicao.instituicao.id }}"><i
-                                    class="ti-user"></i>Funcionarios
-                            </button>
-                            <button type="button" class="btn btn-success btn-flat btn-addon m-b-10 m-l-5"
-                                    data-toggle="modal" data-target="#ModalVeiculo{{ instituicao.instituicao.id }}">
-                                <i class="ti-car"></i>Veiculos
-                            </button>
-                            {% endif %}
-                            <button type="button" class="btn btn-default btn-flat btn-addon m-b-10 m-l-5"
-                                    data-toggle="modal" data-target="#ModalOrden{{ instituicao.instituicao.id }}"><i
-                                    class="ti-clipboard" style="color:white"></i>Ordens
-                            </button>
-                            <button type="button" class="btn btn-info btn-flat btn-addon m-b-10 m-l-5"
-                                    data-toggle="modal"
-                                    data-target="#ModalInfo{{ instituicao.instituicao.id }}"><i class="ti-info-alt"></i>Info
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="ModalVeiculo{{ instituicao.instituicao.id }}" tabindex="-1"
-                                 role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">O que deseja fazer?</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="button-list ">
-                                                <a type="button" class="btn btn-secondary btn-large btn-block"
-                                                   style="color:white"
-                                                   href="{% url 'veiculos_show' pk=instituicao.instituicao.id %}">Gerenciar
-                                                    Veiculos
-                                                </a>
-                                                <a type="button" class="btn btn-primary btn-large btn-block"
-                                                   data-toggle="modal"
-                                                   href="#MOdalAdicionarveiculo{{ instituicao.instituicao.id }}">Adicionar
-                                                    Veiculo
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="button-list">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Fechar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="MOdalAdicionarveiculo{{ instituicao.instituicao.id }}"
-                                 tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="ModalCenterTitle"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="rrTitle">add veiculo na
-                                                {{ instituicao.instituicao.nome }}</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label>Email address</label>
-                                                    <input type="email" class="form-control"
-                                                           aria-describedby="emailHelp" placeholder="Enter email">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Fechar
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal fade" id="ModalOrden{{ instituicao.instituicao.id }}" tabindex="-1"
-                                 role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">O que deseja fazer?</h5>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div class="button-list ">
-                                                <a type="button" class="btn btn-secondary btn-large btn-block"
-                                                   style="color:white"
-                                                   href="{% url 'show_ordens' pk=instituicao.instituicao.id %}">Gerenciar
-                                                    Ordens
-                                                </a>
-                                                {% if usuario.tipo.id != 3 %}
-                                                <a type="button" class="btn btn-primary btn-large btn-block"
-                                                   data-toggle="modal"
-                                                   href="#MOdalAdicionarOrden{{ instituicao.instituicao.id }}">Criar
-                                                    Solicitação
-                                                </a>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="button-list">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Fechar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="MOdalAdicionarOrden{{ instituicao.instituicao.id }}"
-                                 data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="rrTitleorden">Fazer Pedido na
-                                                {{ instituicao.instituicao.nome }}</h5>
-                                        </div>
-                                        {% include 'Forms/form_ordem.html' with instituicao=instituicao %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal fade" id="ModalFuncionario{{ instituicao.instituicao.id }}"
-                                 tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">O que deseja fazer?</h5>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div class="button-list ">
-                                                <a style="color:white" type="button"
-                                                   class="btn btn-secondary btn-large btn-block "
-                                                   href="{% url 'show_funcionario' pk=instituicao.instituicao.id %}">Gerenciar
-                                                    Fuincionarios
-                                                </a>
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="button-list">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Fechar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal fade" id="ModalInfo{{ instituicao.instituicao.id }}" tabindex="-1"
-                                 role="dialog"
-                                 aria-labelledby="ModalCenterTitle" aria-hidden="true">
-
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="ModalTitleInfo">Informações</h5>
-                                        </div>
-
-                                        <div class="modal-body">
-
-                                            <h2> Codigo: {{ instituicao.instituicao.codigo }}</h2>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="button-list">
-
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Fechar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-group dropleft" style="position: absolute;top: 0; right: 0;">
-                        <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
-                                aria-expanded="false" data-toggle="dropdown"><i class="ti-settings"></i></button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar Nome</a>
-                            <a class="dropdown-item" href="#"><i class="ti-close"> </i> Fechar</a>
-                            <a class="dropdown-item" href="#"><i class="ti-folder"> </i> Arquivar</a>
-                        </div>
-                    </div>
-                </div>
-
+                    {% include 'card_instituicao.html' with instituicao=instituicao %}
                 {% endfor %}
-                {% if user.is_authenticated %}
 
+                {% if usuario.cargo == 1 %}
                 <div><i class="bi bi-plus-circle"></i>
                     <button type="button" class="btn btn-success btn-square btn-lg" style="width: 100%"
                             data-toggle="modal"
@@ -254,7 +46,7 @@
                         <i class="ti-plus"> </i> Criar
                     </button>
                 </div>
-                {% endif %}
+
                 <div class="modal fade" data-backdrop="static" id="MOdalAdicionarinsituicao" tabindex="-1" role="dialog"
                      aria-labelledby="ModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -281,334 +73,20 @@
 
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
-        <!-- Nav instituicoes entradas-->
-        <div class="tab-pane  p-20" id="profile7" role="tabpanel">
-            <!-- Instituições criadas-->
-            {% for instituicao in entradas %}
-            {% if instituicao.cargo.id != 2 %}
-            <div class="card">
-                <div class="card-title">
-                    <h4>{{ instituicao.instituicao.nome }}</h4>
-                </div>
-                <div class="card-toggle-body">
-                    <p class="text-muted m-b-15">Descrição da instituição </p>
-                    <div class="button-list">
-                        {% if instituicao.cargo.id != 5 %}
-                        {% if usuario.tipo.id == 1 or usuario.tipo.id == 2 %}
-                        <button type="button" class="btn btn-primary btn-flat btn-addon m-b-10 m-l-5"
-                                data-toggle="modal" data-target="#ModalFuncE{{ instituicao.instituicao.id }}">
-                            <i class="ti-user"></i>Funcionariosasdas
-                        </button>
-
-                        <button type="button" class="btn btn-success btn-flat btn-addon m-b-10 m-l-5"
-                                data-toggle="modal"
-                                data-target="#ModalVeiculoE{{ instituicao.instituicao.id }}"><i class="ti-car"></i>Veiculos
-                        </button>
-                        {% endif %}
-                        <button type="button" style="color:white"
-                                class="btn btn-default btn-flat btn-addon m-b-10 m-l-5"
-                                data-toggle="modal" data-target="#ModalOrdenE{{ instituicao.instituicao.id }}"><i
-                                class="ti-clipboard"></i>Ordens
-                        </button>
-                        <button type="button" class="btn btn-info btn-flat btn-addon m-b-10 m-l-5"
-                                data-toggle="modal"
-                                data-target="#ModalInfoE{{ instituicao.instituicao.id }}"><i class="ti-info-alt"></i>Info
-                        </button>
-
-                        <!--                        <button type="button" class="btn btn-danger btn-flat btn-addon m-b-10 m-l-5"><i-->
-                        <!--                                class="ti-settings"></i>Opções-->
-                        <!--                        </button>-->
-
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="ModalOrdenE{{ instituicao.instituicao.id }}" tabindex="-1"
-                             role="dialog"
-                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">O que deseja fazer?</h5>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <div class="button-list ">
-                                            <a type="button" class="btn btn-secondary btn-large btn-block"
-                                               style="color:white"
-                                               href="{% url 'show_ordens' pk=instituicao.instituicao.id %}">Gerenciar
-                                                Ordens
-                                            </a>
-                                            {% if usuario.tipo.id != 3 %}
-                                            <a type="button" class="btn btn-primary btn-large btn-block"
-                                               data-toggle="modal"
-                                               href="#ModalAddOrdenE{{ instituicao.instituicao.id }}">Criar Solicitação
-                                            </a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="button-list">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Fechar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" data-backdrop="static"
-                             id="ModalAddOrdenE{{ instituicao.instituicao.id }}"
-                             tabindex="-1"
-
-                             role="dialog"
-                             aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Fazer Pedidos nass {{ instituicao.nome }}</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>Descrição</label>
-                                                <input type="email" class="form-control" placeholder="Enter email">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Quatidade de vagas</label>
-                                                <input type="email" class="form-control" placeholder="Enter email">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Data desejada</label>
-                                                <input type="date" class="form-control" placeholder="Enter email">
-                                            </div>
-
-
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Fechar
-                                        </button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="ModalFuncE{{ instituicao.instituicao.id }}" tabindex="-1"
-                             role="dialog"
-                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">O que deseja fazer?</h5>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <div class="button-list ">
-                                            <a style="color:white" type="button"
-                                               class="btn btn-secondary btn-large btn-block "
-                                               href="{% url 'show_funcionario' pk=instituicao.instituicao.id %}">Gerenciar
-                                                Fuincionarios
-                                            </a>
-                                        </div>
-
-                                        <!--modal add user-->
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="button-list">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Fechar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" data-backdrop="static"
-                             id="MOdalAdicionarUserE{{ instituicao.instituicao.id }}"
-                             tabindex="-1"
-                             role="dialog"
-                             aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">add user na {{ instituicao.instituicao.nome }}</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>Email address</label>
-                                                <input type="email" class="form-control"
-                                                       aria-describedby="emailHelp" placeholder="Enter email">
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Fechar
-                                        </button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="ModalVeiculoE{{ instituicao.instituicao.id }}" tabindex="-1"
-                             role="dialog"
-                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">O que deseja fazer?</h5>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <div class="button-list ">
-                                            <a type="button" class="btn btn-secondary btn-large btn-block"
-                                               style="color:white"
-                                               href="{% url 'veiculos_show' pk=instituicao.instituicao.id %}">Gerenciar
-                                                Veiculos
-                                            </a>
-                                            <a type="button" class="btn btn-primary btn-large btn-block"
-                                               data-toggle="modal"
-                                               href="#MOdalAdicionarveiculoE{{ instituicao.instituicao.id }}">Adicionar
-                                                Veiculo
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="button-list">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Fechar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" data-backdrop="static"
-                             id="MOdalAdicionarveiculoE{{ instituicao.instituicao.id }}"
-                             tabindex="-1"
-                             role="dialog"
-                             aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">add veiculo na {{ instituicao.instituicao.nome }}</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>Email address</label>
-                                                <input type="email" class="form-control" aria-describedby="emailHelp"
-                                                       placeholder="Enter email">
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Fechar
-                                        </button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="ModalInfoE{{ instituicao.instituicao.id }}" tabindex="-1"
-                             role="dialog"
-                             aria-labelledby="ModalCenterTitle" aria-hidden="true">
-
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Informações {{ instituicao.instituicao.id }}</h5>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        Inforações sobre a instituição
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="button-list">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Fechar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        <button type="button" class="btn btn-danger btn-flat btn-addon m-b-10 m-l-5"><i
-                                class="ti-close"></i>Sair
-                        </button>
-
-                    </div>
-
-                </div>
-            </div>
-
-            {% endif %}
-            {% endfor %}
-            {% if user.is_authenticated %}
-
-            <div><i class="bi bi-plus-circle"></i>
-                <button type="button" class="btn btn-success btn-square btn-lg" style="width: 100%"
-                        data-toggle="modal"
-                        data-target="#MOdalbuscarinst">
-                    <i class="ti-plus"> </i> Entrar
-                </button>
-            </div>
-            {% endif %}
-            <div class="modal fade" data-backdrop="static" id="MOdalbuscarinst" tabindex="-1" role="dialog"
-                 aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Entrar usando código </h5>
-                        </div>
-                        <form method="post" action="{% url 'joinroom' %}">
-                            <div class="modal-body">
-
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <input maxlength="10" minlength="3" type="text" class="form-control" id="inputBI"
-                                           name="InputCode"
-                                           placeholder="Código" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary">Entrar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
+        {% if usuario.cargo == 1 %}
         <div class="tab-pane p-20" id="messages7" role="tabpanel">
+            {% if arquivados %}
+            {% for arquivado in arquivados %}
 
-            <button type="button" class="btn btn-success" id="toastr-success-top-center">Success</button>
+            {% include 'card_instituicao.html' with instituicao=arquivado %}
 
+            {% endfor %}
+            {% endif %}
         </div>
-
+        {% endif %}
     </div>
 
     {% if messages %}
@@ -634,11 +112,6 @@
             "tapToDismiss": false
             })
         };
-
-
-
-
-
 
 
     </script>

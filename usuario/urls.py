@@ -15,6 +15,8 @@ urlpatterns = [
     path('', views.show_home_page, name='show_home_page'),
 
     path('register', views.create_account, name="register"),
+    path('<pk>/funcionarios/register_user/', views.create_account_func, name="register_new_user"),
+
 
     path('bancodados', views.criar_base_dados, name='create_bd'),
     path('<pk>/ccf', views.change_cargo_user, name='change_cargo_func'),

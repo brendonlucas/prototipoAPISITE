@@ -48,19 +48,13 @@ def show_ordems(request, pk):
     ordens = Ordem.objects.filter(instituicao=pk)
     instituicao = Instituicao.objects.get(id=pk)
 
-    if CargosInstituicao.objects.get(instituicao_id=pk, usuario_id=get_user(request).id).cargo.id in (2, 3):
-        ordens = Ordem.objects.filter(instituicao=pk)
-    elif CargosInstituicao.objects.get(instituicao_id=pk, usuario_id=get_user(request).id).cargo.id == 4:
-        ordens = Ordem.objects.filter(instituicao=pk)
-
-    func_motorista = CargosInstituicao.objects.filter(instituicao_id=pk, cargo_id=4)
     veiculos = Veiculo.objects.filter(instituicao_id=pk)
 
     aguardando = Ordem.objects.filter(instituicao=pk, status=3)
 
     return render(request, 'show_ordens.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'ordens': ordens,
-                   'motoristas': func_motorista, 'veiculos': veiculos, 'aguardando': aguardando,
+                   'veiculos': veiculos, 'aguardando': aguardando,
                    'instituicao': instituicao})
 
 
@@ -69,15 +63,27 @@ def show_detail_ordem(request):
 
 
 def create_ordem(request, pk):
+    if request.method == 'GET':
+        instituicao = Instituicao.objects.get(id=pk)
+        return render(request, 'Forms/form_ordem.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao, })
+
     if request.method == 'POST':
         form = CreateOrdem(request.POST)
         if form.is_valid():
             dados_form = form.data
-            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ")
             instituicao = Instituicao.objects.filter(id=pk).first()
-            a = Ordem(solicitante=get_user(request), descricao=dados_form['descricao'], qtd_espaco=dados_form['carga'],
-                      data_solicitacao=dados_form['dataD'], origem=dados_form['destino'], destino=dados_form['destino'],
+            if dados_form['TypeT'] == 1:  # 1 = pessoas / 2 = carga
+                carga = dados_form['carga']
+            else:
+                carga = 0
+
+            a = Ordem(solicitante=get_user(request), descricao=dados_form['descricao'],
+                      qtd_espaco=carga, data_solicitado=dados_form['dataD'],
+                      origem=dados_form['destino'], destino=dados_form['destino'],
                       instituicao=instituicao, status=StatusOrdem.objects.get(id=3))
+
+            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ")
             print(a.solicitante.name, a.descricao, a.qtd_espaco, )
             a.save()
         return redirect('inst_show')
@@ -92,6 +98,20 @@ def remove_ordem(request):
 
 
 def confirm_ordem(request, pk, pk_2):
+    if request.method == 'GET':
+        instituicao = Instituicao.objects.get(id=pk)
+        ordem = Ordem.objects.get(id=pk_2)
+        veiculos = Veiculo.objects.filter(instituicao_id=pk)
+        motoristas = Instituicao.objects.get(id=pk).funcionarios.all().filter(cargo_id=4)
+        print("MOtoristas aqui--------------------------------------", veiculos)
+        ids_veiculos = []
+        for k in range(len(veiculos)):
+            ids_veiculos.append(veiculos[k].id)
+
+        return render(request, 'Forms/gerenciar_ordem.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
+                       'ordem': ordem, 'veiculos': veiculos, 'motoristas': motoristas, 'ids_veiculos': ids_veiculos})
+
     if request.method == 'POST':
         form = ConfirmOrdem(request.POST)
         if form.is_valid():

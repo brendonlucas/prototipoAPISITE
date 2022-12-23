@@ -22,6 +22,22 @@ class RegistrarUsuarioForm(forms.Form):
         return valid
 
 
+class RegisterNewUserForm(forms.Form):
+    username = forms.CharField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    full_name = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+    havepass = forms.CharField(required=False)
+    senha = forms.CharField(required=False)
+    cargo = forms.IntegerField(required=True)
+
+    def is_valid(self):
+        valid = True
+
+        return valid
+
+
 class ChangeCargoForm(forms.Form):
     cargo = forms.CharField(required=True)
 

@@ -1,11 +1,24 @@
-<form method="POST" action="{% url 'add_orden' pk=instituicao.instituicao.id %}">
+{% extends 'base.html' %}
+{% block 'content' %}
+<br>
+<h2 style="text-align:center" class=""> Criar Orden </h2>
+<hr>
+<form method="POST" action="{% url 'add_orden' pk=instituicao.id %}">
     {% csrf_token %}
     <div class="modal-body">
         <div class="form-group">
+            <label>Tipo de Transporte</label>
+            <select  class="form-control" required name="TypeT" id="selectType" onChange="showDiv()">
+                <option value="">------</option>
+                <option value="1">Pessoas</option>
+                <option value="2">Outros</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="display: none;" id="divPessoas">
             <label>Quatidade de vagas</label>
-            <input type="number" class="form-control" min="1" max="10"
-                   placeholder="Quantidade de pessoas" required
-                   onkeypress="return isNumberKey(event)" name="carga">
+            <input type="number" class="form-control" min="1" max="10" placeholder="Quantidade de pessoas"
+                   onkeypress="return isNumberKey(event)" name="carga" id="inputQtd">
         </div>
         <SCRIPT> function isNumberKey(evt){
                 var charCode = (evt.which) ? evt.which : evt.keyCode
@@ -25,13 +38,26 @@
         <div class="form-group">
             <label>Descrição</label>
             <textarea class="form-control" placeholder="Descreva"
-                      style="max-height:200px;height:100px" name="descricao"></textarea>
+                      style="max-height:200px;height:100px; min-height:50px" name="descricao"></textarea>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Fechar
-        </button>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
 </form>
+
+
+<script>
+function showDiv(){
+    if ((document.getElementById('selectType').value == 1)) {
+        document.getElementById('divPessoas').style.display="block";
+        document.getElementById("inputQtd").required = true;
+    }
+    else {
+        document.getElementById('divPessoas').style.display="none";
+        document.getElementById("inputQtd").required = false;
+    }
+}
+
+</script>
+{% endblock %}

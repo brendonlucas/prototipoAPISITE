@@ -2,9 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib import messages
 
 from instituicao.models import Instituicao, Cargo, CargosInstituicao
-from usuario.forms import RegistrarUsuarioForm, ChangeCargoForm
+from usuario.forms import RegistrarUsuarioForm, ChangeCargoForm, RegisterNewUserForm
 from usuario.models import TipoUsuario, Usuario
 from veiculo.models import Veiculo, TipoVeiculo
 
@@ -28,13 +29,7 @@ def show_home_page(request):
 # @login_required
 def pag_home(request):
     # criar_base_dados()
-    t = TipoUsuario(nome='admin', descricao='Todo poderioso')
-    # id_t = TipoUsuario.objects.get(id=11)
-    #
-    # u = User.objects.create_user(username="tomas", email="luiz@gmail.com", password="123456", first_name="jhon",
-    #                              last_name="travolta")
-    # uu = Usuario(name="Thonas travolta", user=u, telefone=99556641, tipo=id_t)
-    # uu.save()
+
     return render(request, 'base.html', {'user': get_user_logged(request)})
 
 
@@ -68,41 +63,75 @@ def help(request):
 
 def create_account(request):
     if request.method == 'GET':
-        print("-------------------------------------------------")
         return redirect('show_home_page')
-
     if request.method == 'POST':
         form = RegistrarUsuarioForm(request.POST)
         if form.is_valid():
-            print("-----------------------validou------------------------------------")
             dados_form = form.data
-            print(dados_form['username'], dados_form['first_name'], dados_form['last_name'], dados_form['email'],
-                  dados_form['telefone'],
-                  dados_form['password'],
-                  dados_form['ConfirmPassword'])
-            # tipo = TipoUsuario.objects.get(id=1)
             user = User.objects.create_user(username=dados_form['username'], email=dados_form['email'],
                                             password=dados_form['password'], first_name=dados_form['first_name'],
                                             last_name=dados_form['last_name'], )
+            cargo = TipoUsuario.objects.get(id=1)
+            usuario_dados = Usuario(telefone=dados_form['telefone'], user=user, name=dados_form['username'],
+                                    cargo=cargo)
+            usuario_dados.save()
+            return redirect('show_home_page')
+        return redirect('show_home_page')
 
-            usuario_dados = Usuario(telefone=dados_form['telefone'], user=user, nome=dados_form['username'])
+
+def create_account_func(request, pk):
+    if request.method == 'GET':
+        return render(request, 'form_add_user.html',
+                      {'user': get_user_logged(request), 'instituicao': Instituicao.objects.get(id=pk), })
+
+    if request.method == 'POST':
+        form = RegisterNewUserForm(request.POST)
+        if form.is_valid():
+            dados_form = form.data
+            print("---------------------------------------------------------")
+            print(dados_form['username'], dados_form['email'], dados_form['password'], dados_form['first_name'],
+                  dados_form['last_name'], dados_form['full_name'])
+            print(request.POST.getlist('havepass'), dados_form['cargo'])
+            print("---------------------------------------------------------")
+
+            senha = ""
+            if len(request.POST.getlist('havepass')) > 0:
+                print("tem senha")
+                senha = dados_form['password']
+            else:
+                senha = "123456789"  # make_default_pass
+
+            user = User.objects.create_user(username=dados_form['username'], email=dados_form['email'],
+                                            password=senha, first_name=dados_form['first_name'],
+                                            last_name=dados_form['last_name'], )
+
+            cargo = TipoUsuario.objects.get(id=dados_form['cargo'])
+            usuario_dados = Usuario(user=user, name=dados_form['username'], cargo=cargo)
             usuario_dados.save()
 
-            return redirect('show_home_page')
+            inst = Instituicao.objects.get(id=pk)
+            usuario_inst = Usuario.objects.get(user=user.id)
+            print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-", usuario_inst.name)
+            if inst:
+                inst.funcionarios.add(usuario_inst)
 
-        return redirect('show_home_page')
+            messages.success(request, 'Criado com sucesso!')
+            return redirect('show_funcionario', pk)
+
+        messages.error(request, 'Dados invalidos!')
+        return redirect('register_new_user', pk)
+
+
 
 
 def show_funcionarios_instituicao(request, pk):
     user = get_user_logged(request)
 
-    funcionarios = CargosInstituicao.objects.filter(instituicao_id=pk)
-    cargos = Cargo.objects.all()
-    solicitacoes = CargosInstituicao.objects.filter(instituicao_id=pk, cargo_id=5)
-
+    funcionarios = Instituicao.objects.get(id=pk).funcionarios.all()
+    print("--------------------------------------------", funcionarios[0])
     return render(request, 'show_funcionarios.html',
-                  {'user': get_user_logged(request), 'funcionarios': funcionarios, 'cargos': cargos,
-                   'solicitacoes': solicitacoes})
+                  {'user': get_user_logged(request), 'funcionarios': funcionarios,
+                   'instituicao': Instituicao.objects.get(id=pk)})
 
 
 def change_cargo_user(request, pk):
@@ -132,21 +161,15 @@ def handler500(request, *args, **argv):
 
 
 def criar_base_dados(request):
-    tu1 = TipoUsuario(nome="Criado", descricao="pode tudo").save()
-    tu2 = TipoUsuario(nome="Chefe", descricao="Controla as ordens").save()
-    tu3 = TipoUsuario(nome="motorista", descricao="Dirige os carro").save()
-    tu4 = TipoUsuario(nome="Solicitante", descricao="Pode solicitar ordens").save()
+    tv1 = TipoVeiculo(name="Moto", descricao="Motoca veia de trilha").save()
+    tv2 = TipoVeiculo(name="Caminhão", descricao="caminhoneta pra levar coisas uma pampa tunada").save()
+    tv3 = TipoVeiculo(name="carro", descricao="carrin de 4 portas").save()
+    tv4 = TipoVeiculo(name="Onibus", descricao="Escolar pra esola").save()
 
-    tv1 = TipoVeiculo(name="Motoca", descricao="Motoca veia de trilha").save()
-    tv2 = TipoVeiculo(name="Caminhoneta", descricao="caminhoneta pra levar coisas uma pampa tunada").save()
-    tv3 = TipoVeiculo(name="carru", descricao="carrin de 4 portas").save()
-    tv4 = TipoVeiculo(name="onibus", descricao="Escolar pra esola").save()
-
-    c1 = Cargo(nome="sem cargo", descricao="").save()
-    c2 = Cargo(nome="Adminstrador", descricao="").save()
-    c3 = Cargo(nome="gerente", descricao="").save()
-    c4 = Cargo(nome="funcionario", descricao="").save()
-    c4 = Cargo(nome="Solicitante", descricao="").save()
+    c2 = TipoUsuario(nome="Adminstrador", descricao="").save()
+    c3 = TipoUsuario(nome="gerente", descricao="").save()
+    c4 = TipoUsuario(nome="funcionario", descricao="").save()
+    c1 = TipoUsuario(nome="motorista", descricao="").save()
 
     # user admins
     userADV1 = User.objects.create_user(username="alan", email="emai5l@gmail.com", password=123456, first_name="alan",

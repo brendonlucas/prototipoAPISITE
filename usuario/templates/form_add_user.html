@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+{% load static %}
+
+<div class="card">
+    <h3 style="text-align:center"> Adicionado usuario</h3>
+    <hr>
+    <form method="post" action="{% url 'register_new_user' pk=instituicao.id %}">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Nome</label>
+                <input type="text" class="form-control" id="inputEmail4" placeholder="Nome" name="first_name" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Sobrenome</label>
+                <input type="text" class="form-control" id="inputPassword4" placeholder="Sobrenome" name="last_name"
+                       required>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="inputname">Nome Completo</label>
+            <input type="text" class="form-control" id="inputname" placeholder="" name="full_name" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputuser">Nome de Usuario</label>
+                <input type="text" class="form-control" id="inputuser" placeholder="Usuario" name="username" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputemail">Email</label>
+                <input type="email" class="form-control" id="inputemail" placeholder="exemplo@email.com" name="email"
+                       required>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="inputcargo">Cargo</label>
+            <select class="form-control" id="inputcargo" name="cargo" required>
+                <option value="" > Escolha um cargo</option>
+                <option value="2"> Gerente</option>
+                <option value="3"> Secretario</option>
+                <option value="4"> Motorista</option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="true" id="gridCheck" name="havepass" onclick="toggleDiv()">
+                <label class="form-check-label" for="gridCheck">Escolher senha?</label>
+            </div>
+        </div>
+
+        <div class="form-group" id="Pakistan" style="display:none;">
+            <label for="inputPass">Senha</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="inputPass" name="password">
+                <div class="input-group-append">
+                    <button type="button" class="input-group-text btn"><i class="ti-eye" onclick="myFunction()"> </i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary " style="width:100%">Criar</button>
+    </form>
+
+</div>
+{% if messages %}
+        {% for message in messages %}
+        <script>
+            window.onload = function exampleFunction() {
+            toastr.{{ message.tags }}('{{ message }}','{{ message.tags }}',{
+            "positionClass": "toast-top-center",
+            timeOut: 5000,
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "tapToDismiss": false
+            })
+        };
+        </script>
+        {% endfor %}
+        {% endif %}
+
+<script>
+function myFunction() {
+    var x = document.getElementById("inputPass");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
+
+</script>
+
+<script type="text/javascript">
+function toggleDiv() {
+    if ((document.getElementById('Pakistan').style.display == 'none')) {
+        document.getElementById('Pakistan').style.display="block";
+        document.getElementById("inputPass").required = true;
+    }
+    else {
+        document.getElementById('Pakistan').style.display="none";
+        document.getElementById("inputPass").required = false;
+    }
+}
+
+</script>
+
+
+{% endblock %}
+
