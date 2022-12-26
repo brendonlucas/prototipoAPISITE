@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+
+<style>
+.panel-heading .chevron:after {
+    content: "\f078";
+}
+.panel-heading.collapsed .chevron:after {
+    content: "\f054";
+}
+
+
+</style>
+<div id="accordion-2" role="tablist" aria-multiselectable="true" class="o-accordion">
+    <div class="card multi">
+        <div class="card-header panel-heading " role="tab" id="headingOne-1" data-toggle="collapse"
+             data-parent="#accordion" data-target="#collapseOne-1" aria-expanded="true" aria-controls="collapseOne-1">
+            <h5 class="mb-0 d-flex">
+                <a class="p-2">Dados da Solicitação</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
+            </h5>
+        </div>
+        <div id="collapseOne-1" class="collapse show" role="tabpanel" aria-labelledby="headingOne-1">
+            <div class="card-block">
+                <hr>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Solicitante</label>
+                            <input type="email" class="form-control" id="inputEmail4" disabled
+                                   value="{{ordem.solicitante.full_name}}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Solicitado para</label>
+                            <input type="text" class="form-control" id="inputPassword4" disabled value="----">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Data da Solicitação</label>
+                            <input type="email" class="form-control" disabled value="{{ordem.data_solicitacao}}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Data Solicitada</label>
+                            <input type="text" class="form-control" disabled value="{{ ordem.data_solicitado }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress2">Descrição</label>
+                        <textarea class="form-control" id="inputAddress2" disabled
+                                  style="min-height:100px;max-height:200px;">{{ordem.descricao}} </textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card multi">
+        <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
+             data-target="#collapseTwo-1" aria-expanded="false" aria-controls="collapseTwo-1" role="tab"
+             id="headingTwo-1">
+            <h5 class="mb-0 d-flex">
+                <a class="p-2">Dados do Veiculo</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
+            </h5>
+        </div>
+        <div id="collapseTwo-1" class="collapse" role="tabpanel" aria-labelledby="headingTwo-1">
+            <div class="card-block">
+                <hr>
+
+
+                <div class="card">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <img src="https://unsplash.it/400/300?image=503" class="w-100">
+                        </div>
+                        <div class="col-md-8 px-3">
+                            <div class="card-block px-3">
+                                <h3 class="card-title">{{ ordem.veiculo.name }} </h3>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Placa: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">{{ordem.veiculo.placa}}</h6>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Tipo: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">{{ordem.veiculo.tipo.name}}</h6>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Disponibilidade: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
+                                </div>
+                                <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
+                                    mais</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card multi">
+        <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
+             data-target="#collapseThree-1" aria-expanded="false" aria-controls="collapseThree-1" role="tab"
+             id="headingThree-1">
+            <h5 class="mb-0 d-flex">
+                <a class="p-2"> Dados do Motorista</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
+            </h5>
+        </div>
+        <div id="collapseThree-1" class="collapse" role="tabpanel" aria-labelledby="headingThree-1">
+            <div class="card-block">
+                <hr>
+                <div class="card">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <img src="https://unsplash.it/400/300?image=503" class="w-100">
+                        </div>
+                        <div class="col-md-8 px-3">
+                            <div class="card-block px-3">
+                                <h3 class="card-title">{{ ordem.motorista.full_name }} </h3>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Contato: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">{{ ordem.motorista.telefone }}</h6>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">-------: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">--------</h6>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Disponibilidade: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
+                                </div>
+                                <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
+                                    mais</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if messages %}
+{% for message in messages %}
+<script>
+            window.onload = function exampleFunction() {
+            toastr.{{ message.tags }}('{{ message }}','{{ message.tags }}',{
+            "positionClass": "toast-top-center",
+            timeOut: 5000,
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "tapToDismiss": false
+            })
+        };
+
+</script>
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}
+

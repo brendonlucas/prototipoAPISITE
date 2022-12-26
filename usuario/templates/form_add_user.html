@@ -40,7 +40,7 @@
 
         <div class="form-group">
             <label for="inputcargo">Cargo</label>
-            <select class="form-control" id="inputcargo" name="cargo" required>
+            <select class="form-control" id="select-state" placeholder="Escolha um Veiculo" name="cargo" required>
                 <option value="" > Escolha um cargo</option>
                 <option value="2"> Gerente</option>
                 <option value="3"> Secretario</option>
@@ -126,5 +126,14 @@ function toggleDiv() {
 </script>
 
 
+<script>
+    $(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+  });
+
+
+</script>
 {% endblock %}
 

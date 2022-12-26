@@ -81,6 +81,8 @@ def create_account(request):
 
 def create_account_func(request, pk):
     if request.method == 'GET':
+        instituicao = Instituicao.objects.get(id=pk)
+
         return render(request, 'form_add_user.html',
                       {'user': get_user_logged(request), 'instituicao': Instituicao.objects.get(id=pk), })
 
@@ -122,8 +124,6 @@ def create_account_func(request, pk):
         return redirect('register_new_user', pk)
 
 
-
-
 def show_funcionarios_instituicao(request, pk):
     user = get_user_logged(request)
 
@@ -144,8 +144,10 @@ def change_cargo_user(request, pk):
         return redirect('show_funcionario', pk)
 
 
-def my_profile(request):
-    return render(request, 'profile/profile.html', {'user': get_user_logged(request), 'usuario': get_user(request)})
+def my_profile(request, pk):
+    instituicao = Instituicao.objects.get(id=pk)
+    return render(request, 'profile/profile.html',
+                  {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao})
 
 
 def handler404(request, exception):

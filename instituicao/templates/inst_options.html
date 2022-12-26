@@ -11,6 +11,7 @@
 }
 
 
+
 </style>
 <h1> Instiruição </h1>
 <div class="card">
@@ -34,9 +35,9 @@
         <div class="tab-pane active" id="home7" role="tabpanel">
             <div class="p-20">
                 <!-- Instituições criadas-->
-                {% for instituicao in instituicoes %}
-                    {% include 'card_instituicao.html' with instituicao=instituicao %}
-                {% endfor %}
+
+                {% include 'card_instituicao.html' with instituicao=instituicao %}
+
 
                 {% if usuario.cargo == 1 %}
                 <div><i class="bi bi-plus-circle"></i>
@@ -112,6 +113,7 @@
             "tapToDismiss": false
             })
         };
+
 
 
     </script>

@@ -19,10 +19,14 @@ def get_user(request):
 def show_instituicao(request):
     # inst = Instituicao.objects.all().filter(funcionarios = get_user(request).id)
 
-    inst = Instituicao.objects.filter(funcionarios=get_user(request).id)
+    try:
+        inst = Instituicao.objects.get(funcionarios=get_user(request).id)
+    except Instituicao.DoesNotExist:
+        inst = None
+
     print("-------------------------------------------------", inst)
     return render(request, 'inst_options.html',
-                  {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicoes': inst})
+                  {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': inst})
 
 
 def create_instituicao(request):

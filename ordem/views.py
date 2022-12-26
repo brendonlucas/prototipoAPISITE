@@ -1,6 +1,6 @@
 import datetime
 from datetime import date
-
+from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from instituicao.models import Instituicao, CargosInstituicao
@@ -86,6 +86,7 @@ def create_ordem(request, pk):
             print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ")
             print(a.solicitante.name, a.descricao, a.qtd_espaco, )
             a.save()
+            messages.success(request, 'Criado com sucesso!')
         return redirect('inst_show')
 
 
@@ -108,25 +109,41 @@ def confirm_ordem(request, pk, pk_2):
         for k in range(len(veiculos)):
             ids_veiculos.append(veiculos[k].id)
 
+        ids_motorista = []
+        for k in range(len(motoristas)):
+            ids_motorista.append(motoristas[k].id)
+
         return render(request, 'Forms/gerenciar_ordem.html',
                       {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
-                       'ordem': ordem, 'veiculos': veiculos, 'motoristas': motoristas, 'ids_veiculos': ids_veiculos})
+                       'ordem': ordem, 'veiculos': veiculos, 'motoristas': motoristas, 'ids_veiculos': ids_veiculos,
+                       'ids_motorista': ids_motorista})
 
     if request.method == 'POST':
         form = ConfirmOrdem(request.POST)
         if form.is_valid():
-            dados_form = form.data
-            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", dados_form)
-            print(dados_form['selectVeiculo' + str(pk_2)])
-            print(dados_form['selectMotorista' + str(pk_2)])
-            print(dados_form['data' + str(pk_2)])
-            print(dados_form['horaa' + str(pk_2)])
+            pass
+            # dados_form = form.data
+            # print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", dados_form)
+            # print(dados_form['selectVeiculo' + str(pk_2)])
+            # print(dados_form['selectMotorista' + str(pk_2)])
+            # print(dados_form['data' + str(pk_2)])
+            # print(dados_form['horaa' + str(pk_2)])
+            messages.success(request, 'Ordem confirmada como sucesso!')
 
-        return redirect('show_ordens', pk)
+            return redirect('show_ordens_detail', pk, pk_2)
 
 
 def recuse_ordem(request):
     pass
+
+
+def show_ordens_detail(request, pk, pk_2):
+    if request.method == 'GET':
+        ordem = Ordem.objects.get(id=pk_2)
+        instituicao = Instituicao.objects.get(id=pk)
+        return render(request, 'Forms/detail_ordem.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'ordem': ordem,'instituicao': instituicao })
+    return None
 
 
 def show_ordems_and_ini(request, pk):

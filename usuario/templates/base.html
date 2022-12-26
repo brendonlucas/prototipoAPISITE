@@ -91,40 +91,10 @@
 
                     </ul>
                 </li>
-                <li><a href="app-event-calender.html"><i class="ti-calendar"></i> Ordens </a></li>
-
+                <li><a href="{% url 'show_ordens' pk=instituicao.id %}"><i class="ti-calendar"></i> Ordens </a></li>
                 <li><a href="{% url 'inst_show' %}"> <i class="ti-email"></i> Instituição</a></li>
-
-                {% if instituicoes %}
-                <li>
-                    <a class="sidebar-sub-toggle"><i class="ti-email"></i> Criadas
-                        <span class="sidebar-collapse-icon ti-angle-down"></span>
-                    </a>
-                    <ul>
-                        {% for instituicao in instituicoes %}
-                        <li><a href="#"> {{instituicao.instituicao.nome}} </a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% endif %}
-
-                {% if entradas %}
-                <li>
-                    <a class="sidebar-sub-toggle"><i class="ti-email"></i> Entrou
-                        <span class="sidebar-collapse-icon ti-angle-down"></span>
-                    </a>
-                    <ul>
-                        {% for instituicao in entradas %}
-                        <li><a href="#"> {{instituicao.instituicao.nome}} </a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% endif %}
-
-
-                <li><a href="{% url 'profile_user' %}"><i class="ti-user"></i> Profile</a></li>
+                <li><a href="{% url 'profile_user' pk=instituicao.id %}"><i class="ti-user"></i> Profile</a></li>
                 <li><a href="app-widget-card.html"><i class="ti-layout-grid2-alt"></i> Widget</a></li>
-
                 <li><a href="{% url 'logout' %}"> <i class="ti-close"> </i> Logout</a></li>
             </ul>
         </div>

@@ -10,29 +10,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
 <div id="accordion-2" role="tablist" aria-multiselectable="true" class="o-accordion">
     <div class="card multi">
@@ -78,6 +55,9 @@
             </div>
         </div>
     </div>
+
+<form method="POST" action="{% url 'ordem_confirm' pk=instituicao.id pk_2=ordem.id %}" >
+    {% csrf_token %}
     <div class="card multi">
         <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
              data-target="#collapseTwo-1" aria-expanded="false" aria-controls="collapseTwo-1" role="tab"
@@ -89,19 +69,15 @@
         <div id="collapseTwo-1" class="collapse" role="tabpanel" aria-labelledby="headingTwo-1">
             <div class="card-block">
                 <hr>
-                <form>
-                    <label> Selecione um veiculo: </label>
-                    <select id="select-state" placeholder="Escolha um Veiculo"
-                            onChange="toggleDiv({{ids_veiculos}})">
-                        <option value="">Select a state...</option>
-                        {% for veiculo in veiculos %}
-                        <option value="{{veiculo.id}}">{{ veiculo.name }}</option>
-                        {% endfor %}
-                    </select>
-                </form>
-
+                <label> Selecione um veiculo: </label>
+                <select id="select-state" placeholder="Escolha um Veiculo"
+                        onChange="toggleDiv({{ids_veiculos}})" required>
+                    <option value="">Select a state...</option>
+                    {% for veiculo in veiculos %}
+                    <option value="{{veiculo.id}}">{{ veiculo.name }}</option>
+                    {% endfor %}
+                </select>
                 {% for veiculo in veiculos %}
-
                 <div class="card" id="divDados{{ veiculo.id }}" style="display:none;">
                     <div class="row ">
                         <div class="col-md-4">
@@ -109,9 +85,22 @@
                         </div>
                         <div class="col-md-8 px-3">
                             <div class="card-block px-3">
-                                <h4 class="card-title">{{ veiculo.name }} </h4>
+                                <h3 class="card-title">{{ veiculo.name }} </h3>
                                 <hr>
-                                <p class="card-text" id="IdDescricao">Consectetur adipiscing elit, sed do eiusmod </p>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Placa: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">{{veiculo.placa}}</h6>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Tipo: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">{{veiculo.tipo.name}}</h6>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <h5 style="margin:0">Disponibilidade: </h5>
+                                    <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
+                                </div>
                                 <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
                                     mais</a>
                             </div>
@@ -122,8 +111,8 @@
             </div>
         </div>
     </div>
-</div>
-<div class="card multi">
+
+    <div class="card multi">
     <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
          data-target="#collapseThree-1" aria-expanded="false" aria-controls="collapseThree-1" role="tab"
          id="headingThree-1">
@@ -133,12 +122,54 @@
     </div>
     <div id="collapseThree-1" class="collapse" role="tabpanel" aria-labelledby="headingThree-1">
         <div class="card-block">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
-            moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-            Brunch 3 wolf moon tempor, sunt aliqua
+            <hr>
+            <label> Selecione um Motorista: </label>
+            <select id="select-states" placeholder="Escolha um motorista"
+                    onChange="toggleDivMotorista({{ids_motorista}})" required>
+                <option value="">Select a state...</option>
+                {% for motorista in motoristas %}
+                <option value="{{ motorista.id }}">{{ motorista.name }}</option>
+                {% endfor %}
+            </select>
+            {% for motorista in motoristas %}
+            <div class="card" id="divDadosMotoristas{{ motorista.id }}" style="display:none;">
+                <div class="row ">
+                    <div class="col-md-4">
+                        <img src="https://unsplash.it/400/300?image=503" class="w-100">
+                    </div>
+                    <div class="col-md-8 px-3">
+                        <div class="card-block px-3">
+                            <h3 class="card-title">{{ motorista.full_name }} </h3>
+                            <hr>
+                            <div class="d-flex align-items-center">
+                                <h5 style="margin:0">Contato: </h5>
+                                <h6 style="margin-bottom:-3px; margin-left:5px">{{ motorista.telefone }}</h6>
+                            </div>
+                            <hr>
+                            <div class="d-flex align-items-center">
+                                <h5 style="margin:0">-------: </h5>
+                                <h6 style="margin-bottom:-3px; margin-left:5px">--------</h6>
+                            </div>
+                            <hr>
+                            <div class="d-flex align-items-center">
+                                <h5 style="margin:0">Disponibilidade: </h5>
+                                <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
+                            </div>
+                            <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
+                                mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+    <button class="btn btn-primary" style="width:100%" type="submit"> Enviar </button>
+</form>
+    <br><br><br><br>
+</div>
+
 
 
 <script>
@@ -168,7 +199,31 @@ function toggleDiv(ids_veiculos) {
         document.getElementById(selectX).style.display="none";
     }
 }
+
+
 </script>
 
+
+<script type="text/javascript">
+function toggleDivMotorista(ids_motorista) {
+    var x = document.getElementById('select-states');
+    var selectX = 'divDadosMotoristas' + x.value;
+    if (document.getElementById('select-states').value >= 1) {
+        for (i = 0; i < ids_motorista.length; i++) {
+           document.getElementById('divDadosMotoristas'+ ids_motorista[i]).style.display="none";
+        }
+        document.getElementById(selectX).style.display="block";
+    }
+    else {
+        var i;
+        for (i = 0; i < ids_motorista.length; i++) {
+           document.getElementById('divDadosMotoristas'+ ids_motorista[i]).style.display="none";
+        }
+        document.getElementById(selectX).style.display="none";
+    }
+}
+
+
+</script>
 {% endblock %}
 
