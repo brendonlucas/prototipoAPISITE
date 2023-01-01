@@ -10,6 +10,8 @@
 }
 
 
+
+
 </style>
 <div id="accordion-2" role="tablist" aria-multiselectable="true" class="o-accordion">
     <div class="card multi">
@@ -55,121 +57,144 @@
             </div>
         </div>
     </div>
-
-<form method="POST" action="{% url 'ordem_confirm' pk=instituicao.id pk_2=ordem.id %}" >
-    {% csrf_token %}
-    <div class="card multi">
-        <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
-             data-target="#collapseTwo-1" aria-expanded="false" aria-controls="collapseTwo-1" role="tab"
-             id="headingTwo-1">
-            <h5 class="mb-0 d-flex">
-                <a class="p-2">Dados do Veiculo</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
-            </h5>
+    <form method="POST" action="{% url 'ordem_confirm' pk=instituicao.id pk_2=ordem.id %}">
+        {% csrf_token %}
+        <div class="card multi">
+            <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
+                 data-target="#collapseZero-1" aria-expanded="false" aria-controls="collapseZero-1" role="tab"
+                 id="headingZero-1">
+                <h5 class="mb-0 d-flex">
+                    <a class="p-2">Marcar Data</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
+                </h5>
+            </div>
+            <div id="collapseZero-1" class="collapse" role="tabpanel" aria-labelledby="headingZero-1">
+                <div class="card-block">
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Data</label>
+                            <input type="date" class="form-control" name="data" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Horario</label>
+                            <input type="time" class="form-control" name="hora" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="collapseTwo-1" class="collapse" role="tabpanel" aria-labelledby="headingTwo-1">
-            <div class="card-block">
-                <hr>
-                <label> Selecione um veiculo: </label>
-                <select id="select-state" placeholder="Escolha um Veiculo"
-                        onChange="toggleDiv({{ids_veiculos}})" required>
-                    <option value="">Select a state...</option>
+        <div class="card multi">
+            <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
+                 data-target="#collapseTwo-1" aria-expanded="false" aria-controls="collapseTwo-1" role="tab"
+                 id="headingTwo-1">
+                <h5 class="mb-0 d-flex">
+                    <a class="p-2">Dados do Veiculo</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
+                </h5>
+            </div>
+            <div id="collapseTwo-1" class="collapse" role="tabpanel" aria-labelledby="headingTwo-1">
+                <div class="card-block">
+                    <hr>
+                    <label> Selecione um veiculo: </label>
+                    <select id="select-state" placeholder="Escolha um Veiculo"
+                            onChange="toggleDiv({{ids_veiculos}})" required name="veiculo">
+                        <option value="">Select a state...</option>
+                        {% for veiculo in veiculos %}
+                        <option value="{{veiculo.id}}">{{ veiculo.name }}</option>
+                        {% endfor %}
+                    </select>
                     {% for veiculo in veiculos %}
-                    <option value="{{veiculo.id}}">{{ veiculo.name }}</option>
+                    <div class="card" id="divDados{{ veiculo.id }}" style="display:none;">
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <img src="https://unsplash.it/400/300?image=503" class="w-100">
+                            </div>
+                            <div class="col-md-8 px-3">
+                                <div class="card-block px-3">
+                                    <h3 class="card-title">{{ veiculo.name }} </h3>
+                                    <hr>
+                                    <div class="d-flex align-items-center">
+                                        <h5 style="margin:0">Placa: </h5>
+                                        <h6 style="margin-bottom:-3px; margin-left:5px">{{veiculo.placa}}</h6>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex align-items-center">
+                                        <h5 style="margin:0">Tipo: </h5>
+                                        <h6 style="margin-bottom:-3px; margin-left:5px">{{veiculo.tipo.name}}</h6>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex align-items-center">
+                                        <h5 style="margin:0">Disponibilidade: </h5>
+                                        <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
+                                    </div>
+                                    <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
+                                        mais</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </select>
-                {% for veiculo in veiculos %}
-                <div class="card" id="divDados{{ veiculo.id }}" style="display:none;">
-                    <div class="row ">
-                        <div class="col-md-4">
-                            <img src="https://unsplash.it/400/300?image=503" class="w-100">
-                        </div>
-                        <div class="col-md-8 px-3">
-                            <div class="card-block px-3">
-                                <h3 class="card-title">{{ veiculo.name }} </h3>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <h5 style="margin:0">Placa: </h5>
-                                    <h6 style="margin-bottom:-3px; margin-left:5px">{{veiculo.placa}}</h6>
-                                </div>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <h5 style="margin:0">Tipo: </h5>
-                                    <h6 style="margin-bottom:-3px; margin-left:5px">{{veiculo.tipo.name}}</h6>
-                                </div>
-                                <hr>
-                                <div class="d-flex align-items-center">
-                                    <h5 style="margin:0">Disponibilidade: </h5>
-                                    <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
-                                </div>
-                                <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
-                                    mais</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                {% endfor %}
             </div>
         </div>
-    </div>
 
-    <div class="card multi">
-    <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
-         data-target="#collapseThree-1" aria-expanded="false" aria-controls="collapseThree-1" role="tab"
-         id="headingThree-1">
-        <h5 class="mb-0 d-flex">
-            <a class="p-2"> Dados do Motorista</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
-        </h5>
-    </div>
-    <div id="collapseThree-1" class="collapse" role="tabpanel" aria-labelledby="headingThree-1">
-        <div class="card-block">
-            <hr>
-            <label> Selecione um Motorista: </label>
-            <select id="select-states" placeholder="Escolha um motorista"
-                    onChange="toggleDivMotorista({{ids_motorista}})" required>
-                <option value="">Select a state...</option>
-                {% for motorista in motoristas %}
-                <option value="{{ motorista.id }}">{{ motorista.name }}</option>
-                {% endfor %}
-            </select>
-            {% for motorista in motoristas %}
-            <div class="card" id="divDadosMotoristas{{ motorista.id }}" style="display:none;">
-                <div class="row ">
-                    <div class="col-md-4">
-                        <img src="https://unsplash.it/400/300?image=503" class="w-100">
-                    </div>
-                    <div class="col-md-8 px-3">
-                        <div class="card-block px-3">
-                            <h3 class="card-title">{{ motorista.full_name }} </h3>
-                            <hr>
-                            <div class="d-flex align-items-center">
-                                <h5 style="margin:0">Contato: </h5>
-                                <h6 style="margin-bottom:-3px; margin-left:5px">{{ motorista.telefone }}</h6>
+
+        <div class="card multi">
+            <div class="card-header panel-heading collapsed" data-toggle="collapse" data-parent="#accordion"
+                 data-target="#collapseThree-1" aria-expanded="false" aria-controls="collapseThree-1" role="tab"
+                 id="headingThree-1">
+                <h5 class="mb-0 d-flex">
+                    <a class="p-2"> Dados do Motorista</a> <i class="chevron fa fa-fw ml-auto p-2"></i>
+                </h5>
+            </div>
+            <div id="collapseThree-1" class="collapse" role="tabpanel" aria-labelledby="headingThree-1">
+                <div class="card-block">
+                    <hr>
+                    <label> Selecione um Motorista: </label>
+                    <select id="select-states" placeholder="Escolha um motorista"
+                            onChange="toggleDivMotorista({{ids_motorista}})" required name="motorista">
+                        <option value="">Select a state...</option>
+                        {% for motorista in motoristas %}
+                        <option value="{{ motorista.id }}">{{ motorista.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% for motorista in motoristas %}
+                    <div class="card" id="divDadosMotoristas{{ motorista.id }}" style="display:none;">
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <img src="https://unsplash.it/400/300?image=503" class="w-100">
                             </div>
-                            <hr>
-                            <div class="d-flex align-items-center">
-                                <h5 style="margin:0">-------: </h5>
-                                <h6 style="margin-bottom:-3px; margin-left:5px">--------</h6>
+                            <div class="col-md-8 px-3">
+                                <div class="card-block px-3">
+                                    <h3 class="card-title">{{ motorista.full_name }} </h3>
+                                    <hr>
+                                    <div class="d-flex align-items-center">
+                                        <h5 style="margin:0">Contato: </h5>
+                                        <h6 style="margin-bottom:-3px; margin-left:5px">{{ motorista.telefone }}</h6>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex align-items-center">
+                                        <h5 style="margin:0">-------: </h5>
+                                        <h6 style="margin-bottom:-3px; margin-left:5px">--------</h6>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex align-items-center">
+                                        <h5 style="margin:0">Disponibilidade: </h5>
+                                        <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
+                                    </div>
+                                    <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
+                                        mais</a>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="d-flex align-items-center">
-                                <h5 style="margin:0">Disponibilidade: </h5>
-                                <h6 style="margin-bottom:-3px; margin-left:5px">Disponivel</h6>
-                            </div>
-                            <a href="#" class="btn btn-primary" style="position: absolute; bottom:0; right: 0;">Ver
-                                mais</a>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
-            {% endfor %}
         </div>
-    </div>
-</div>
-    <button class="btn btn-primary" style="width:100%" type="submit"> Enviar </button>
-</form>
+        <button class="btn btn-primary" style="width:100%" type="submit"> Enviar</button>
+    </form>
     <br><br><br><br>
 </div>
-
 
 
 <script>
@@ -178,6 +203,8 @@
           sortField: 'text'
       });
   });
+
+
 </script>
 
 
@@ -201,6 +228,8 @@ function toggleDiv(ids_veiculos) {
 }
 
 
+
+
 </script>
 
 
@@ -222,6 +251,8 @@ function toggleDivMotorista(ids_motorista) {
         document.getElementById(selectX).style.display="none";
     }
 }
+
+
 
 
 </script>

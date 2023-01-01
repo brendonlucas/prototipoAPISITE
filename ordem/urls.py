@@ -7,15 +7,19 @@ from ordem import views
 
 
 urlpatterns = [
-    path('<pk>/ordens', views.show_ordems, name='show_ordens'),
+    path('<pk>/ordens/', views.show_ordems, name='show_ordens'),
     path('<pk>/ordens_and_ini', views.show_ordems_and_ini, name='show_ordens_and_ini'),
     path('<pk>/ordens_and_cur', views.show_ordems_and_cur, name='show_ordens_and_cur'),
     path('<pk>/ordens_final', views.show_ordems_final, name='show_ordens_final'),
     path('<pk>/ordem_detail/<pk_2>', views.show_ordens_detail, name='show_ordens_detail'),
 
     path('<pk>/create_orden/', views.create_ordem, name='add_orden'),
+
     path('<pk>/confirm_ordem/<pk_2>/', views.confirm_ordem, name='ordem_confirm'),
+    path('<pk>/confirm_ordem_2/<pk_2>/', views.confirm_omi, name='ordem_confirm_2'),
+    path('<pk>/confirm_ordem_3/<pk_2>/', views.confirm_OMF, name='ordem_confirm_3'),
+
+    path('<pk>/ordens_motorista', views.show_ordens_motorista, name='ordens_motorista'),
+
 
 ]
-
-# courses/<slug:param1>/<slug:param2>

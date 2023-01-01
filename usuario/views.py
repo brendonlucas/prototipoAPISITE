@@ -28,37 +28,7 @@ def show_home_page(request):
 
 # @login_required
 def pag_home(request):
-    # criar_base_dados()
-
     return render(request, 'base.html', {'user': get_user_logged(request)})
-
-
-def login_pag(request):
-    return render(request, 'login.html')
-
-
-def home(request):
-    return render(request, 'index.html')
-
-
-def add_user(request):
-    pass
-
-
-def show_users(request):
-    pass
-
-
-def show_user(request):
-    pass
-
-
-def chang_pass(request):
-    pass
-
-
-def help(request):
-    pass
 
 
 def create_account(request):
@@ -151,14 +121,26 @@ def my_profile(request, pk):
 
 
 def handler404(request, exception):
-    response = render("page_404.html")
+    response = render(request, "pages_extra/page_404.html")
     response.status_code = 404
     return response
 
 
 def handler500(request, *args, **argv):
-    response = render("page_404.html")
+    instituicao = Instituicao.objects.get(id=9)
+    messages.error(request, "não encontrado")
+    response = render(request, 'pages_extra/data_not_found.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao})
     response.status_code = 500
+    return response
+
+
+def handler401(request, *args, **argv):
+    instituicao = Instituicao.objects.get(id=9)
+    messages.error(request, "não encontrado")
+    response = render(request, 'pages_extra/data_not_found.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao})
+    response.status_code = 401
     return response
 
 
@@ -251,6 +233,7 @@ def criar_base_dados(request):
     veiculo6 = Veiculo(name="Limosine preta e azul", qtd_pessoas=5, placa="plg159", tipo=TipoVeiculo.objects.get(id=3),
                        instituicao=Instituicao.objects.get(id=2)).save()
 
+
 # def criar_base_dados():
 #     tu1 = TipoUsuario(nome="Criado", descricao="pode tudo").save()
 #     tu2 = TipoUsuario(nome="Chefe", descricao="Controla as ordens").save()
@@ -319,3 +302,14 @@ def criar_base_dados(request):
 #                        instituicao=Instituicao.objects.get(id=2)).save()
 #     veiculo6 = Veiculo(name="Limosine preta e azul", qtd_pessoas=5, placa="plg159", tipo=TipoVeiculo.objects.get(id=3),
 #                        instituicao=Instituicao.objects.get(id=2)).save()
+
+
+def error_data(request):
+    instituicao = Instituicao.objects.get(id=9)
+    messages.error(request, "não encontrado")
+    render(request, 'pages_extra/data_not_found.html',
+           {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao})
+
+
+def error404(request):
+    return render(request, 'pages_extra/page_404.html')

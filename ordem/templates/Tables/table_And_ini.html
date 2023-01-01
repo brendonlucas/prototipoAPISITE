@@ -1,0 +1,103 @@
+{% load static %}
+
+<table id="myTable{{tipo}}" class="table table-hover ">
+    <thead>
+    <tr>
+        <th>Solicitante</th>
+        <th>Data pedido</th>
+        <th>Data marcada</th>
+        <th>status</th>
+        <th class="disable"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ordem in ordens %}
+    <tr>
+        <td>{{ ordem.solicitante.full_name }}</td>
+        <td>{{ ordem.data_solicitacao | date:"d/m/Y" }}</td>
+        <td>{{ ordem.data_marcada | date:"d/m/Y" }}</td>
+        <td><span class="badge badge-danger">Em Espera</span></td>
+
+        <td class="color-primary">
+            <button class="btn btn-md btn-primary" data-target="#MOdalDetail3{{ordem.id}}" data-toggle="modal">
+                Detalhes
+            </button>
+        </td>
+
+        <div class="modal fade" data-backdrop="static" id="MOdalDetail3{{ordem.id}}"
+             tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="tab-content">
+                            <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#tabDetail{{ordem.id}}"
+                                       role="tab">
+                                        <span class="hidden-sm-up"><i class="ti-home"></i></span>
+                                        <span class="hidden-xs-down">Detalhes</span></a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-pane active" id="tabDetail{{ordem.id}}" role="tabpanel">
+                                <div class="p-10">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <h5 style="margin:0">Solicitante: </h5>
+                                            <h6 style="margin-bottom:-3px; margin-left:5px">
+                                                {{ordem.solicitante.full_name}}</h6>
+                                        </li>
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <h5 style="margin:0">Data da Solicitação: </h5>
+                                            <h6 style="margin-bottom:-3px; margin-left:5px">
+                                                {{ordem.data_solicitacao | date:"d/m/Y"}}</h6>
+                                        </li>
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <h5 style="margin:0">Origem: </h5>
+                                            <h6 style="margin-bottom:-3px; margin-left:5px">{{ ordem.origem }}</h6>
+                                        </li>
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <h5 style="margin:0">Destino: </h5>
+                                            <h6 style="margin-bottom:-3px; margin-left:5px">{{ ordem.destino }}</h6>
+                                        </li>
+                                        <li class="list-group-item d-flex align-items-center" style="padding-right:0px">
+                                            <h5 style="margin:0">Descrição: </h5>
+                                            <textarea disabled
+                                                      style="margin: 0; margin-left:5px; padding:0px; width:100%;
+                                                      border:none; min-height:80px">{{ordem.descricao}}</textarea>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <a class="btn btn-success" type="button"
+                           href="{% url 'ordem_confirm_2' pk=instituicao.id pk_2=ordem.id %}"> Gerenciar </a>
+                        <a class="btn btn-warning" type="button"
+                           href="{% url 'show_ordens_detail' pk=instituicao.id pk_2=ordem.id %}"> Detalhes </a>
+                        <button type="button" class="btn btn-secondary ml-auto p-2" data-dismiss="modal">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+	$(document).ready(function(){
+		$('#myTable{{tipo}}').dataTable({
+		"language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            }
+		});
+	});
+
+</script>
+

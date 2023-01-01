@@ -15,12 +15,14 @@ cursor: hand;
 </style>
 <div class="card">
     <ul class="nav nav-tabs customtab2 nav-justified">
+        {% if usuario.cargo.id != 4 %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'show_ordens' instituicao.id %}">
                 <span class="hidden-sm-up"><i class="ti-pencil-alt"></i></span>
                 <span class="hidden-xs-down">Aguardando</span>
             </a>
         </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link active" href="{% url 'show_ordens_and_ini' instituicao.id %}">
                 <span class="hidden-sm-up"> <i class="ti-truck"></i> </span>
@@ -51,7 +53,7 @@ cursor: hand;
     </ul>
 </div>
     <div class="">
-        {% include 'table_ordens.html' with ordens=andamento_inicio tipo=2 %}
+        {% include 'Tables/table_And_ini.html' with ordens=andamento_inicio tipo=2 %}
     </div>
 </div>
 

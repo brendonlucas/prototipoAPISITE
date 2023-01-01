@@ -5,20 +5,28 @@
     <div class="card-toggle-body">
         <p class="text-muted m-b-15">Descrição da instituição </p>
         <div class="button-list">
-
+            {% if usuario.cargo.id == 2 or usuario.cargo.id == 1 %}
             <button type="button" class="btn btn-primary btn-flat btn-addon m-b-10 m-l-5"
                     data-toggle="modal" data-target="#ModalFuncE{{ instituicao.id }}">
                 <i class="ti-user"></i>Funcionarios
             </button>
-
+            {% endif %}
             <button type="button" class="btn btn-success btn-flat btn-addon m-b-10 m-l-5" data-toggle="modal"
                     data-target="#ModalVeiculoE{{ instituicao.id }}"><i class="ti-car"></i>Veiculos
             </button>
-
+            {% if usuario.cargo.id != 4 %}
             <button type="button" style="color:white" class="btn btn-default btn-flat btn-addon m-b-10 m-l-5"
                     data-toggle="modal" data-target="#ModalOrdenE{{ instituicao.id }}"><i
                     class="ti-clipboard"></i>Ordens
             </button>
+            {% endif %}
+            {% if usuario.cargo.id == 4 %}
+            <a type="button" style="color:white" class="btn btn-warning btn-flat btn-addon m-b-10 m-l-5"
+               href="{% url 'show_ordens_and_ini' pk=instituicao.id %}">
+                <i class="ti-clipboard"></i>Ordens
+            </a>
+            {% endif %}
+
 
             <button type="button" class="btn btn-info btn-flat btn-addon m-b-10 m-l-5" data-toggle="modal"
                     data-target="#ModalInfoE{{ instituicao.id }}"><i class="ti-info-alt"></i>Info

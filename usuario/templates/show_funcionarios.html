@@ -23,8 +23,8 @@
         <form method="post" action="#" class="input-group" style="max-width: 300px; margin-left:auto; float:right ">
             {% csrf_token %}
             <input type="search" class="form-control rounded" placeholder="Buscar" aria-label="Search"
-                   aria-describedby="search-addon" required>
-            <button type="submit" class="btn btn-primary"><i class="ti-search"></i></button>
+                   aria-describedby="search-addon" id="myFilter" onkeyup="myFunction()">
+            <button type="submit" class="btn btn-primary" disabled><i class="ti-search"></i></button>
         </form>
     </div>
 </div>
@@ -42,9 +42,9 @@
     <div class="tab-content">
         <div class="tab-pane active" id="home7" role="tabpanel">
             <div class="p-20">
-                <div class="recent-comment">
+                <div class="recent-comment" id="myProducts">
                     {% for funcionario in funcionarios %}
-                    <div class="media">
+                    <div class="media" >
                         <div class="media-left">
                             <a href="#ModalInfo{{ funcionario.id }}" data-toggle="modal">
                                 <img class="media-object" src="{% static 'images/avatar/2.jpg'%}" alt="...">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{ funcionario.name }}</h4>
+                            <h4 class="card-title">{{ funcionario.name }}</h4>
                             <p>{{ funcionario.cargo.nome }}</p>
                             <div class="comment-action">
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
@@ -160,6 +160,28 @@
         </script>
         {% endfor %}
         {% endif %}
+
+
+<script>
+
+ function myFunction() {
+  var input, filter, cards, cardContainer, title, i;
+  input = document.getElementById("myFilter");
+  filter = input.value.toUpperCase();
+  cardContainer = document.getElementById("myProducts");
+  cards = cardContainer.getElementsByClassName("media");
+  for (i = 0; i < cards.length; i++) {
+    title = cards[i].querySelector(".card-title");
+    if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+      cards[i].style.display = "";
+    } else {
+      cards[i].style.display = "none";
+    }
+  }
+}
+
+</script>
+
 {% endblock %}
 
 

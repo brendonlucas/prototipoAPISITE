@@ -21,40 +21,11 @@ def get_user(request):
 
 
 def show_ordems(request, pk):
-    # tu1 = StatusOrdem(nome="Concluido", descricao="Ordem Finalizada").save()
-    # tu2 = StatusOrdem(nome="Em Andamento", descricao="Em execução de serviço").save()
-    # tu3 = StatusOrdem(nome="Aguardando", descricao="Aguarde").save()
-    #
-    # o1 = Ordem(solicitante=Usuario.objects.get(id=1), descricao='viajem para umas pessoas ai', qtd_espaco=4,
-    #            data_solicitacao=date.today(), origem='Barru duro', destino='jacare do mulato',
-    #            instituicao=Instituicao.objects.get(id=1), motorista=Usuario.objects.get(id=3),
-    #            status=StatusOrdem.objects.get(id=3), veiculo=Veiculo.objects.get(id=1)).save()
-    #
-    # o2 = Ordem(solicitante=Usuario.objects.get(id=1), descricao='viajem para umas pessoas ai', qtd_espaco=5,
-    #            data_solicitacao=date.today(), origem='Limoeiro', destino='louvradouro',
-    #            instituicao=Instituicao.objects.get(id=1), motorista=Usuario.objects.get(id=3),
-    #            status=StatusOrdem.objects.get(id=3), veiculo=Veiculo.objects.get(id=3)).save()
-    #
-    # o3 = Ordem(solicitante=Usuario.objects.get(id=2), descricao='viajem para umas pessoas ai', qtd_espaco=3,
-    #            data_solicitacao=date.today(), origem='Jarro batidpo', destino='Lomperina',
-    #            instituicao=Instituicao.objects.get(id=2), motorista=Usuario.objects.get(id=5),
-    #            status=StatusOrdem.objects.get(id=2), veiculo=Veiculo.objects.get(id=5)).save()
-    #
-    # o4 = Ordem(solicitante=Usuario.objects.get(id=2), descricao='viajem para umas pessoas ai', qtd_espaco=2,
-    #            data_solicitacao=date.today(), origem='lambori', destino='Janaiscabar',
-    #            instituicao=Instituicao.objects.get(id=2), status=StatusOrdem.objects.get(id=3)).save()
-    #
-
-    ordens = Ordem.objects.filter(instituicao=pk)
     instituicao = Instituicao.objects.get(id=pk)
-
-    veiculos = Veiculo.objects.filter(instituicao_id=pk)
-
     aguardando = Ordem.objects.filter(instituicao=pk, status=3)
 
     return render(request, 'show_ordens.html',
-                  {'user': get_user_logged(request), 'usuario': get_user(request), 'ordens': ordens,
-                   'veiculos': veiculos, 'aguardando': aguardando,
+                  {'user': get_user_logged(request), 'usuario': get_user(request), 'aguardando': aguardando,
                    'instituicao': instituicao})
 
 
@@ -79,12 +50,10 @@ def create_ordem(request, pk):
                 carga = 0
 
             a = Ordem(solicitante=get_user(request), descricao=dados_form['descricao'],
+                      data_solicitacao=datetime.date.today(), horario_requirido=dados_form['horaD'],
                       qtd_espaco=carga, data_solicitado=dados_form['dataD'],
-                      origem=dados_form['destino'], destino=dados_form['destino'],
+                      origem=dados_form['saida'], destino=dados_form['destino'],
                       instituicao=instituicao, status=StatusOrdem.objects.get(id=3))
-
-            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ")
-            print(a.solicitante.name, a.descricao, a.qtd_espaco, )
             a.save()
             messages.success(request, 'Criado com sucesso!')
         return redirect('inst_show')
@@ -121,13 +90,19 @@ def confirm_ordem(request, pk, pk_2):
     if request.method == 'POST':
         form = ConfirmOrdem(request.POST)
         if form.is_valid():
-            pass
-            # dados_form = form.data
-            # print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", dados_form)
-            # print(dados_form['selectVeiculo' + str(pk_2)])
-            # print(dados_form['selectMotorista' + str(pk_2)])
-            # print(dados_form['data' + str(pk_2)])
-            # print(dados_form['horaa' + str(pk_2)])
+            ordem = Ordem.objects.get(id=pk_2)
+            dados_form = form.data
+            ordem.veiculo = Veiculo.objects.get(id=dados_form['veiculo'])
+            ordem.motorista = Usuario.objects.get(id=dados_form['motorista'])
+            ordem.data_marcada = dados_form['data']
+            ordem.horario_marcado = dados_form['hora']
+            ordem.status = StatusOrdem.objects.get(id=2)
+            ordem.save()
+
+            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", )
+            print(dados_form['veiculo'], dados_form['motorista'], dados_form['data'], dados_form['hora'])
+            print("-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", )
+
             messages.success(request, 'Ordem confirmada como sucesso!')
 
             return redirect('show_ordens_detail', pk, pk_2)
@@ -142,13 +117,17 @@ def show_ordens_detail(request, pk, pk_2):
         ordem = Ordem.objects.get(id=pk_2)
         instituicao = Instituicao.objects.get(id=pk)
         return render(request, 'Forms/detail_ordem.html',
-                      {'user': get_user_logged(request), 'usuario': get_user(request), 'ordem': ordem,'instituicao': instituicao })
-    return None
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'ordem': ordem,
+                       'instituicao': instituicao})
 
 
 def show_ordems_and_ini(request, pk):
     instituicao = Instituicao.objects.get(id=pk)
-    andamento_inicio = Ordem.objects.filter(instituicao=pk, status=2)
+    if get_user(request).cargo.id == 4:
+        andamento_inicio = Ordem.objects.filter(instituicao=pk, status=2, motorista=get_user(request).id)
+    else:
+        andamento_inicio = Ordem.objects.filter(instituicao=pk, status=2)
+
     return render(request, 'table_ordens_And_Ini.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
                    'andamento_inicio': andamento_inicio, })
@@ -156,7 +135,10 @@ def show_ordems_and_ini(request, pk):
 
 def show_ordems_and_cur(request, pk):
     instituicao = Instituicao.objects.get(id=pk)
-    andamento_executando = Ordem.objects.filter(instituicao=pk, status=4)
+    if get_user(request).cargo.id == 4:
+        andamento_executando = Ordem.objects.filter(instituicao=pk, status=4, motorista=get_user(request).id)
+    else:
+        andamento_executando = Ordem.objects.filter(instituicao=pk, status=4)
     return render(request, 'table_ordens_And_Cur.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
                    'andamento_executando': andamento_executando, })
@@ -164,7 +146,60 @@ def show_ordems_and_cur(request, pk):
 
 def show_ordems_final(request, pk):
     instituicao = Instituicao.objects.get(id=pk)
-    finalizados = Ordem.objects.filter(instituicao=pk, status=1)
+    if get_user(request).cargo.id == 4:
+        finalizados = Ordem.objects.filter(instituicao=pk, status=1, motorista=get_user(request).id)
+    else:
+        finalizados = Ordem.objects.filter(instituicao=pk, status=1)
     return render(request, 'table_ordens_finalizados.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
                    'ord_finalizdos': finalizados, })
+
+
+def confirm_omi(request, pk, pk_2):
+    if request.method == 'GET':
+        ordem = Ordem.objects.get(id=pk_2)
+        instituicao = Instituicao.objects.get(id=pk)
+        return render(request, 'Forms/Form_And_Ini.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
+                       'ordem': ordem, })
+
+    if request.method == 'POST':
+        ordem = Ordem.objects.get(id=pk_2)
+        if ordem.status.id == 2:
+            ordem.status = StatusOrdem.objects.get(id=4)
+            ordem.save()
+            return redirect('show_ordens_and_cur', pk)
+        else:
+            # pagina erro
+            pass
+
+
+def confirm_OMF(request, pk, pk_2):
+    if request.method == 'GET':
+        ordem = Ordem.objects.get(id=pk_2)
+        instituicao = Instituicao.objects.get(id=pk)
+        return render(request, 'Forms/Form_And_Cur.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao,
+                       'ordem': ordem, })
+
+    if request.method == 'POST':
+        ordem = Ordem.objects.get(id=pk_2)
+        if ordem.status.id == 4:
+            ordem.status = StatusOrdem.objects.get(id=1)
+            ordem.save()
+            return redirect('show_ordens_final', pk)
+        else:
+            # pagina erro
+            pass
+
+
+def show_ordens_motorista(request, pk):
+    try:
+        ordens = Ordem.objects.filter(instituicao=pk)
+    except Instituicao.DoesNotExist:
+        ordens = None
+
+    instituicao = Instituicao.objects.get(id=pk)
+    return render(request, 'Forms/detail_ordem.html',
+                  {'user': get_user_logged(request), 'usuario': get_user(request), 'ordem': ordens,
+                   'instituicao': instituicao})
