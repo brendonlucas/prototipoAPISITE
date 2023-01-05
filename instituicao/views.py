@@ -18,7 +18,6 @@ def get_user(request):
 
 def show_instituicao(request):
     # inst = Instituicao.objects.all().filter(funcionarios = get_user(request).id)
-
     try:
         inst = Instituicao.objects.get(funcionarios=get_user(request).id)
     except Instituicao.DoesNotExist:
@@ -44,7 +43,7 @@ def create_instituicao(request):
             print(dados_form['NameInst'], "-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", codigo_inst)
 
             Instituicao(nome=dados_form['NameInst'], codigo=codigo_inst).save()
-            inst = Instituicao.objects.get(codigo = codigo_inst)
+            inst = Instituicao.objects.get(codigo=codigo_inst)
             inst.funcionarios.add(get_user(request))
 
 

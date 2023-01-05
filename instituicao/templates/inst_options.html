@@ -31,8 +31,12 @@
         <div class="tab-pane active" id="home7" role="tabpanel">
             <div class="p-20">
                 <!-- Instituições criadas-->
-                {% include 'card_instituicao.html' with instituicao=instituicao %}
-                {% if usuario.cargo == 1 %}
+                {% if instituicao %}
+                    {% include 'card_instituicao.html' with instituicao=instituicao %}
+                {% endif %}
+
+
+                {% if usuario.cargo.id == 1 %}
                 <div><i class="bi bi-plus-circle"></i>
                     <button type="button" class="btn btn-success btn-square btn-lg" style="width: 100%"
                             data-toggle="modal" data-target="#MOdalAdicionarinsituicao">

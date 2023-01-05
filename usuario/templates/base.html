@@ -30,17 +30,11 @@
     <link href="{% static 'css/lib/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/helper.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/toastr/toastr.min.css' %}" rel="stylesheet">
-
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
     <link rel="stylesheet" href="{% static 'steps/bs-stepper.min.css' %}">
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
     <link rel="stylesheet" href="{% static 'DataTable/datatables.min.css' %}">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"/>
+<!--    Sujeito a remover-->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 
@@ -48,7 +42,19 @@
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="{% static 'steps/bs-stepper.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'steps/main.js' %}"></script>
-
+<!---->
+<!--selectize-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+            integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+          integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous"/>
+<!---->
+<!--data table-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.13.1/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.13.1/datatables.min.js"></script>
+<!---->
 
 </head>
 
@@ -79,13 +85,21 @@
                     </ul>
                 </li>
                 {% if usuario.cargo.id != 4 %}
-                <li><a href="{% url 'show_ordens' pk=instituicao.id %}"><i class="ti-calendar"></i> Ordens </a></li>
+                {% if instituicao %}
+                    <li><a href="{% url 'show_ordens' pk=instituicao.id %}"><i class="ti-calendar"></i> Ordens </a></li>
+                {% else %}
+                    <li><a href="#"><i class="ti-calendar"></i> Ordens </a></li>
+                {% endif %}
+
                 {% endif %}
                 {% if usuario.cargo.id == 4 %}
-                <li><a href="{% url 'show_ordens_and_ini' pk=instituicao.id %}"><i class="ti-calendar"></i> Ordens </a></li>
+                <li><a href="{% url 'show_ordens_and_ini' pk=instituicao.id %}"><i class="ti-calendar"></i> Ordens </a>
+                </li>
                 {% endif %}
                 <li><a href="{% url 'inst_show' %}"> <i class="ti-email"></i> Instituição</a></li>
-                <li><a href="{% url 'profile_user' pk=instituicao.id %}"><i class="ti-user"></i> Profile</a></li>
+
+                <li><a href="{% url 'profile_user' %}"><i class="ti-user"></i> Profile</a></li>
+
                 <li><a href="app-widget-card.html"><i class="ti-layout-grid2-alt"></i> Widget</a></li>
                 <li><a href="{% url 'logout' %}"> <i class="ti-close"> </i> Logout</a></li>
             </ul>

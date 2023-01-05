@@ -2,8 +2,13 @@ import datetime
 from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from instituicao.InstituicaoSerializer import InstituicaoSerializer
 from instituicao.models import Instituicao, CargosInstituicao
+from ordem.OrdemSerializer import OrdemSerializer, CreateOrdemSerializer
 from ordem.forms import CreateOrdem, ConfirmOrdem
 from ordem.models import Ordem, StatusOrdem
 from usuario.models import Usuario
@@ -203,3 +208,56 @@ def show_ordens_motorista(request, pk):
     return render(request, 'Forms/detail_ordem.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'ordem': ordens,
                    'instituicao': instituicao})
+
+
+# APIIIIIIIIIIIIIIIIIIIIIII
+class APIGetAllOrdem(APIView):
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            instituicao = Instituicao.objects.get(id=pk)
+        except Instituicao.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
+
+        ordens = Ordem.objects.filter(instituicao=pk)
+        serializer_context = {
+            'request': request,
+        }
+        file_serializer = OrdemSerializer(ordens, many=True, context=serializer_context)
+
+        return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+
+class APIGetOrdem(APIView):
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            ordem = Ordem.objects.get(id=pk)
+        except Ordem.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_ORDEM"}, status=status.HTTP_404_NOT_FOUND)
+        serializer_context = {
+            'request': request,
+        }
+        file_serializer = OrdemSerializer(ordem, context=serializer_context)
+        return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+
+class APICreateOrdem(APIView):
+    def post(self, request, pk, *args, **kwargs):
+        try:
+            instituicao = Instituicao.objects.get(id=pk)
+        except Instituicao.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = CreateOrdemSerializer(data=request.data)
+
+        if data.is_valid():
+
+            return Response(data.data, status=status.HTTP_201_CREATED)
+        else:
+
+            return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, *args, **kwargs):
+        pass
+
+    def delete(self, request, pk, *args, **kwargs):
+        pass

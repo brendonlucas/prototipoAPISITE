@@ -3,11 +3,20 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+from rest_framework import status, generics
+from rest_framework.views import APIView
 
+from instituicao.InstituicaoSerializer import InstituicaoSerializer
 from instituicao.models import Instituicao, Cargo, CargosInstituicao
+from usuario.UsuarioSerializer import UsuarioSerializer, CreateUserSerializer
 from usuario.forms import RegistrarUsuarioForm, ChangeCargoForm, RegisterNewUserForm
 from usuario.models import TipoUsuario, Usuario
 from veiculo.models import Veiculo, TipoVeiculo
+
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
 
 
 def get_user_logged(request):
@@ -114,8 +123,11 @@ def change_cargo_user(request, pk):
         return redirect('show_funcionario', pk)
 
 
-def my_profile(request, pk):
-    instituicao = Instituicao.objects.get(id=pk)
+def my_profile(request):
+    instituicao = Instituicao.objects.filter(funcionarios__id=get_user(request).id).first()
+    if not instituicao:
+        instituicao = None
+
     return render(request, 'profile/profile.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': instituicao})
 
@@ -313,3 +325,87 @@ def error_data(request):
 
 def error404(request):
     return render(request, 'pages_extra/page_404.html')
+
+
+# APIIIIIIIIIIII
+
+class APICreateUser(APIView):
+    queryset = Usuario.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        data = CreateUserSerializer(data=request.data)
+        if data.is_valid():
+            # if not User.objects.filter(username=data['user']['username'].value).first():
+            # user = User.objects.create_user(username=data['user']['username'].value,
+            #                                 password=data['user']['password'].value,
+            #                                 email=data['user']['email'].value,
+            #                                 first_name=data['user']['first_name'].value,
+            #                                 last_name=data['user']['last_name'].value)
+            # funcionario = Usuario(nome=data['name'].value, telefone=data['telefone'].value, user=user)
+            # funcionario.save()
+            return Response(data.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response("HTTP_400_BAD_REQUEST", status=status.HTTP_400_BAD_REQUEST)
+
+
+class APIGetUserDetail(APIView):
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            user = Usuario.objects.get(id=pk)
+        except Usuario.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
+
+        file_serializer = UsuarioSerializer(user)
+        return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk, *args, **kwargs):
+        try:
+            user = Usuario.objects.get(id=pk)
+        except Usuario.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
+
+        file_serializer = UsuarioSerializer(user)
+        return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk, *args, **kwargs):
+        try:
+            user = Usuario.objects.get(id=pk)
+        except Usuario.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
+
+        # user.delete()
+        return Response({'erro': "HTTP_204_NO_CONTENT_USER_REMOVED"}, status=status.HTTP_204_NO_CONTENT)
+
+
+class APIGetAllFuncInst(APIView):
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            funcionarios = Instituicao.objects.get(id=pk).funcionarios.all()
+        except Instituicao.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_INSTITUICAO"}, status=status.HTTP_404_NOT_FOUND)
+
+        file_serializer = UsuarioSerializer(funcionarios, many=True)
+        return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        dados_funcionario = get_object_or_404(Usuario, user=user.id)
+        instituicao = Instituicao.objects.filter(funcionarios__id=Usuario.objects.get(user_id=user.id).id).first()
+        if instituicao:
+            # instituicao = get_object_or_404(Instituicao, funcionarios__id=Usuario.objects.get(user_id=user.id).id)
+            inst_serialize = InstituicaoSerializer(instituicao).data
+        else:
+            inst_serialize = None
+        usu = UsuarioSerializer(dados_funcionario)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'dados': usu.data,
+            'instituicao': inst_serialize
+        })

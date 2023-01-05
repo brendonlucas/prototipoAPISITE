@@ -2,10 +2,6 @@ from django.contrib import admin
 from django.urls import path, include
 from ordem import views
 
-
-
-
-
 urlpatterns = [
     path('<pk>/ordens/', views.show_ordems, name='show_ordens'),
     path('<pk>/ordens_and_ini', views.show_ordems_and_ini, name='show_ordens_and_ini'),
@@ -21,5 +17,9 @@ urlpatterns = [
 
     path('<pk>/ordens_motorista', views.show_ordens_motorista, name='ordens_motorista'),
 
+    # API
+    path('<pk>/API/APIGetAllOrdem/', views.APIGetAllOrdem.as_view(), name='API-Get-All-Ordem'),
+    path('<pk>/API/APIGetOrdemInstituicao/', views.APIGetOrdem.as_view(), name='API-Get-Ordem'),
+    path('<pk>/API/APICreateOrdem/', views.APICreateOrdem.as_view(), name='API-Create-Ordem'),
 
 ]
