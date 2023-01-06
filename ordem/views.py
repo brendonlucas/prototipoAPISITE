@@ -6,9 +6,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from instituicao.InstituicaoSerializer import InstituicaoSerializer
-from instituicao.models import Instituicao, CargosInstituicao
-from ordem.OrdemSerializer import OrdemSerializer, CreateOrdemSerializer
+from instituicao.models import *
+from ordem.OrdemSerializer import *
 from ordem.forms import CreateOrdem, ConfirmOrdem
 from ordem.models import Ordem, StatusOrdem
 from usuario.models import Usuario
@@ -246,18 +245,75 @@ class APICreateOrdem(APIView):
             instituicao = Instituicao.objects.get(id=pk)
         except Instituicao.DoesNotExist:
             return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
-
         data = CreateOrdemSerializer(data=request.data)
-
         if data.is_valid():
+            solicitante = Usuario.objects.get(id=data['solicitante'].value)
+
+            if data['qtd_espaco'].value > 0:  # 1 = pessoas / 2 = carga
+                carga = data['qtd_espaco'].value
+            else:
+                carga = 0
+
+            ordem = Ordem(solicitante=solicitante, descricao=data['descricao'].value, origem=data['origem'].value,
+                          destino=data['destino'].value, data_solicitacao=datetime.date.today(),
+                          horario_requirido=data['horario_requirido'].value, qtd_espaco=carga,
+                          data_solicitado=data['data_solicitado'].value, instituicao=instituicao,
+                          status=StatusOrdem.objects.get(id=3))
+            ordem.save()
 
             return Response(data.data, status=status.HTTP_201_CREATED)
         else:
-
             return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, *args, **kwargs):
         pass
 
     def delete(self, request, pk, *args, **kwargs):
-        pass
+        try:
+            ordem = Ordem.objects.get(id=pk)
+        except Ordem.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Ordem"}, status=status.HTTP_404_NOT_FOUND)
+
+        ordem.delete()
+        return Response({'erro': "HTTP_204_NO_CONTENT"}, status=status.HTTP_204_NO_CONTENT)
+
+
+class APIGConfirmOrdem(APIView):
+    def put(self, request, pk, *args, **kwargs):
+        try:
+            ordem = Ordem.objects.get(id=pk)
+        except Ordem.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Ordem"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = GConfirmOrdemSerializer(data=request.data)
+        if data.is_valid():
+            print(request.data)
+            return Response(data.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class APIGInicioOrdem(APIView):
+    def put(self, request, pk, *args, **kwargs):
+        try:
+            ordem = Ordem.objects.get(id=pk)
+        except Ordem.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
+        data = GInicioOrdemSerializer(data=request.data)
+        if data.is_valid():
+            return Response(data.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class APIGFinalizeOrdem(APIView):
+    def put(self, request, pk, *args, **kwargs):
+        try:
+            ordem = Ordem.objects.get(id=pk)
+        except Ordem.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
+        data = GFinalizeOrdemSerializer(data=request.data)
+        if data.is_valid():
+            return Response(data.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)

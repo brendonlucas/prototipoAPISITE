@@ -22,4 +22,8 @@ urlpatterns = [
     path('<pk>/API/APIGetOrdemInstituicao/', views.APIGetOrdem.as_view(), name='API-Get-Ordem'),
     path('<pk>/API/APICreateOrdem/', views.APICreateOrdem.as_view(), name='API-Create-Ordem'),
 
+    path('<pk>/API/APIGConfirmOrdem/', views.APIGConfirmOrdem.as_view(), name='API-G-Confirm-Ordem'),
+    path('<pk>/API/APIGInicioOrdem/', views.APIGInicioOrdem.as_view(), name='API-G-Inicio-Ordem'),
+    path('<pk>/API/APIGFinalizeOrdem/', views.APIGFinalizeOrdem.as_view(), name='API-G-Finalize-Ordem'),
+
 ]
