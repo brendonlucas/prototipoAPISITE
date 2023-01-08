@@ -37,8 +37,9 @@ def main():
     # data_put = {}
     # userC = requests.put('http://127.0.0.1:8000/19/API/APIGInicioOrdem/', json=data_put)
 
-    userC = requests.delete('http://127.0.0.1:8000/23/API/APICreateOrdem/')
-    print(userC.status_code)
+    data_user = {"username": "lovis", "password": "123456789"}
+    userC = requests.post('/API/APICreateIntituicao',json=data_user)
+    print(userC.text)
 
 
 if __name__ == '__main__':

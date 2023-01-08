@@ -71,7 +71,6 @@ class VeiculoLists(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ApiVeiculoList(APIView):
-    queryset = Veiculo.objects.all()
 
     def get(self, request, pk):
         try:

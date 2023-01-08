@@ -4,9 +4,12 @@ from instituicao.models import Instituicao
 
 
 class InstituicaoSerializer(serializers.ModelSerializer):
+    veiculos = serializers.HyperlinkedIdentityField(view_name="veiculo-list")
+    funcionario = serializers.HyperlinkedIdentityField(view_name="API-Get-All-Func-Inst")
+
     class Meta:
         model = Instituicao
-        fields = ('pk', 'nome', 'codigo')
+        fields = ('pk', 'nome', 'codigo', 'veiculos', 'funcionario')
 
 
 class InstituicaoDetailSerializer(serializers.ModelSerializer):

@@ -3,6 +3,11 @@ import random
 from django.shortcuts import render, redirect
 
 from django.contrib import messages
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from instituicao.InstituicaoSerializer import *
 from instituicao.forms import JoinRoomForm, CreateIntituicaoForm
 from instituicao.models import Instituicao, Cargo, CargosInstituicao
 from usuario.models import Usuario
@@ -46,6 +51,49 @@ def create_instituicao(request):
             inst = Instituicao.objects.get(codigo=codigo_inst)
             inst.funcionarios.add(get_user(request))
 
-
         messages.success(request, 'Criado com sucesso!')
         return redirect('inst_show')
+
+
+# APIIIIIIIIIIIIIIIIIIIII
+
+class APIGerentInstituicao(APIView):
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            instituicao = Instituicao.objects.get(id=pk)
+        except Instituicao.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
+        serializer_context = {
+            'request': request,
+        }
+        data_serializer = InstituicaoSerializer(instituicao, context=serializer_context)
+        return Response(data_serializer.data, status=status.HTTP_200_OK)
+
+
+class APIGInstituicao(APIView):
+
+    def post(self, request, *args, **kwargs):
+        data = CreateInstituicaoSerializer(data=request.data)
+        if data.is_valid():
+            while True:
+                codigo_inst = ''.join(
+                    random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(5))
+                tem_inst = Instituicao.objects.filter(codigo=codigo_inst).first()
+                if tem_inst is None:
+                    break
+
+            print(data['name'].value, "-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", codigo_inst)
+
+            # Instituicao(nome=data['name'].value, codigo=codigo_inst).save()
+            # inst = Instituicao.objects.get(codigo=codigo_inst)
+            # inst.funcionarios.add(get_user(request))
+
+            return Response(data.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs):
+        pass
+
+    def delete(self, request, *args, **kwargs):
+        pass
