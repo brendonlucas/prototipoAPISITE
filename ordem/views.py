@@ -226,6 +226,22 @@ class APIGetAllOrdem(APIView):
         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
 
+class APIGetOrdenVeiculo(APIView):
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            veiculo = Veiculo.objects.get(id=pk)
+        except Veiculo.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_veiculo"}, status=status.HTTP_404_NOT_FOUND)
+
+        ordens = Ordem.objects.filter(veiculo=pk)
+        serializer_context = {
+            'request': request,
+        }
+        file_serializer = OrdemSerializer(ordens, many=True, context=serializer_context)
+
+        return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+
 class APIGetOrdem(APIView):
     def get(self, request, pk, *args, **kwargs):
         try:

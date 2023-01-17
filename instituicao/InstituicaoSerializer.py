@@ -21,4 +21,4 @@ class InstituicaoDetailSerializer(serializers.ModelSerializer):
 class CreateInstituicaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instituicao
-        fields = ('pk', 'name',)
+        fields = ('nome',)

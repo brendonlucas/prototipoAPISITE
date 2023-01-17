@@ -38,8 +38,13 @@ def main():
     # userC = requests.put('http://127.0.0.1:8000/19/API/APIGInicioOrdem/', json=data_put)
 
     data_user = {"username": "lovis", "password": "123456789"}
-    userC = requests.post('/API/APICreateIntituicao',json=data_user)
-    print(userC.text)
+    userC = requests.post('http://127.0.0.1:8000/api-token-auth/', json=data_user)
+    token = userC.json()["token"]
+    print({"Authorization": "Token " + str(token)})
+    rec_veiculos = requests.get('http://127.0.0.1:8000/9/API/APIveiculos/', headers={"Authorization": "Token " + str(token)})
+    # rec_veiculos = requests.get('https://brendonlulucas.pythonanywhere.com/9/API/APIveiculos/', headers={"Authorization": "Token " + str(token)})
+    print(rec_veiculos.text)
+    # print(userC.text)
 
 
 if __name__ == '__main__':

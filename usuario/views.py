@@ -399,7 +399,7 @@ class CustomAuthToken(ObtainAuthToken):
         instituicao = Instituicao.objects.filter(funcionarios__id=Usuario.objects.get(user_id=user.id).id).first()
         if instituicao:
             # instituicao = get_object_or_404(Instituicao, funcionarios__id=Usuario.objects.get(user_id=user.id).id)
-            inst_serialize = InstituicaoSerializer(instituicao).data
+            inst_serialize = InstituicaoSerializer(instituicao,context={'request': request}).data
         else:
             inst_serialize = None
         usu = UsuarioSerializer(dados_funcionario)

@@ -82,7 +82,7 @@ class APIGInstituicao(APIView):
                 if tem_inst is None:
                     break
 
-            print(data['name'].value, "-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", codigo_inst)
+            print(data['nome'].value, "-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", codigo_inst)
 
             # Instituicao(nome=data['name'].value, codigo=codigo_inst).save()
             # inst = Instituicao.objects.get(codigo=codigo_inst)
@@ -90,6 +90,7 @@ class APIGInstituicao(APIView):
 
             return Response(data.data, status=status.HTTP_201_CREATED)
         else:
+            print(data.data)
             return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs):

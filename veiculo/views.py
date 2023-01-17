@@ -71,7 +71,7 @@ class VeiculoLists(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ApiVeiculoList(APIView):
-
+    permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, pk):
         try:
             Instituicao.objects.get(id=pk)
@@ -79,6 +79,7 @@ class ApiVeiculoList(APIView):
             return Response({'erro': "HTTP_404_NOT_FOUND_INSTITUICAO"}, status=status.HTTP_404_NOT_FOUND)
 
         veiculos = Veiculo.objects.filter(instituicao=pk)
+        print(request.data)
         file_serializer = VeiculoSerializer(veiculos, many=True)
         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
@@ -92,6 +93,25 @@ class ApiVeiculoDetail(APIView):
 
         file_serializer = VeiculoSerializer(veiculo)
         return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk, *args, **kwargs):
+        try:
+            veiculo = Veiculo.objects.get(id=pk)
+        except Veiculo.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
+
+        file_serializer = VeiculoSerializer(veiculo)
+        return Response(file_serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk, *args, **kwargs):
+        try:
+            veiculo = Veiculo.objects.get(id=pk)
+        except Veiculo.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
+
+        # veiculo.delete()
+        return Response({'erro': "HTTP_204_NO_CONTENT_USER_REMOVED"}, status=status.HTTP_204_NO_CONTENT)
+
 
 # class ApiVeiculoDetail(APIView):
 #     queryset = Veiculo.objects.all()
