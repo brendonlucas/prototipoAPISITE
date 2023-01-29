@@ -94,6 +94,7 @@ class ApiVeiculoList(APIView):
 
 
 class ApiVeiculoDetail(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, pk):
         try:
             veiculo = Veiculo.objects.get(id=pk)
@@ -125,6 +126,7 @@ class ApiVeiculoDetail(APIView):
 
 
 class APICreateVeiculo(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Veiculo.objects.all()
 
     def post(self, request, pk):

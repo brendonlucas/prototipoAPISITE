@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
 from rest_framework.views import APIView
 
 from instituicao.InstituicaoSerializer import InstituicaoSerializer
@@ -332,6 +332,7 @@ def error404(request):
 
 class APICreateUser(APIView):
     queryset = Usuario.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         data = CreateUserSerializer(data=request.data)
@@ -350,6 +351,8 @@ class APICreateUser(APIView):
 
 
 class APIGetUserDetail(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, pk, *args, **kwargs):
         try:
             user = Usuario.objects.get(id=pk)
@@ -405,6 +408,8 @@ class APIGetUserDetail(APIView):
 
 
 class APIGetAllFuncInst(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, pk, *args, **kwargs):
         try:
             funcionarios = Instituicao.objects.get(id=pk).funcionarios.all()

@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect
 
 from django.contrib import messages
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -58,6 +58,7 @@ def create_instituicao(request):
 # APIIIIIIIIIIIIIIIIIIIII
 
 class APIGerentInstituicao(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
     def get(self, request, pk, *args, **kwargs):
         try:
             instituicao = Instituicao.objects.get(id=pk)
@@ -71,7 +72,7 @@ class APIGerentInstituicao(APIView):
 
 
 class APIGInstituicao(APIView):
-
+    permission_classes = (permissions.IsAuthenticated,)
     def post(self, request, *args, **kwargs):
         data = CreateInstituicaoSerializer(data=request.data)
         if data.is_valid():
