@@ -18,6 +18,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
+import datetime
 
 def get_user_logged(request):
     return request.user
@@ -363,6 +364,32 @@ class APIGetUserDetail(APIView):
             user = Usuario.objects.get(id=pk)
         except Usuario.DoesNotExist:
             return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
+
+        key_dict = list(request.data.keys())[0]
+        if key_dict == "telefone":
+            try:
+                value_num = int(request.data[key_dict])
+            except ValueError:
+                return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
+
+            user.telefone = value_num
+            user.save()
+        elif key_dict == "name":
+            pass
+        elif key_dict == "username":
+            pass
+        elif key_dict == "password":
+            pass
+        elif key_dict == "foto":
+            x = datetime.datetime.now()
+            a = str(x)
+            name = ""
+            for letra in a:
+                if letra not in ('-', '.', ',', ':', ' '):
+                    name += letra
+            print(name)
+
+            print(request.data)
 
         file_serializer = UsuarioSerializer(user)
         return Response(file_serializer.data, status=status.HTTP_200_OK)

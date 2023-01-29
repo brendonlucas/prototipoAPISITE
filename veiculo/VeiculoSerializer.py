@@ -13,7 +13,7 @@ class VeiculoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Veiculo
-        fields = ('pk', 'name', 'placa', 'tipo')
+        fields = ('pk', 'name', 'placa', 'tipo', 'qtd_pessoas')
 
 
 class VeiculoDetailSerializer(serializers.ModelSerializer):
@@ -25,4 +25,4 @@ class VeiculoDetailSerializer(serializers.ModelSerializer):
 class CreateVeiculoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Veiculo
-        fields = ('pk', 'name',)
+        fields = ('name', 'placa', 'qtd_pessoas')

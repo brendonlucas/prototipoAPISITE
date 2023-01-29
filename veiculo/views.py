@@ -101,6 +101,8 @@ class ApiVeiculoDetail(APIView):
             return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
 
         file_serializer = VeiculoSerializer(veiculo)
+
+        print(request.data)
         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk, *args, **kwargs):
@@ -111,23 +113,6 @@ class ApiVeiculoDetail(APIView):
 
         # veiculo.delete()
         return Response({'erro': "HTTP_204_NO_CONTENT_USER_REMOVED"}, status=status.HTTP_204_NO_CONTENT)
-
-
-# class ApiVeiculoDetail(APIView):
-#     queryset = Veiculo.objects.all()
-#
-#     def get(self, request, pk, pk_2):
-#         try:
-#             Instituicao.objects.get(id=pk)
-#         except Instituicao.DoesNotExist:
-#             return Response({'erro': "HTTP_404_NOT_FOUND_INSTITUICAO"}, status=status.HTTP_404_NOT_FOUND)
-#         try:
-#             veiculo = Veiculo.objects.get(id=pk_2, instituicao=pk)
-#         except Veiculo.DoesNotExist:
-#             return Response({'erro': "HTTP_404_NOT_FOUND_VEICULO"}, status=status.HTTP_404_NOT_FOUND)
-#
-#         file_serializer = VeiculoSerializer(veiculo)
-#         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
 
 class APICreateVeiculo(APIView):
@@ -141,6 +126,10 @@ class APICreateVeiculo(APIView):
 
         file_serializer = CreateVeiculoSerializer(data=request.data)
         if file_serializer.is_valid():
-            print(request.data['file'])
+            if 'file' in request.data:
+                print("Tem imagem")
+            else:
+                print("Não tem image")
+            print(request.data)
             # file_serializer.save()
             return Response(file_serializer.data, status=status.HTTP_201_CREATED)

@@ -9,6 +9,7 @@ class TipoVeiculo(models.Model):
 
 
 class Veiculo(models.Model):
+    image = models.ImageField(upload_to='images')
     name = models.CharField(max_length=150)
     qtd_pessoas = models.IntegerField()
     placa = models.CharField(max_length=150)
