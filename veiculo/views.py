@@ -11,6 +11,7 @@ from veiculo.models import Veiculo, TipoVeiculo
 
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
+import datetime
 
 
 def get_user_logged(request):
@@ -23,13 +24,20 @@ def get_user(request):
 
 def add_veiculo(request, pk):
     if request.method == 'POST':
-        form = CreateVeiculo(request.POST)
+
+        form = CreateVeiculo(request.POST, request.FILES)
         if form.is_valid():
             instituicao = Instituicao.objects.filter(id=pk).first()
+
             if instituicao:
                 dados_form = form.data
+                if 'image' in request.FILES:
+                    image = request.FILES['image']
+                else:
+                    image = 'defaults/ic_car_image.png'
+
                 tipo = TipoVeiculo.objects.get(id=form.data['tipo'])
-                veiculo = Veiculo(name=form.data['name'], qtd_pessoas=form.data['QtdCarga'],
+                veiculo = Veiculo(name=form.data['name'], qtd_pessoas=form.data['QtdCarga'], image=image,
                                   placa=form.data['placa'].upper(), tipo=tipo, instituicao=instituicao).save()
                 return redirect('veiculos_show', pk)
         return redirect('veiculos_show', pk)
@@ -72,6 +80,7 @@ class VeiculoLists(generics.RetrieveUpdateDestroyAPIView):
 
 class ApiVeiculoList(APIView):
     permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             Instituicao.objects.get(id=pk)
@@ -124,12 +133,15 @@ class APICreateVeiculo(APIView):
         except Instituicao.DoesNotExist:
             return Response({'erro': "HTTP_404_NOT_FOUND_INSTITUICAO"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_serializer = CreateVeiculoSerializer(data=request.data)
-        if file_serializer.is_valid():
+        veiculo_serializer = CreateVeiculoSerializer(data=request.data)
+        if veiculo_serializer.is_valid():
             if 'file' in request.data:
-                print("Tem imagem")
+                image = request.data['file']
             else:
-                print("Não tem image")
+                image = 'defaults/ic_car_image.png'
             print(request.data)
-            # file_serializer.save()
-            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+            v = Veiculo(image=image, name=veiculo_serializer['name'],
+                        qtd_pessoas=veiculo_serializer['qtd_pessoas'], placa=veiculo_serializer['placa'],
+                        tipo=TipoVeiculo.objects.get(request.data['tipo']), instituicao=instituicao)
+
+            return Response(veiculo_serializer.data, status=status.HTTP_201_CREATED)

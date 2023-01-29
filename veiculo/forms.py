@@ -6,6 +6,7 @@ class CreateVeiculo(forms.Form):
     qtd_carga = forms.IntegerField()
     tipo = forms.IntegerField()
     placa = forms.CharField(max_length=16)
+    image = forms.FileField()
 
     def is_valid(self):
         valid = True
