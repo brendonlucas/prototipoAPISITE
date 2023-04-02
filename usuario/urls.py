@@ -29,5 +29,6 @@ urlpatterns = [
     path('API/create_user/', views.APICreateUser.as_view(), name='create-acc-user'),
     path('<pk>/API/GetAllFuncInst/', views.APIGetAllFuncInst.as_view(), name='API-Get-All-Func-Inst'),
     path('<pk>/API/APIGetUserDetail/', views.APIGetUserDetail.as_view(), name='API-Get-User-Detail'),
+    path('<pk>/API/APICreateFunc/', views.APICreateFunc.as_view(), name='API-Create-Func'),
 
 ]

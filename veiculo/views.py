@@ -89,19 +89,20 @@ class ApiVeiculoList(APIView):
 
         veiculos = Veiculo.objects.filter(instituicao=pk)
         print(request.data)
-        file_serializer = VeiculoSerializer(veiculos, many=True)
+        file_serializer = VeiculoSerializer(veiculos, many=True, context={"request": request})
         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
 
 class ApiVeiculoDetail(APIView):
     permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             veiculo = Veiculo.objects.get(id=pk)
         except Veiculo.DoesNotExist:
             return Response({'erro': "HTTP_404_NOT_FOUND_VEICULO"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_serializer = VeiculoSerializer(veiculo)
+        file_serializer = VeiculoSerializer(veiculo, context={"request": request})
         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk, *args, **kwargs):
@@ -110,10 +111,32 @@ class ApiVeiculoDetail(APIView):
         except Veiculo.DoesNotExist:
             return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_serializer = VeiculoSerializer(veiculo)
+        file_serializer = VeiculoUpdateSerializer(data=request.data)
 
-        print(request.data)
-        return Response(file_serializer.data, status=status.HTTP_200_OK)
+        if file_serializer.is_valid():
+            a = {'name': 'Carro barco', 'placa': 'JDHD55', 'qtd_pessoas': 15, 'tipo': 'carro',
+                 'file': '<1651516516.png>'}
+            if 'file' in request.data():
+                veiculo.image = request.FILES['file']
+
+            if veiculo.name != request.data['name']:
+                veiculo.name = request.data['name']
+
+            if veiculo.placa != request.data['palca']:
+                veiculo.placa = request.data['placa']
+
+            if veiculo.qtd_pessoas != request.data['qtd_pessoas']:
+                print("qtd e difrente")
+                veiculo.qtd_pessoas = request.data['qtd_pessoas']
+
+            if veiculo.tipo != request.data['tipo']:
+                veiculo.tipo = TipoVeiculo.objects.get(id=request.data['tipo'])
+
+            veiculo.save()
+
+            return Response(file_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response('error: HTTP_400_BAD_REQUEST ', status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, *args, **kwargs):
         try:
@@ -121,7 +144,7 @@ class ApiVeiculoDetail(APIView):
         except Veiculo.DoesNotExist:
             return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
 
-        # veiculo.delete()
+        veiculo.delete()
         return Response({'erro': "HTTP_204_NO_CONTENT_USER_REMOVED"}, status=status.HTTP_204_NO_CONTENT)
 
 
@@ -142,8 +165,8 @@ class APICreateVeiculo(APIView):
             else:
                 image = 'defaults/ic_car_image.png'
             print(request.data)
-            v = Veiculo(image=image, name=veiculo_serializer['name'],
-                        qtd_pessoas=veiculo_serializer['qtd_pessoas'], placa=veiculo_serializer['placa'],
-                        tipo=TipoVeiculo.objects.get(request.data['tipo']), instituicao=instituicao)
-
+            v = Veiculo(image=image, name=veiculo_serializer['name'].value,
+                        qtd_pessoas=veiculo_serializer['qtd_pessoas'].value, placa=veiculo_serializer['placa'].value,
+                        tipo=TipoVeiculo.objects.get(id=request.data['tipo']), instituicao=instituicao)
+            v.save()
             return Response(veiculo_serializer.data, status=status.HTTP_201_CREATED)

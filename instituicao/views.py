@@ -70,6 +70,17 @@ class APIGerentInstituicao(APIView):
         data_serializer = InstituicaoSerializer(instituicao, context=serializer_context)
         return Response(data_serializer.data, status=status.HTTP_200_OK)
 
+    def put(self, request, *args, **kwargs):
+        pass
+
+    def delete(self, request, pk, *args, **kwargs):
+        try:
+            instituicao = Instituicao.objects.get(id=pk)
+        except Instituicao.DoesNotExist:
+            return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
+
+        instituicao.delete()
+        return Response({'fim': "removido"}, status=status.HTTP_200_OK)
 
 class APIGInstituicao(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -85,17 +96,19 @@ class APIGInstituicao(APIView):
 
             print(data['nome'].value, "-*-*-*-*-*-***-*-*-*-*-*-*-*-*-*-**-*-* ", codigo_inst)
 
-            # Instituicao(nome=data['name'].value, codigo=codigo_inst).save()
-            # inst = Instituicao.objects.get(codigo=codigo_inst)
-            # inst.funcionarios.add(get_user(request))
+            Instituicao(nome=data['nome'].value, codigo=codigo_inst).save()
+            inst = Instituicao.objects.get(codigo=codigo_inst)
+            inst.funcionarios.add(get_user(request))
+            inst.save()
+            inst = Instituicao.objects.get(codigo=codigo_inst)
+            serializer_context = {
+                'request': request,
+            }
+            inst_serialize = InstituicaoSerializer(inst, context=serializer_context)
 
-            return Response(data.data, status=status.HTTP_201_CREATED)
+            return Response(inst_serialize.data, status=status.HTTP_201_CREATED)
         else:
             print(data.data)
             return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, *args, **kwargs):
-        pass
 
-    def delete(self, request, *args, **kwargs):
-        pass

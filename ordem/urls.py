@@ -25,5 +25,6 @@ urlpatterns = [
     path('<pk>/API/APIGConfirmOrdem/', views.APIGConfirmOrdem.as_view(), name='API-G-Confirm-Ordem'),
     path('<pk>/API/APIGInicioOrdem/', views.APIGInicioOrdem.as_view(), name='API-G-Inicio-Ordem'),
     path('<pk>/API/APIGFinalizeOrdem/', views.APIGFinalizeOrdem.as_view(), name='API-G-Finalize-Ordem'),
+    # path('<pk>/API/APIGCancelOrdem/', views.APIGCancelOrdem.as_view(), name='API-G-Cancel-Ordem'),
 
 ]

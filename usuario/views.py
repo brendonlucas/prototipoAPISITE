@@ -420,6 +420,12 @@ class APIGetAllFuncInst(APIView):
         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
 
+
+class APICreateFunc(APIView):
+    pass
+
+
+
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={'request': request})
@@ -441,3 +447,5 @@ class CustomAuthToken(ObtainAuthToken):
             'dados': usu.data,
             'instituicao': inst_serialize
         })
+
+

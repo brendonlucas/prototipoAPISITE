@@ -2,7 +2,7 @@ import datetime
 from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -211,6 +211,8 @@ def show_ordens_motorista(request, pk):
 
 # APIIIIIIIIIIIIIIIIIIIIIII
 class APIGetAllOrdem(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, pk, *args, **kwargs):
         try:
             instituicao = Instituicao.objects.get(id=pk)
@@ -227,6 +229,8 @@ class APIGetAllOrdem(APIView):
 
 
 class APIGetOrdenVeiculo(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, pk, *args, **kwargs):
         try:
             veiculo = Veiculo.objects.get(id=pk)
@@ -243,6 +247,8 @@ class APIGetOrdenVeiculo(APIView):
 
 
 class APIGetOrdem(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request, pk, *args, **kwargs):
         try:
             ordem = Ordem.objects.get(id=pk)
@@ -256,19 +262,24 @@ class APIGetOrdem(APIView):
 
 
 class APICreateOrdem(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def post(self, request, pk, *args, **kwargs):
         try:
             instituicao = Instituicao.objects.get(id=pk)
         except Instituicao.DoesNotExist:
             return Response({'erro': "HTTP_404_NOT_FOUND_Instituicao"}, status=status.HTTP_404_NOT_FOUND)
+
         data = CreateOrdemSerializer(data=request.data)
         if data.is_valid():
-            solicitante = Usuario.objects.get(id=data['solicitante'].value)
+            # solicitante = Usuario.objects.get(id=data['solicitante'].value)
 
             if data['qtd_espaco'].value > 0:  # 1 = pessoas / 2 = carga
                 carga = data['qtd_espaco'].value
             else:
                 carga = 0
+
+            solicitante = get_user(request)
 
             ordem = Ordem(solicitante=solicitante, descricao=data['descricao'].value, origem=data['origem'].value,
                           destino=data['destino'].value, data_solicitacao=datetime.date.today(),
@@ -295,6 +306,8 @@ class APICreateOrdem(APIView):
 
 
 class APIGConfirmOrdem(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def put(self, request, pk, *args, **kwargs):
         try:
             ordem = Ordem.objects.get(id=pk)
@@ -304,12 +317,23 @@ class APIGConfirmOrdem(APIView):
         data = GConfirmOrdemSerializer(data=request.data)
         if data.is_valid():
             print(request.data)
+            ordem = Ordem.objects.get(id=pk)
+            dados_form = data
+            ordem.veiculo = Veiculo.objects.get(id=dados_form['veiculo'].value)
+            ordem.motorista = Usuario.objects.get(id=dados_form['motorista'].value)
+            ordem.data_marcada = dados_form['data'].value
+            ordem.horario_marcado = dados_form['hora'].value
+            ordem.status = StatusOrdem.objects.get(id=2)
+            ordem.save()
+
             return Response(data.data, status=status.HTTP_201_CREATED)
         else:
             return Response({'erro': "HTTP_400_BAD_REQUEST"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class APIGInicioOrdem(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def put(self, request, pk, *args, **kwargs):
         try:
             ordem = Ordem.objects.get(id=pk)
@@ -323,6 +347,8 @@ class APIGInicioOrdem(APIView):
 
 
 class APIGFinalizeOrdem(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def put(self, request, pk, *args, **kwargs):
         try:
             ordem = Ordem.objects.get(id=pk)

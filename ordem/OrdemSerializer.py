@@ -23,7 +23,7 @@ class OrdemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ordem
-        fields = ('url', 'pk', 'solicitante', 'motorista', 'veiculo', 'data_solicitacao', 'status')
+        fields = ('url', 'pk', 'solicitante', 'motorista', 'veiculo', 'data_solicitacao','data_solicitado', 'status')
 
 
 class OrdemDetailSerializer(serializers.ModelSerializer):
@@ -39,7 +39,8 @@ class OrdemDetailSerializer(serializers.ModelSerializer):
 class CreateOrdemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ordem
-        fields = ('solicitante', 'data_solicitado', 'horario_requirido', 'descricao', 'qtd_espaco', 'origem', 'destino')
+        fields = ('data_solicitado', 'horario_requirido', 'descricao', 'qtd_espaco', 'origem', 'destino')
+        # fields = ('solicitante', 'data_solicitado', 'horario_requirido', 'descricao', 'qtd_espaco', 'origem', 'destino')
 
 
 class GConfirmOrdemSerializer(serializers.ModelSerializer):

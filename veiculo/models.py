@@ -21,6 +21,14 @@ class Veiculo(models.Model):
     placa = models.CharField(max_length=150)
     tipo = models.ForeignKey(TipoVeiculo, on_delete=models.CASCADE)
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE, null=True)
+    # Status = models.ForeignKey(StatusVeiculo, on_delete=models.CASCADE)
+    # qtd_usos = models.IntegerField()
+
+
+# class StatusVeiculo(models.Model):
+#     name = models.CharField(max_length=150)
+#     descricao = models.CharField(max_length=150)
+#     # Disponivel / Indisponivel - Ocupado / Bloqueado / Removido
 
 
 def set_name_image():
