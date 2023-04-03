@@ -71,3 +71,47 @@
 
 
 })(jQuery);
+
+
+const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+// searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close0");
+})
+
+/*
+searchBtn.addEventListener("click" , () =>{
+    sidebar.classList.remove("close0");
+})
+*/
+modeSwitch.addEventListener("click" , () =>{
+    body.classList.toggle("dark");
+
+    if(body.classList.contains("dark")){
+        modeText.innerText = "Light mode";
+        localStorage.setItem('theme', "Dark mode");
+    }else{
+        modeText.innerText = "Dark mode";
+        localStorage.setItem('theme', "Light mode");
+    }
+});
+
+
+
+window.onload = function setThemeFunction() {
+    const theme = localStorage.getItem('theme');
+    if (theme == "Light mode"){
+        body.classList.remove("dark");
+    }else{
+        body.classList.toggle("dark");
+    }
+};
+
+
+

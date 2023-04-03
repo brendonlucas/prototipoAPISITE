@@ -5,7 +5,7 @@
 <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"-->
 <!--        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"-->
 <!--        crossorigin="anonymous"></script>-->
-<div class="card">
+<div class="card" style="padding:10px; margin:10px">
     <div>
         {% if usuario.cargo.id == 1 or usuario.cargo.id == 2 %}
         <button class="btn btn-md btn-primary btn-addon m-b-10 m-l-5" data-toggle="modal"
@@ -52,14 +52,14 @@
                         </div>
                         <div class="form-group">
                             <label>Quantidade de pessoas</label>
-                            <input type="number" class="form-control" placeholder="Ex: 5" name="QtdCarga">
+                            <input type="number" class="form-control" placeholder="Ex: 5" name="QtdCarga" min="0">
                         </div>
 
                         <div class="form-group">
                             <label>Foto</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFile" name="image" accept="image/*">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                <label class="custom-file-label" for="customFile">Escolha a foto</label>
                             </div>
                             <script>
                             $('#customFile').on('change',function(){
@@ -72,7 +72,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>
             </div>
@@ -81,8 +81,8 @@
 
 </div>
 
-<div class="card">
-    <div class="card-deck" id="myProducts">
+<div class="card" style="margin:10px">
+    <div class="card-deck" id="myProducts" style="padding:10px">
         {% for veiculo in veiculos %}
         {% include 'card_veiculo.html' with veiculo=veiculo %}
         {% endfor %}

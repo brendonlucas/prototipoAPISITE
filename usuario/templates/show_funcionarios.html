@@ -13,10 +13,9 @@
 }
 
 
-
 </style>
-<div class="card">
-    <div>
+<div class="card color-bg" style="padding:10px; margin:10px">
+    <div class="" style="bac">
         <a class="btn btn-md btn-primary btn-addon m-b-10 m-l-5" style="color:white;"
            href="{% url 'register_new_user' pk=instituicao.id %}"><i class="ti-plus"></i>Adicionar
         </a>
@@ -29,111 +28,106 @@
     </div>
 </div>
 
-<div class="card">
-    <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+<div class="card color-bg" style="padding:10px; margin:10px">
+    <ul class="nav nav-pills customtab2 nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home7" role="tab">
+            <a class="nav-link active" href="#" role="tab">
                 <span class="hidden-sm-up"><i class="ti-home"></i></span>
                 <span class="hidden-xs-down">Funcionarios</span></a>
         </li>
-
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="home7" role="tabpanel">
-            <div class="p-20">
-                <div class="recent-comment" id="myProducts">
+            <div class="">
+                <div class="card-deck mx-3 " id="myProducts"> <!-- justify-content-center-->
                     {% for funcionario in funcionarios %}
-                    <div class="media" >
-                        <div class="media-left">
-                            <a href="#ModalInfo{{ funcionario.id }}" data-toggle="modal">
-                                <img class="media-object" src="{% static 'images/avatar/2.jpg'%}" alt="...">
-                            </a>
-
-                            <!-- Modal Infos funcionario -->
-                            <div class="modal fade" data-backdrop="static" id="ModalInfo{{ funcionario.id }}"
-                                 tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Informações de {{ funcionario.name }}</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h2> Infos Aqui </h2>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">
-                                                Fechar
-                                            </button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="profile-card-user shadow-hover elevation color-bg-dark" style="margin:10px">
+                        <div class="image-user">
+                            <img src="https://i.pinimg.com/originals/29/47/9b/29479ba0435741580ca9f4a467be6207.png"
+                                 alt="" class="profile-img-user"/>
                         </div>
-                        <div class="media-body">
-                            <h4 class="card-title">{{ funcionario.name }}</h4>
-                            <p>{{ funcionario.cargo.nome }}</p>
-                            <div class="comment-action">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                        data-target="#ModalChangeCargo{{ funcionario.id }}">Mudar cargo
-                                </button>
-                                <div class="badge badge-warning">Pending</div>
-                                <div class="badge badge-danger">Rejected</div>
-                                <span class="m-l-10"></span>
+                        <div class="text-data-user">
+                            <span class="name-user">{{ funcionario.name }}</span>
+                            <span class="job-user">{{ funcionario.cargo.nome }}</span>
+                        </div>
 
-                                <!-- Modal -->
-                                <div class="modal fade" data-backdrop="static"
-                                     id="ModalChangeCargo{{ funcionario.id }}" tabindex="-1"
-                                     role="dialog"
-                                     aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="veiculoModalCenterTitle">Selecione um
-                                                    cargo</h5>
-                                            </div>
-                                            <form method="POST"
-                                                  action="{% url 'change_cargo_func' pk=instituicao.id %}">
-                                                {% csrf_token %}
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <select class="form-control" name="OptionSelectCargo">
-                                                            {% for cargo in cargos %}
-                                                            {% if cargo.id != funcionario.cargo.id %}
-                                                            <option>{{ cargo.nome }}</option>
-                                                            {% endif %}
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">
-                                                        Fechar
-                                                    </button>
-                                                    <button type="submit" class="btn btn-primary">Save changes
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="button-list" style="text-align:center">
+                            <button class="btn btn-primary dropdown" role="button" type="button" data-toggle="dropdown"
+                                    id="DMO{{ funcionario.id }}"
+                                    style="border-radius: 24px; margin: 0 10px 10px; padding: 8px 24px;">Opções
+                            </button>
+
+
+                            <div class="dropdown-menu" aria-labelledby="DMO{{ funcionario.id }}">
+                                {% if funcionario.cargo.id != 1 %}
+                                <a class="dropdown-item" data-toggle="modal"
+                                   href="#ModalChangeCargo{{ funcionario.id }}">Mudar Cargo</a>
+                                {% else %}
+                                <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Mudar Cargo</a>
+                                {% endif %}
+
+                                <a class="dropdown-item" href="#">Opção 2</a>
                             </div>
-                            <p class="comment-date">October 21, 2017</p>
+
+                            <button class="btn btn-primary"
+                                    style="border-radius: 24px; margin: 0 10px 10px; padding: 8px 24px;">Detalhes
+                            </button>
+                        </div>
+                        <div class="buttons-user">
+                            <!--                            <div class="btn btn-warning btn-sm" style="border-radius: 20px;" disabled> Disponivel</div>-->
+                            <div class="btn btn-danger btn-sm" style="border-radius: 20px;" disabled> Indisponivel
+                            </div>
                         </div>
                     </div>
+
+
+                    <div class="modal fade" data-backdrop="static"
+                         id="ModalChangeCargo{{ funcionario.id }}" tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="veiculoModalCenterTitle">Selecione um
+                                        cargo</h5>
+                                </div>
+                                <form method="POST"
+                                      action="{% url 'change_cargo_func' pk=instituicao.id %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <select class="form-control" name="OptionSelectCargo">
+                                                {% for cargo in cargos %}
+                                                {% if cargo.id != funcionario.cargo.id %}
+                                                <option>{{ cargo.nome }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Fechar
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     {% endfor %}
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
-        {% if messages %}
-        {% for message in messages %}
-        <script>
+{% if messages %}
+{% for message in messages %}
+<script>
             window.onload = function exampleFunction() {
             toastr.{{ message.tags }}('{{ message }}','{{ message.tags }}',{
             "positionClass": "toast-top-center",
@@ -157,9 +151,9 @@
 
 
 
-        </script>
-        {% endfor %}
-        {% endif %}
+</script>
+{% endfor %}
+{% endif %}
 
 
 <script>
@@ -169,9 +163,9 @@
   input = document.getElementById("myFilter");
   filter = input.value.toUpperCase();
   cardContainer = document.getElementById("myProducts");
-  cards = cardContainer.getElementsByClassName("media");
+  cards = cardContainer.getElementsByClassName("profile-card-user");
   for (i = 0; i < cards.length; i++) {
-    title = cards[i].querySelector(".card-title");
+    title = cards[i].querySelector(".name-user");
     if (title.innerText.toUpperCase().indexOf(filter) > -1) {
       cards[i].style.display = "";
     } else {
@@ -180,8 +174,22 @@
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 {% endblock %}
-
 

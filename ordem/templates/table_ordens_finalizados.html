@@ -13,23 +13,23 @@ cursor: hand;
 
 
 </style>
-<div class="card">
-    <ul class="nav nav-tabs customtab2 nav-justified">
+<div class="card p-20 " style="margin:10px">
+    <ul class="nav nav-pills customtab2 nav-justified">
         {% if usuario.cargo.id != 4 %}
-        <li class="nav-item">
+        <li class="nav-item lineG">
             <a class="nav-link" href="{% url 'show_ordens' instituicao.id %}">
                 <span class="hidden-sm-up"><i class="ti-pencil-alt"></i></span>
                 <span class="hidden-xs-down">Aguardando</span>
             </a>
         </li>
         {% endif %}
-        <li class="nav-item">
+        <li class="nav-item lineG">
             <a class="nav-link" href="{% url 'show_ordens_and_ini' instituicao.id %}">
                 <span class="hidden-sm-up"> <i class="ti-truck"></i> </span>
                 <span class="hidden-xs-down">Em Andamento</span>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item lineG">
             <a class="nav-link active" href="{% url 'show_ordens_final' instituicao.id %}">
                 <span class="hidden-sm-up"><i class="ti-close"></i></span>
                 <span class="hidden-xs-down">Finalizados</span>
@@ -37,7 +37,7 @@ cursor: hand;
         </li>
     </ul>
 
-    <div class="p-10">
+    <div class="p-20">
         {% include 'Tables/table_final.html' with ordens=ord_finalizdos tipo=4 %}
     </div>
 </div>

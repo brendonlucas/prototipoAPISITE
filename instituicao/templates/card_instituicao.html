@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" style="padding:10px;" >
     <div class="card-title">
         <h4>{{ instituicao.nome }}</h4>
     </div>
@@ -6,144 +6,32 @@
         <p class="text-muted m-b-15">Descrição da instituição </p>
         <div class="button-list">
             {% if usuario.cargo.id == 2 or usuario.cargo.id == 1 %}
-            <button type="button" class="btn btn-primary btn-flat btn-addon m-b-10 m-l-5"
-                    data-toggle="modal" data-target="#ModalFuncE{{ instituicao.id }}">
-                <i class="ti-user"></i>Funcionarios
-            </button>
+            <a type="button" class="btn btn-primary btn-flat btn-addon m-b-10 m-l-5"
+               href="{% url 'show_funcionario' pk=instituicao.id %}">
+                <i class="ti-user" style="margin-right:10px"></i>Funcionarios
+            </a>
             {% endif %}
-            <button type="button" class="btn btn-success btn-flat btn-addon m-b-10 m-l-5" data-toggle="modal"
-                    data-target="#ModalVeiculoE{{ instituicao.id }}"><i class="ti-car"></i>Veiculos
-            </button>
+            <a type="button" class="btn btn-success btn-flat btn-addon m-b-10 m-l-5"
+               href="{% url 'veiculos_show' pk=instituicao.id %}">
+                <i class="ti-car" style="margin-right:10px"></i>Veiculos
+            </a>
             {% if usuario.cargo.id != 4 %}
-            <button type="button" style="color:white" class="btn btn-default btn-flat btn-addon m-b-10 m-l-5"
-                    data-toggle="modal" data-target="#ModalOrdenE{{ instituicao.id }}"><i
-                    class="ti-clipboard"></i>Ordens
-            </button>
+            <a type="button" class="btn btn-warning btn-flat btn-addon m-b-10 m-l-5"
+               href="{% url 'show_ordens' pk=instituicao.id %}">
+                <i class="ti-clipboard" style="margin-right:10px"></i>Ordens
+            </a>
             {% endif %}
             {% if usuario.cargo.id == 4 %}
-            <a type="button" style="color:white" class="btn btn-warning btn-flat btn-addon m-b-10 m-l-5"
+            <a type="button" class="btn btn-warning btn-flat btn-addon m-b-10 m-l-5"
                href="{% url 'show_ordens_and_ini' pk=instituicao.id %}">
-                <i class="ti-clipboard"></i>Ordens
+                <i class="ti-clipboard" style="margin-right:10px"></i>Ordens
             </a>
             {% endif %}
 
-
             <button type="button" class="btn btn-info btn-flat btn-addon m-b-10 m-l-5" data-toggle="modal"
-                    data-target="#ModalInfoE{{ instituicao.id }}"><i class="ti-info-alt"></i>Info
+                    data-target="#ModalInfoE{{ instituicao.id }}"> <i class="ti-info-alt" style="margin-right:10px"></i>Info
             </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="ModalOrdenE{{ instituicao.id }}" tabindex="-1"
-                 role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">O que deseja fazer?</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="button-list ">
-                                <a type="button" class="btn btn-secondary btn-large btn-block"
-                                   style="color:white"
-                                   href="{% url 'show_ordens' pk=instituicao.id %}">Gerenciar
-                                    Ordens
-                                </a>
-                                <a type="button" class="btn btn-primary btn-large btn-block" style="color:white"
-                                   href="{% url 'add_orden' pk=instituicao.id %}">Criar orden
-                                </a>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="button-list">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    Fechar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="ModalFuncE{{ instituicao.id }}" tabindex="-1"
-                 role="dialog"
-                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">O que deseja fazer?</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="button-list ">
-                                <a style="color:white" type="button"
-                                   class="btn btn-secondary btn-large btn-block "
-                                   href="{% url 'show_funcionario' pk=instituicao.id %}">Gerenciar
-                                    Fuincionarios
-                                </a>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="button-list">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    Fechar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="ModalVeiculoE{{ instituicao.id }}" tabindex="-1"
-                 role="dialog"
-                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">O que deseja fazer?</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="button-list ">
-                                <a type="button" class="btn btn-secondary btn-large btn-block"
-                                   style="color:white"
-                                   href="{% url 'veiculos_show' pk=instituicao.id %}">Gerenciar
-                                    Veiculos
-                                </a>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="button-list">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    Fechar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="ModalInfoE{{ instituicao.id }}" tabindex="-1"
-                 role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Informações</h5>
-                        </div>
-                        <div class="modal-body">
-                            Inforações sobre a instituição
-                        </div>
-                        <div class="modal-footer">
-                            <div class="button-list">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    Fechar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -182,5 +70,46 @@
     </div>
     {% endif %}
 
+    <div class="modal fade" id="sdfs" tabindex="-1"
+         role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Informações</h5>
+                </div>
+                <div class="modal-body">
+                    Inforações sobre a instituição
+                </div>
+                <div class="modal-footer">
+                    <div class="button-list">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalInfoE{{ instituicao.id }}" tabindex="-1"
+         role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Informações</h5>
+                </div>
+                <div class="modal-body">
+                    Inforações sobre a instituição
+                </div>
+                <div class="modal-footer">
+                    <div class="button-list">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

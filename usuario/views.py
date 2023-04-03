@@ -20,6 +20,7 @@ from rest_framework.response import Response
 
 import datetime
 
+
 def get_user_logged(request):
     return request.user
 
@@ -106,11 +107,12 @@ def create_account_func(request, pk):
 
 def show_funcionarios_instituicao(request, pk):
     user = get_user_logged(request)
+    cargos = TipoUsuario.objects.all()
 
     funcionarios = Instituicao.objects.get(id=pk).funcionarios.all()
     print("--------------------------------------------", funcionarios[0])
     return render(request, 'show_funcionarios.html',
-                  {'user': get_user_logged(request), 'funcionarios': funcionarios,
+                  {'user': get_user_logged(request), 'funcionarios': funcionarios, 'cargos': cargos,
                    'instituicao': Instituicao.objects.get(id=pk)})
 
 
@@ -420,10 +422,8 @@ class APIGetAllFuncInst(APIView):
         return Response(file_serializer.data, status=status.HTTP_200_OK)
 
 
-
 class APICreateFunc(APIView):
     pass
-
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -437,7 +437,7 @@ class CustomAuthToken(ObtainAuthToken):
         instituicao = Instituicao.objects.filter(funcionarios__id=Usuario.objects.get(user_id=user.id).id).first()
         if instituicao:
             # instituicao = get_object_or_404(Instituicao, funcionarios__id=Usuario.objects.get(user_id=user.id).id)
-            inst_serialize = InstituicaoSerializer(instituicao,context={'request': request}).data
+            inst_serialize = InstituicaoSerializer(instituicao, context={'request': request}).data
         else:
             inst_serialize = None
         usu = UsuarioSerializer(dados_funcionario)
@@ -447,5 +447,3 @@ class CustomAuthToken(ObtainAuthToken):
             'dados': usu.data,
             'instituicao': inst_serialize
         })
-
-

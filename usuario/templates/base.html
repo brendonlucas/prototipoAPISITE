@@ -5,20 +5,39 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://api.iconify.design/ic:baseline-garage.svg">
     <title>Veicular: controle</title>
-    <!-- ================= Favicon ================== -->
-    <!-- Standard -->
-    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
-    <!-- Retina iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
-    <!-- Retina iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
-    <!-- Standard iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
-    <!-- Standard iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
-    <!-- Styles -->
+
+    <!----======== CSS ======== -->
+
+    <link rel="stylesheet" type="text/css" href=" {% static '/css/style.css' %} ">
+
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+
+    <!--data table-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.13.1/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.13.1/datatables.min.js"></script>
+
+
+
+
+
     <link href="{% static 'css/lib/calendar2/pignose.calendar.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/chartist/chartist.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/font-awesome.min.css' %}" rel="stylesheet">
@@ -27,37 +46,231 @@
     <link href="{% static 'css/lib/owl.theme.default.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/lib/weather-icons.css'%}" rel="stylesheet"/>
     <link href="{% static 'css/lib/menubar/sidebar.css' %}" rel="stylesheet">
-    <link href="{% static 'css/lib/bootstrap.min.css' %}" rel="stylesheet">
+
     <link href="{% static 'css/lib/helper.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/toastr/toastr.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static 'steps/bs-stepper.min.css' %}">
     <link rel="stylesheet" href="{% static 'DataTable/datatables.min.css' %}">
 
-<!--    Sujeito a remover-->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
-
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="{% static 'steps/bs-stepper.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'steps/main.js' %}"></script>
-<!---->
-<!--selectize-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
-            integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
-          integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous"/>
-<!---->
-<!--data table-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.13.1/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.13.1/datatables.min.js"></script>
-<!---->
-
 </head>
 
+<body class="boody">
+<nav class="sidebar0 close0">
+    <header style="position: relative;">
+        <div class="image-text">
+                <span class="image">
+                    <img src="{% static 'images/logo_ic.png'%}" alt="">
+                </span>
+
+            <div class="text logo-text">
+                <span class="name">Veicular</span>
+                <span class="profession">Web developer</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle' style=""></i>
+    </header>
+
+    <div class="menu-bar0" style="overflow: hidden;">
+        <div class="menu">
+            <ul class="">
+                <li class="">
+                    <a href="#">
+                        <i class='bx bx-home-alt icon'></i>
+                        <span class="text nav-text">inicio</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="{% url 'inst_show' %}">
+                        <i class='bx bx-bar-chart-alt-2 icon'></i>
+                        <span class="text nav-text">Instituição</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url 'show_funcionario' pk=instituicao.id %}">
+                        <i class='bx bx-user icon'></i>
+                        <span class="text nav-text">Funcionários</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url 'veiculos_show' pk=instituicao.id %}">
+                        <i class='bx bxs-truck icon'></i>
+                        <span class="text nav-text">Veiculos</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="{% url 'show_ordens' pk=instituicao.id %}">
+                        <i class='bx bx-notepad icon'></i>
+                        <span class="text nav-text">Ordem</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="">
+                <a href="{% url 'logout' %}">
+                    <i class='bx bx-log-out icon'></i>
+                    <span class="text nav-text">sair</span>
+                </a>
+            </li>
+
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class='bx bx-moon icon moon'></i>
+                    <i class='bx bx-sun icon sun'></i>
+                </div>
+                <span class="mode-text text">Dark mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+
+        </div>
+    </div>
+
+</nav>
+
+
+<section class="home">
+    <nav class="navbar navbar-expand navbar-light color-bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bx bx-bell icon"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
+                        <h6 class="dropdown-header">Notificações Recentes</h6>
+                        <a class="dropdown-item" href="#">Notificação 1</a>
+                        <a class="dropdown-item" href="#">Notificação 2</a>
+                        <a class="dropdown-item" href="#">Notificação 3</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Ver mais</a>
+                    </div>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img src="https://i.pinimg.com/originals/29/47/9b/29479ba0435741580ca9f4a467be6207.png"
+                             alt="Usuário" class="rounded-circle" width="30" height="30">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="#">Configurações</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Sair</a>
+                    </div>
+                </li>
+
+
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid">
+        {% block 'content' %}
+        {% endblock %}
+
+    </div>
+
+</section>
+
+
+<script>
+    $(function () {
+        $('nav li a').filter(function () {
+            return this.href === location.href;
+        }).addClass('mode');
+    });
+</script>
+
+
+<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+
+
+
+
+
+<script src=" {% static 'js/lib/jquery.min.js' %}"></script>
+<script src="{% static 'js/lib/jquery.nanoscroller.min.js' %}"></script>
+<!-- nano scroller -->
+<script src="{% static 'js/lib/menubar/sidebar.js' %}"></script>
+<script src="{% static 'js/lib/preloader/pace.min.js' %}"></script>
+<!-- sidebar -->
+
+
+<!-- bootstrap -->
+
+<script src="{% static 'js/lib/calendar-2/moment.latest.min.js' %}"></script>
+<script src="{% static 'js/lib/calendar-2/pignose.calendar.min.js' %}"></script>
+<script src="{% static 'js/lib/calendar-2/pignose.init.js' %}"></script>
+
+
+<script src="{% static 'js/lib/weather/jquery.simpleWeather.min.js' %}"></script>
+<script src="{% static 'js/lib/weather/weather-init.js' %}"></script>
+<script src="{% static 'js/lib/circle-progress/circle-progress.min.js' %}"></script>
+<script src="{% static 'js/lib/circle-progress/circle-progress-init.js' %}"></script>
+<script src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>
+<script src="{% static 'js/lib/sparklinechart/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'js/lib/sparklinechart/sparkline.init.js' %}"></script>
+<script src="{% static 'js/lib/owl-carousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/lib/owl-carousel/owl.carousel-init.js' %}"></script>
+
+
+<script src="{% static 'DataTable/datatables.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-pt_BR.min.js"></script>
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+
+<!-- scripit init-->
+<script src="{% static 'js/dashboard2.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'steps/bs-stepper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'steps/main.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/lib/toastr/toastr.min.js' %}"></script>
+
+
+
+
+
+
+
+
+
+</body>
+
+
+</html>
+<!--</body>-->
+
+
+<!--
 <body>
 <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures ">
     <div class="nano">
@@ -106,7 +319,7 @@
         </div>
     </div>
 </div>
-<!-- /# sidebar -->
+
 <div class="header ">
     <div class="container-fluid ">
         <div class="row ">
@@ -140,7 +353,7 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        <!-- notficações aqui -->
+
                                         <li class="text-center">
                                             <a href="#" class="more-link">See All</a>
                                         </li>
@@ -224,71 +437,63 @@
 <div class="content-wrap">
     <div class="main">
         <div class="container-fluid">
-            {% block 'content' %}
-            {% endblock %}
+
 
         </div>
     </div>
 </div>
+-->
 
 
-<!-- jquery vendor -->
-<script src=" {% static 'js/lib/jquery.min.js' %}"></script>
-<script src="{% static 'js/lib/jquery.nanoscroller.min.js' %}"></script>
-<!-- nano scroller -->
-<script src="{% static 'js/lib/menubar/sidebar.js' %}"></script>
-<script src="{% static 'js/lib/preloader/pace.min.js' %}"></script>
-<!-- sidebar -->
+<!--<script src=" {% static 'js/lib/jquery.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/jquery.nanoscroller.min.js' %}"></script>-->
 
-<script src="{% static 'js/lib/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/scripts.js' %}"></script>
+<!--<script src="{% static 'js/lib/menubar/sidebar.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/preloader/pace.min.js' %}"></script>-->
+
+
+<!--<script src="{% static 'js/lib/bootstrap.min.js' %}"></script>-->
+
 <!-- bootstrap -->
 
-<script src="{% static 'js/lib/calendar-2/moment.latest.min.js' %}"></script>
-<script src="{% static 'js/lib/calendar-2/pignose.calendar.min.js' %}"></script>
-<script src="{% static 'js/lib/calendar-2/pignose.init.js' %}"></script>
+<!--<script src="{% static 'js/lib/calendar-2/moment.latest.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/calendar-2/pignose.calendar.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/calendar-2/pignose.init.js' %}"></script>-->
 
 
-<script src="{% static 'js/lib/weather/jquery.simpleWeather.min.js' %}"></script>
-<script src="{% static 'js/lib/weather/weather-init.js' %}"></script>
-<script src="{% static 'js/lib/circle-progress/circle-progress.min.js' %}"></script>
-<script src="{% static 'js/lib/circle-progress/circle-progress-init.js' %}"></script>
-<script src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>
-<script src="{% static 'js/lib/sparklinechart/jquery.sparkline.min.js' %}"></script>
-<script src="{% static 'js/lib/sparklinechart/sparkline.init.js' %}"></script>
-<script src="{% static 'js/lib/owl-carousel/owl.carousel.min.js' %}"></script>
-<script src="{% static 'js/lib/owl-carousel/owl.carousel-init.js' %}"></script>
+<!--<script src="{% static 'js/lib/weather/jquery.simpleWeather.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/weather/weather-init.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/circle-progress/circle-progress.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/circle-progress/circle-progress-init.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/sparklinechart/jquery.sparkline.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/sparklinechart/sparkline.init.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/owl-carousel/owl.carousel.min.js' %}"></script>-->
+<!--<script src="{% static 'js/lib/owl-carousel/owl.carousel-init.js' %}"></script>-->
 
 
-<script src="{% static 'DataTable/datatables.js' %}"></script>
+<!--<script src="{% static 'DataTable/datatables.js' %}"></script>-->
 <!--<script src="{% static 'js/lib/data-table/datatables.min.js' %}"></script>-->
 <!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.13.1/af-2.5.1/b-2.3.3/date-1.2.0/kt-2.8.0/r-2.4.0/sc-2.0.7/sb-1.4.0/sp-2.1.0/sl-1.5.0/datatables.min.js"></script>-->
 <!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js"></script>-->
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>-->
 <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>-->
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-pt_BR.min.js"></script>
-
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-pt_BR.min.js"></script>-->
+<!--<script type="text/javascript"-->
+<!--        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>-->
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>-->
 
 
 <!-- scripit init-->
-<script src="{% static 'js/dashboard2.js' %}"></script>
+<!--<script src="{% static 'js/dashboard2.js' %}"></script>-->
 
-<script type="text/javascript" src="{% static 'steps/bs-stepper.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'steps/main.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'steps/bs-stepper.min.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'steps/main.js' %}"></script>-->
 
-<script type="text/javascript" src="{% static 'js/lib/toastr/toastr.min.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/lib/toastr/toastr.min.js' %}"></script>-->
 
 
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>-->
 
-</body>
-
-
-</html>
