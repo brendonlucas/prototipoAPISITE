@@ -35,7 +35,18 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.13.1/datatables.min.js"></script>
 
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+          integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
 
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+            integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
 
 
     <link href="{% static 'css/lib/calendar2/pignose.calendar.min.css' %}" rel="stylesheet">
@@ -146,19 +157,52 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown1" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="bx bx-bell icon"></i>
+                        <i class="bx bx-bell icon bx-sm"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger"
+                              style="position: absolute; right: 0; center:0; top:0; margin-right:10px ">9</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown">
-                        <h6 class="dropdown-header">Notificações Recentes</h6>
-                        <a class="dropdown-item" href="#">Notificação 1</a>
-                        <a class="dropdown-item" href="#">Notificação 2</a>
-                        <a class="dropdown-item" href="#">Notificação 3</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Ver mais</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown"
+                         style="width:300px">
+                        <div class="dropdown-content-heading">
+                            <span class="text-left">Notificações recentes</span>
+                            <a href="#" class="aHover">
+                                <i class="bx bx-list-check bx-sm" style="float: right; top:0"> </i>
+                            </a>
+                        </div>
+                        <div class="dropdown-content-body">
+                            <ul>
+                                <li>
+                                    <a href="#" style="text-decoration:none">
+                                        <small style="position: absolute; right: 0; center:0; margin-right: 10px">10/03/2023</small>
+                                        <div class="notification-heading"
+                                             style="position: absolute; left: 0; center:0; margin-left: 10px">João
+                                            kleber
+                                        </div>
+                                        <div class="notification-text">5 members joined today</div>
+                                    </a>
+                                </li>
+
+
+                                <li>
+                                    <a href="#" style="text-decoration:none">
+                                        <small style="position: absolute; right: 0; center:0; margin-right: 10px">10/03/2023</small>
+                                        <div class="notification-heading"
+                                             style="position: absolute; left: 0; center:0; margin-left: 10px">Antonho
+                                            Freitas
+                                        </div>
+                                        <div class="notification-text">5 members joined today</div>
+                                    </a>
+                                </li>
+
+                                <li class="text-center">
+                                    <a href="#" class="more-link " style="text-decoration:none; display:block">Ver
+                                        mais</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </li>
 
@@ -198,15 +242,20 @@
             return this.href === location.href;
         }).addClass('mode');
     });
+
+
+
+
+
+
+
+
+
 </script>
 
 
 <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-
-
-
-
 
 
 <script src=" {% static 'js/lib/jquery.min.js' %}"></script>
@@ -240,7 +289,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-pt_BR.min.js"></script>
 
 <script type="text/javascript"
@@ -254,13 +302,6 @@
 <script type="text/javascript" src="{% static 'steps/main.js' %}"></script>
 
 <script type="text/javascript" src="{% static 'js/lib/toastr/toastr.min.js' %}"></script>
-
-
-
-
-
-
-
 
 
 </body>
@@ -331,6 +372,8 @@
                         <span class="line"></span>
                     </div>
                 </div>
+
+
                 <div class="float-right">
                     <div class="dropdown dib">
                         <div class="header-icon" data-toggle="dropdown">
@@ -362,6 +405,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="dropdown dib">
                         <div class="header-icon" data-toggle="dropdown">
                             <i class="ti-email"></i>

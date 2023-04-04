@@ -9,12 +9,15 @@
     z-index: 1051 !important;
 }
 
+
+
+
 </style>
 
 <div class="card" style="margin:10px">
     <ul class="nav nav-pills customtab2 nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active"  href="#home7" role="tab">
+            <a class="nav-link active" href="#home7" role="tab">
                 <span class="hidden-sm-up"><i class="ti-home"></i></span>
                 <span class="hidden-xs-down">Instituição</span></a>
         </li>
@@ -32,7 +35,7 @@
             <div class="p-20">
                 <!-- Instituições criadas-->
                 {% if instituicao %}
-                    {% include 'card_instituicao.html' with instituicao=instituicao %}
+                {% include 'card_instituicao.html' with instituicao=instituicao %}
                 {% endif %}
 
 
@@ -73,6 +76,7 @@
                 {% endif %}
             </div>
         </div>
+
         {% if usuario.cargo == 1 %}
         <div class="tab-pane p-20" id="messages7" role="tabpanel">
             {% if arquivados %}
@@ -112,11 +116,17 @@
 
 
 
+
+
+
     </script>
     {% endfor %}
     {% endif %}
 </div>
 
+<script>
+    $('#normalize').selectize();
+</script>
 
 {% endblock %}
 
