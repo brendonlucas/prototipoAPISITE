@@ -133,7 +133,8 @@ class ApiVeiculoDetail(APIView):
                 veiculo.tipo = TipoVeiculo.objects.get(id=request.data['tipo'])
 
             veiculo.save()
-
+            veiculo1 = Veiculo.objects.get(id=pk)
+            print("qtd aqui orova ", veiculo.qtd_pessoas)
             return Response(file_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response('error: HTTP_400_BAD_REQUEST ', status=status.HTTP_400_BAD_REQUEST)
