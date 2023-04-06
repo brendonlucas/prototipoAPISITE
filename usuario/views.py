@@ -126,6 +126,17 @@ def change_cargo_user(request, pk):
         return redirect('show_funcionario', pk)
 
 
+def get_profifle_user(request, pk, pk_2):
+    try:
+        instituicao = Instituicao.objects.get(id=pk)
+        user = Usuario.objects.get(id=pk_2)
+    except Usuario.DoesNotExist:
+        return Response({'erro': "HTTP_404_NOT_FOUND_USER"}, status=status.HTTP_404_NOT_FOUND)
+
+    return render(request, 'profile/profile.html',
+                  {'user': get_user_logged(request), 'usuario': user, 'instituicao': instituicao})
+
+
 def my_profile(request):
     instituicao = Instituicao.objects.filter(funcionarios__id=get_user(request).id).first()
     if not instituicao:

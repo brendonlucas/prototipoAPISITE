@@ -13,8 +13,8 @@ cursor: hand;
 
 
 </style>
-<div class="card p-20 " style="margin:10px">
-    <ul class="nav nav-pills customtab2 nav-justified">
+<div class="card p-20 shadow-hover" style="margin:10px;" >
+    <ul class="nav nav-pills customtab2 nav-justified ">
         {% if usuario.cargo.id != 4 %}
         <li class="nav-item lineG">
             <a class="nav-link active"  href="{% url 'show_ordens' instituicao.id %}">
@@ -37,7 +37,7 @@ cursor: hand;
         </li>
     </ul>
     {% if usuario.cargo.id != 4 %}
-    <div class="p-20">
+    <div class="p-20 shadow-hover" style="">
         {% include 'table_ordens.html' with ordens=aguardando tipo=1 %}
     </div>
     {% endif %}

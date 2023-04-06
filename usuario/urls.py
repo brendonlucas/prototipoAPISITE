@@ -19,6 +19,9 @@ urlpatterns = [
     path('bancodados', views.criar_base_dados, name='create_bd'),
     path('<pk>/ccf', views.change_cargo_user, name='change_cargo_func'),
     path('profile', views.my_profile, name='profile_user'),
+    path('<pk>/user/<pk_2>', views.get_profifle_user, name='profile_user_inst'),
+
+
 
     path('error/', views.error_data, name='error'),
     path('error404', views.error404, name='error404'),

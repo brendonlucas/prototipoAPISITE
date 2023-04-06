@@ -222,7 +222,8 @@
 }
 
 .boody.dark .card .form-control,
-.boody.dark .modal .modal-dialog .modal-content{
+.boody.dark .modal .modal-dialog .modal-content,
+.boody.dark .paginate_button .page-link{
     background-color: var(--primary-color-light);
     color: var(--text-color);
 }
@@ -300,11 +301,13 @@
 .boody.dark .sidebar0 li a:hover .icon,
 .boody.dark .home .navbar .icon,
 .boody.dark .home .navbar .dropdown-toggle,
+.boody.dark .nav .nav-item a,
 .boody.dark .sidebar0 li a:hover .text{
     color: var(--text-color);
 }
 
-.boody.dark .theme-select{
+.boody.dark .theme-select,
+.boody.dark .nav .nav-item .active{
     color: var(--text-color);
     background-color: var(--primary-color-light);
 
@@ -315,6 +318,19 @@
     color: var(--text-color);
     background-color: var(--sidebar-color);
 }
+
+.boody.dark .text-theme-icon{
+    color: var(--text-color);
+
+}
+
+.boody.dark .text-theme-icon:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important;
+    transition: all .3s;
+
+}
+
+
 
 
 .sidebar0 .menu-bar0{
@@ -415,7 +431,15 @@
     color: var(--text-color);
 }
 
+.shadow-card{
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important;
+    transition: all .3s;
+}
 
+.card {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important;
+    transition: all .3s;
+}
 
 .shadow-hover:hover {
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important;
@@ -612,10 +636,18 @@ background-color: red;
 opacity: 0.5;
 }
 
-.button-list .btn{
-
+.bg-trs{
+    background: transparent;
 }
 
 
+.text-overflow {
+    text-align:center;
+  display: block;
+  width: 270px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 

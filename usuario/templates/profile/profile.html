@@ -1,49 +1,55 @@
 {% extends 'base.html' %}
 {% block 'content' %}
 
-<section style="background-color: #eee;">
+<section class="shadow-card theme-select" style=" padding:20px;margin:10px; border-radius:10px">
     <div class="row">
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                         class="rounded-circle img-fluid" style="width: 150px;">
+                         class="rounded-circle img-fluid shadow-card" style="width: 150px;">
                     <h5 class="my-3">{{ usuario.full_name }}</h5>
-                    <p class="text-muted mb-1">Full Stack Developer</p>
-                    <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
-<!--                    <div class="d-flex justify-content-center mb-2">-->
-<!--                        <button type="button" class="btn btn-primary">Follow</button>-->
-<!--                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>-->
-<!--                    </div>-->
+                    <p class="text-muted mb-1 ">{{ instituicao.nome }}</p>
+                    <p class="text-muted mb-4 badge badge-warning badge-lg" style="font-size:15px">
+                        {{usuario.cargo.nome}}</p>
+                    <!--                    <div class="d-flex justify-content-center mb-2">-->
+                    <!--                        <button type="button" class="btn btn-primary">Follow</button>-->
+                    <!--                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>-->
+                    <!--                    </div>-->
                     <div class="btn-group dropleft" style="position: absolute;top: 0; right: 0; center:0;">
-                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
-                                    aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
-                            </div>
+                        <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
+                                aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
                         </div>
+                    </div>
                 </div>
             </div>
-            <div class="card mb-4 mb-lg-0">
-                <div class="card-body p-0">
+            <div class="card mb-4 mb-lg-0 ">
+                <div class="card-body p-0 ">
                     <ul class="list-group list-group-flush rounded-3">
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fas fa-globe fa-lg text-warning"></i>
+                        <li class="bg-trs list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
+                            style="background:transparent">
+                            <i class="bx bx-globe bx-sm text-warning"></i>
                             <p class="mb-0">https://mdbootstrap.com</p>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
+                            style="background:transparent">
+                            <i class="bx bx-github bx-sm" style="color: #333333;"></i>
                             <p class="mb-0">mdbootstrap</p>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
+                            style="background:transparent">
+                            <i class="bx bx-twitter bx-sm" style="color: #55acee;"></i>
                             <p class="mb-0">@mdbootstrap</p>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
+                            style="background:transparent">
+                            <i class="bx bx-instagram bx-sm" style="color: #ac2bac;"></i>
                             <p class="mb-0">mdbootstrap</p>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
+                            style="background:transparent">
                             <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
                             <p class="mb-0">mdbootstrap</p>
                         </li>
@@ -54,7 +60,7 @@
         <div class="col-lg-8">
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-sm-3">
                             <p class="mb-0">Nome</p>
                         </div>
@@ -62,8 +68,9 @@
                             <p class="text-muted mb-0">{{ usuario.full_name }}</p>
                         </div>
 
-                        <div class="btn-group dropleft" style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
+                        <div class="btn-group dropleft"
+                             style="position: absolute; right: 0; center:0; margin-right: 10px">
+                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar</a>
@@ -78,8 +85,9 @@
                         <div class="col-sm-9">
                             <p class="text-muted mb-0">example@example.com</p>
                         </div>
-                        <div class="btn-group dropleft" style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
+                        <div class="btn-group dropleft"
+                             style="position: absolute; right: 0; center:0; margin-right: 10px">
+                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
@@ -95,8 +103,9 @@
                         <div class="col-sm-9">
                             <p class="text-muted mb-0">(097) 234-5678</p>
                         </div>
-                        <div class="btn-group dropleft" style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
+                        <div class="btn-group dropleft"
+                             style="position: absolute; right: 0; center:0; margin-right: 10px">
+                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
@@ -111,8 +120,9 @@
                         <div class="col-sm-9">
                             <p class="text-muted mb-0">(098) 765-4321</p>
                         </div>
-                        <div class="btn-group dropleft" style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
+                        <div class="btn-group dropleft"
+                             style="position: absolute; right: 0; center:0; margin-right: 10px">
+                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
@@ -127,8 +137,9 @@
                         <div class="col-sm-9">
                             <p class="text-muted mb-0">*************</p>
                         </div>
-                        <div class="btn-group dropleft" style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
+                        <div class="btn-group dropleft"
+                             style="position: absolute; right: 0; center:0; margin-right: 10px">
+                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
@@ -138,9 +149,15 @@
                 </div>
             </div>
             <div class="card mb-4">
-                <h3>Opções</h3>
+                <ul class="nav nav-pills customtab2 nav-justified" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" role="tab">
+                            <span class="hidden-sm-up"><i class="bx bx-notepad icon"></i></span>
+                            <span class="hidden-xs-down">Ordens</span></a>
+                    </li>
+                </ul>
                 <div class="card-body">
-                    <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
+                    <ul class="nav nav-tabs nav-pills customtab2 nav-justified" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">
                                 <span class="hidden-sm-up"><i class="ti-home"></i></span>
@@ -158,7 +175,7 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content">
+                    <div class="card tab-content theme-select" style="border-bottom-right-radius:10px;border-bottom-left-radius:10px">
                         <div class="tab-pane active" id="tab1" role="tabpanel">
                             <div class="p-20">
                                 1

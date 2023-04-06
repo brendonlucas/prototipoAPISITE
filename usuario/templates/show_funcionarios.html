@@ -13,6 +13,7 @@
 }
 
 
+
 </style>
 <div class="card color-bg" style="padding:10px; margin:10px">
     <div class="" style="bac">
@@ -48,7 +49,7 @@
                                  alt="" class="profile-img-user"/>
                         </div>
                         <div class="text-data-user">
-                            <span class="name-user">{{ funcionario.name }}</span>
+                            <span class="name-user text-overflow">{{ funcionario.name }}</span>
                             <span class="job-user">{{ funcionario.cargo.nome }}</span>
                         </div>
 
@@ -64,15 +65,17 @@
                                 <a class="dropdown-item" data-toggle="modal"
                                    href="#ModalChangeCargo{{ funcionario.id }}">Mudar Cargo</a>
                                 {% else %}
-                                <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Mudar Cargo</a>
+                                <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Mudar
+                                    Cargo</a>
                                 {% endif %}
 
                                 <a class="dropdown-item" href="#">Opção 2</a>
                             </div>
 
-                            <button class="btn btn-primary"
-                                    style="border-radius: 24px; margin: 0 10px 10px; padding: 8px 24px;">Detalhes
-                            </button>
+                            <a class="btn btn-primary shadow-card"
+                               href="{% url 'profile_user_inst' instituicao.id funcionario.id %}"
+                               style="border-radius: 24px; margin: 0 10px 10px; padding: 8px 24px;">Detalhes
+                            </a>
                         </div>
                         <div class="buttons-user">
                             <!--                            <div class="btn btn-warning btn-sm" style="border-radius: 20px;" disabled> Disponivel</div>-->
@@ -151,6 +154,7 @@
 
 
 
+
 </script>
 {% endfor %}
 {% endif %}
@@ -173,6 +177,7 @@
     }
   }
 }
+
 
 
 
