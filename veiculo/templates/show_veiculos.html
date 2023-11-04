@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block 'content' %}
-
+{% load static %}
 
 <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"-->
 <!--        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"-->
@@ -16,20 +16,94 @@
         <form method="post" action="#" class="input-group" style="max-width: 300px; margin-left:auto; float:right ">
             {% csrf_token %}
             <input type="search" class="form-control rounded" placeholder="Buscar" aria-label="Search"
-                   aria-describedby="search-addon" id="myFilter" onkeyup="myFunction()" />
+                   aria-describedby="search-addon" id="myFilter" onkeyup="myFunction()"/>
             <button type="submit" class="btn btn-primary disabled" disabled><i class="ti-search"></i></button>
         </form>
 
     </div>
+
+
     <div class="modal fade" data-backdrop="static" id="MOdalAdicionarVeiculo" tabindex="-1" role="dialog"
          aria-labelledby="ModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="veiculoModalCenterTitle">Adicionar Veiculo</h5>
                 </div>
+
+
                 <form method="post" action="{% url 'create_veiculo' pk=instituicao.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
+
+                    <div class="modal-body d-flex justify-content">
+
+                        <div style="border-radius:20px; background-color: gray; height: 100%;">
+                            <div style="padding:10px 10px 10px 10px;">
+                                <img id="selectedImage" src="https://cdn-icons-png.flaticon.com/512/685/685655.png"
+                                     style="max-width:300px; height:100%; border-radius:20px" alt="example placeholder">
+                            </div>
+
+                            <label class="btnhover form-label text-white text-center m-0" for="customFile1">
+                                Selecione uma Imagem</label>
+                            <input type="file" class="form-control d-none" id="customFile1" name="image"
+                                   onchange="displaySelectedImage(event, 'selectedImage')"/>
+
+                        </div>
+
+                        <div style="margin:10px; padding:5px; width:100%; max-height:400px; overflow-y: auto;">
+                            <div class="form-group">
+                                <label>Nome do veiculo</label>
+                                <input type="text" class="form-control" placeholder="EX: pampa 98" name="name">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Palca</label>
+                                <input type="text" class="form-control" placeholder="Ex: GF1234" name="placa"
+                                       style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <select class="form-control" required name="tipo">
+                                    <option value="">Escolha o tipo do veiculo</option>
+                                    <option value="1">Moto</option>
+                                    <option value="2">Carro</option>
+                                    <option value="3">Caminão</option>
+                                    <option value="3">Ônibus</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantidade de pessoas</label>
+                                <input type="number" class="form-control" placeholder="Ex: 5" name="QtdCarga" min="0">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <i class="mr-auto"> - Preencha os campos adequadamente </i>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!--Antiga modal add veeiculo-->
+<!--
+    <div class="modal fade" data-backdrop="static" id="MOdalAdicionarVeiculo ++++++" tabindex="-1" role="dialog"
+         aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="veiculoModalCenterTitle +++++++">Adicionar Veiculo</h5>
+                </div>
+
+                <form method="post" action="{% url 'create_veiculo' pk=instituicao.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Nome do veiculo</label>
@@ -58,7 +132,8 @@
                         <div class="form-group">
                             <label>Foto</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile" name="image" accept="image/*">
+                                <input type="file" class="custom-file-input" id="customFile" name="image"
+                                       accept="image/*">
                                 <label class="custom-file-label" for="customFile">Escolha a foto</label>
                             </div>
                             <script>
@@ -66,6 +141,10 @@
                                 var fileName = $(this).val();
                                 $(this).next('.custom-file-label').html(fileName);
                             })
+
+
+
+
 
                             </script>
                         </div>
@@ -77,7 +156,8 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
+
 
 </div>
 
@@ -108,8 +188,46 @@
   }
 }
 
+
+
+
+
+
+
+
+
+
 </script>
 
+
+<script>
+function displaySelectedImage(event, elementId) {
+    const selectedImage = document.getElementById(elementId);
+    const fileInput = event.target;
+
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            selectedImage.src = e.target.result;
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 
 {% endblock %}
 

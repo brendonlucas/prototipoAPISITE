@@ -333,6 +333,8 @@
 
 
 
+
+
 .sidebar0 .menu-bar0{
     height: calc(100% - 55px);
     display: flex;
@@ -650,4 +652,21 @@ opacity: 0.5;
   text-overflow: ellipsis;
 }
 
+
+.btnhover {
+    width:100%;
+    bottom: 0;
+    background-color: #5c5c5c;
+    border-radius:0px 0px 20px 20px;
+    padding:5px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.btnhover:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important;
+    transition: all .3s;
+    transform: translateY(-3px);
+
+}
 
