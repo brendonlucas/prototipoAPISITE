@@ -1,96 +1,91 @@
-<style>
-.card-imgs{
-
-        min-width: 250px;
-        max-width: 250px;
-        width: 100%;
-        max-height: 600px;
-        border-radius: 4px;
-        box-shadow: 0 -1px 1px 0 rgba(0,0,0,.05), 0 1px 2px 0 rgba(0,0,0,.2);
-        overflow: hidden;
-        display: inline-block;
-        margin: 1rem;
-        position: relative;
-        transition: all .2s ease;
-}
-
-.card-imgs:hover, .card-imgs.hover {
-		transform: translateY(-4px);
-		box-shadow: 0 4px 25px 0 rgba(0,0,0,.3), 0 0 1px 0 rgba(0,0,0,.25);
-		}
-
-.card-img-top-resp{
-    position: relative;
-	height: 224px;
-	width: 100%;
-	background-color: #fff;
-	transition: opacity .2s ease;
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
 
 
-.pb{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color:#42404099;
-
-}
-
-
-.text-t{
-color:white;
-margin:0;
-text-align: center;
-
-}
-.space-bt{
-margin:5px;
-
-}
-
-</style>
-
-
-<div class="card-imgs shadow-hover ">
-    <div class="card-img-top-resp" style="background-image:url({{ veiculo.image.url }})">
-        <div class="pb ">
-            <ul class="row d-flex justify-content-between space-bt">
-                <li>
-                    <p class="text-t">Request</p>
-                    <p class="text-t">7</p>
-                </li>
-                <li>
-                    <p class="text-t">Carga</p>
-                    <p class="text-t">{{ veiculo.qtd_pessoas }}</p>
-                </li>
-                <li>
-                    <p class="text-t">Status </p>
-                    <p class="text-t">Ativo </p>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="card-body">
-        <h5 class="card-title" style="text-align: center;margin-top:10px">{{ veiculo.name }}</h5>
-        <hr style="width:80%">
-        <div class="row justify-content-between" style="margin:5px">
-            <div class="col-5">
-                <small>PLaca:</small>
-                <p>{{veiculo.placa}}</p>
+<div class="col-md-6 card-busca" style="padding:10px; ">
+    <div class="card card-hover" style="border-radius:10px">
+        <div class="card-body d-flex justify-content">
+            <div style="border-radius: 10px; width: max-content; height: inherit; position: relative;">
+                <div style="margin-top:15px;">
+                    <img src="{{ veiculo.image.url }}" style="max-width:200px; border-radius:20px; max-height:250px;
+                     " alt="example placeholder">
+                    <a class="btn btn-primary text-center" style="margin:0% 0% 0% 0%; width:100%; color:white;
+                    bottom: 0px; right:0px; position: absolute" href="{% url 'details_veiculo' pk=instituicao.id pk_2=veiculo.id %}"> Ver mais</a>
+                </div>
             </div>
-            <div class="col-5">
-                <small>Tipo:</small>
-                <p>{{veiculo.tipo.name}}</p>
+
+
+            <div  style="margin:10px; padding:5px; width: 100%; font-size: 12px">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input style="font-size: 12px" type="text" class="form-control busca" value="{{ veiculo.name }}"
+                           name="name" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Placa</label>
+                    <input style="font-size: 12px" type="text" class="form-control" value="{{veiculo.placa}}"
+                           name="name" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <input style="font-size: 12px" type="text" class="form-control " value="{{veiculo.tipo.name}}"
+                           name="name" disabled>
+                </div>
             </div>
         </div>
-        <br>
-        <div class="text-center">
-            <a href="{% url 'details_veiculo' pk=instituicao.id pk_2=veiculo.id %}" class="btn btn-primary" style="width:100%">Detalhes</a>
+
+        <div class="card-footer p-0">
+            <div class="d-flex justify-content-between text-center" style="">
+                <div class="bg-warning" style="width:100%; padding:5px; border-bottom-left-radius: 10px;">
+                    <b style="color:white"> Status: Em operação</b>
+                </div>
+                <div class="bg-success " style="width:100%;padding:5px; border-width: 50px">
+                    <b style="color:white"> Requests: 58</b>
+                </div>
+                <div class="bg-success " style="width:100%;padding:5px; border-bottom-right-radius: 10px;">
+                    <b style="color:white"> Carga: {{ veiculo.qtd_pessoas }}</b>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
+<!--<div class="card-imgs shadow-hover ">-->
+<!--    <div class="card-img-top-resp" style="background-image:url({{ veiculo.image.url }})">-->
+<!--        <div class="pb ">-->
+<!--            <ul class="row d-flex justify-content-between space-bt">-->
+<!--                <li>-->
+<!--                    <p class="text-t">Request</p>-->
+<!--                    <p class="text-t">7</p>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <p class="text-t">Carga</p>-->
+<!--                    <p class="text-t">{{ veiculo.qtd_pessoas }}</p>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <p class="text-t">Status </p>-->
+<!--                    <p class="text-t">Ativo </p>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="card-body">-->
+<!--        <h5 class="card-title" style="text-align: center;margin-top:10px">{{ veiculo.name }}</h5>-->
+<!--        <hr style="width:80%">-->
+<!--        <div class="row justify-content-between" style="margin:5px">-->
+<!--            <div class="col-5">-->
+<!--                <small>PLaca:</small>-->
+<!--                <p>{{veiculo.placa}}</p>-->
+<!--            </div>-->
+<!--            <div class="col-5">-->
+<!--                <small>Tipo:</small>-->
+<!--                <p>{{veiculo.tipo.name}}</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        <div class="text-center">-->
+<!--            <a href="{% url 'details_veiculo' pk=instituicao.id pk_2=veiculo.id %}" class="btn btn-primary" style="width:100%">Detalhes</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 

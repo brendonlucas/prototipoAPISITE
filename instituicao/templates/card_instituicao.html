@@ -27,6 +27,12 @@
                 <i class="ti-clipboard" style="margin-right:10px"></i>Ordens
             </a>
             {% endif %}
+            {% if usuario.cargo.id == 2 or usuario.cargo.id == 1 %}
+            <a type="button" class="btn btn-danger btn-flat btn-addon m-b-10 m-l-5"
+               href="{% url 'conf_relatorios' %}">
+                <i class="ti-clipboard" style="margin-right:10px"></i>Relatorios
+            </a>
+            {% endif %}
 
             <button type="button" class="btn btn-info btn-flat btn-addon m-b-10 m-l-5" data-toggle="modal"
                     data-target="#ModalInfoE{{ instituicao.id }}"> <i class="ti-info-alt" style="margin-right:10px"></i>Info

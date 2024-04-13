@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+<div class="card" style="margin:10px; padding:10px">
+
+    <form>
+        <div class="row">
+            <div class="col-auto my-1">
+                <label class="mr-sm" for="inlineFormCustomSelect" style="width: ">Tipo de Relatório:</label>
+                <select class="form-control" id="inlineFormCustomSelect" style="">
+                    <option selected>escolha...</option>
+                    <option value="1">Veiculos</option>
+                    <option value="2">Funcionarios</option>
+                    <option value="3">Ordens</option>
+                    <option value="4">Completa</option>
+                </select>
+            </div>
+            <div class="col-auto my-1">
+                <label class="mr-sm" for="select_date">Data:</label>
+                <select class="form-control" id="select_date">
+                    <option selected>escolha...</option>
+                    <option value="1">Hoje</option>
+                    <option value="2">1 Semana</option>
+                    <option value="3">1 Mês</option>
+                    <option value="4">2 Mês</option>
+                    <option value="5">3 Mês</option>
+                    <option value="6">1 Ano</option>
+                    <option value="7">Data entre</option>
+                    <option value="8">Todos</option>
+                </select>
+            </div>
+
+            <div class="row" id="range_date" style="display:none">
+                <div class="col-auto my-1">
+                    <label class="mr-sm" for="input_date_start">De Data:</label>
+                    <input type="date" class="form-control" id="input_date_start" name="data" required>
+                </div>
+                <div class="col-auto my-1">
+                    <label class="mr-sm" for="input_date_end">Ate Data:</label>
+                    <input type="date" class="form-control" id="input_date_end" name="data" required>
+                </div>
+            </div>
+
+            <div class="col-auto my-1">
+                <label class="mr-sm" for="select_order">Ordenar:</label>
+                <select class="form-control mr-sm" id="select_order">
+                    <option selected>escolha...</option>
+                    <option value="1">Nome</option>
+                    <option value="2">Data</option>
+                </select>
+            </div>
+
+        </div>
+        <div style="padding:10px">
+            <button type="submit" class="btn btn-primary " style="width:100%; "> Enviar</button>
+        </div>
+    </form>
+</div>
+
+<div class="card" style="margin:10px; padding:15px">
+    <div class="card" style="" id="card_tabela">
+
+        <table class="table theme-select" id="tabela_1">
+
+            <thead class="thead-dark ">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Data</th>
+                <th scope="col">Quantidade</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!--        <button class="btn btn-primary" id="export" onclick="exportPDF('card_tabela')"> Salvar PDF </button>-->
+        <button class="btn btn-primary" id="export" onclick="generate()"> Salvar PDF</button>
+    </div>
+
+
+</div>
+
+
+<script>
+    function generate() {
+        var doc = new jsPDF()
+        doc.autoTable({ html: '#tabela_1' })
+        doc.save('table.pdf')
+}
+</script>
+
+<!--<script>-->
+<!--    var specialElementHandlers = {-->
+<!--        '.no-export': function(element, renderer) {-->
+<!--            return true;-->
+<!--        }-->
+<!--    };-->
+
+<!--function exportPDF(id) {-->
+<!--    var doc = new jsPDF('p', 'pt', 'a4');-->
+<!--    var source = document.getElementById(id);-->
+<!--    console.log(source);-->
+<!--    var margins = {-->
+<!--        top: 10,-->
+<!--        bottom: 10,-->
+<!--        left: 10,-->
+<!--        width: 1000-->
+<!--    };-->
+
+<!--    doc.fromHTML(-->
+<!--        source,-->
+<!--        margins.left,-->
+<!--        margins.top, {-->
+<!--            'width': margins.width,-->
+<!--            'elementHandlers': specialElementHandlers-->
+<!--        },-->
+<!--        function(dispose) {-->
+<!--            doc.save('Test.pdf');-->
+<!--        }, margins);-->
+<!--}-->
+
+<!--</script>-->
+
+
+<script>
+      const el = document.getElementById('select_date');
+      const box = document.getElementById('range_date');
+      el.addEventListener('change', function handleChange(event) {
+         if (event.target.value === '7') {
+            box.style.display = 'contents';
+            $('#input_date_start').attr('required', '');
+            $('#input_date_end').attr('required', '');
+         } else {
+            box.style.display = 'none';
+            $('#input_date_start').val(new Date());
+            $('#input_date_start').removeAttr("required");
+            $('#input_date_end').val(new Date());
+            $('#input_date_end').removeAttr("required");
+         }
+      });
+
+
+
+
+
+
+
+</script>
+
+
+{% endblock %}
+

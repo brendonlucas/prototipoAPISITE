@@ -55,6 +55,19 @@ def create_instituicao(request):
         return redirect('inst_show')
 
 
+def config_relatorios(request):
+    if request.method == 'GET':
+
+        try:
+            inst = Instituicao.objects.get(funcionarios=get_user(request).id)
+        except Instituicao.DoesNotExist:
+            inst = None
+
+        return render(request, 'conf_relatorios.html',
+                      {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': inst})
+
+
+
 # APIIIIIIIIIIIIIIIIIIIII
 
 class APIGerentInstituicao(APIView):

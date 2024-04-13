@@ -2,6 +2,10 @@ import requests
 
 
 def main():
+    busca = requests.post('https://www.google.com.br/')
+    saida = busca
+
+
     data = {}
     data_user = {"username": "teste2", "password": "123456789"}
 

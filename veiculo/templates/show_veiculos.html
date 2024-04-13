@@ -81,7 +81,10 @@
                     </div>
 
                     <div class="modal-footer">
-                        <i class="mr-auto"> - Preencha os campos adequadamente </i>
+                        <div class="mr-auto">
+                            <i class="mr-auto"> - Preencha os campos adequadamente </i> <br>
+                            <i class="mr-auto"> - Imagem preferencial na Horizontal </i>
+                        </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
@@ -90,82 +93,87 @@
         </div>
     </div>
 
-<!--Antiga modal add veeiculo-->
-<!--
-    <div class="modal fade" data-backdrop="static" id="MOdalAdicionarVeiculo ++++++" tabindex="-1" role="dialog"
-         aria-labelledby="ModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="veiculoModalCenterTitle +++++++">Adicionar Veiculo</h5>
-                </div>
+    <!--Antiga modal add veeiculo-->
+    <!--
+        <div class="modal fade" data-backdrop="static" id="MOdalAdicionarVeiculo ++++++" tabindex="-1" role="dialog"
+             aria-labelledby="ModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="veiculoModalCenterTitle +++++++">Adicionar Veiculo</h5>
+                    </div>
 
-                <form method="post" action="{% url 'create_veiculo' pk=instituicao.id %}" enctype="multipart/form-data">
-                    {% csrf_token %}
+                    <form method="post" action="{% url 'create_veiculo' pk=instituicao.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
 
 
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Nome do veiculo</label>
-                            <input type="text" class="form-control" placeholder="EX: pampa 98" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label>Palca</label>
-                            <input type="text" class="form-control" placeholder="Ex: GF1234" name="placa"
-                                   style="text-transform:uppercase">
-                        </div>
-                        <div class="form-group">
-                            <label>Tipo</label>
-                            <select class="form-control" required name="tipo">
-                                <option value="">Escolha o tipo do veiculo</option>
-                                <option value="1">Moto</option>
-                                <option value="2">Carro</option>
-                                <option value="3">Caminão</option>
-                                <option value="3">Ônibus</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Quantidade de pessoas</label>
-                            <input type="number" class="form-control" placeholder="Ex: 5" name="QtdCarga" min="0">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Foto</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile" name="image"
-                                       accept="image/*">
-                                <label class="custom-file-label" for="customFile">Escolha a foto</label>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nome do veiculo</label>
+                                <input type="text" class="form-control" placeholder="EX: pampa 98" name="name">
                             </div>
-                            <script>
-                            $('#customFile').on('change',function(){
-                                var fileName = $(this).val();
-                                $(this).next('.custom-file-label').html(fileName);
-                            })
+                            <div class="form-group">
+                                <label>Palca</label>
+                                <input type="text" class="form-control" placeholder="Ex: GF1234" name="placa"
+                                       style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <select class="form-control" required name="tipo">
+                                    <option value="">Escolha o tipo do veiculo</option>
+                                    <option value="1">Moto</option>
+                                    <option value="2">Carro</option>
+                                    <option value="3">Caminão</option>
+                                    <option value="3">Ônibus</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantidade de pessoas</label>
+                                <input type="number" class="form-control" placeholder="Ex: 5" name="QtdCarga" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Foto</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="image"
+                                           accept="image/*">
+                                    <label class="custom-file-label" for="customFile">Escolha a foto</label>
+                                </div>
+                                <script>
+                                $('#customFile').on('change',function(){
+                                    var fileName = $(this).val();
+                                    $(this).next('.custom-file-label').html(fileName);
+                                })
 
 
 
 
 
-                            </script>
+                                </script>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </div> -->
+        </div> -->
 
 
 </div>
 
-<div class="card" style="margin:10px">
-    <div class="card-deck" id="myProducts" style="padding:10px">
+<div class="card" style="margin:10px; padding:10px">
+    <div class="row " id="myProducts" style="padding:10px"> <!-- justify-content-around-->
         {% for veiculo in veiculos %}
+
         {% include 'card_veiculo.html' with veiculo=veiculo %}
+
+
         {% endfor %}
+
+
     </div>
 </div>
 
@@ -177,25 +185,17 @@
   input = document.getElementById("myFilter");
   filter = input.value.toUpperCase();
   cardContainer = document.getElementById("myProducts");
-  cards = cardContainer.getElementsByClassName("card-imgs");
+  cards = cardContainer.getElementsByClassName("card-busca");
   for (i = 0; i < cards.length; i++) {
-    title = cards[i].querySelector(".card-title");
-    if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+    title = cards[i].querySelector(".busca");
+    if (title.value.toUpperCase().indexOf(filter) > -1) {
+
       cards[i].style.display = "";
     } else {
       cards[i].style.display = "none";
     }
   }
 }
-
-
-
-
-
-
-
-
-
 
 </script>
 
@@ -216,18 +216,8 @@ function displaySelectedImage(event, elementId) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 {% endblock %}
 
+<!--  {% include 'card_veiculo.html' with veiculo=veiculo %}-->

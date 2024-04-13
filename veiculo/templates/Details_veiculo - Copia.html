@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block 'content' %}
 
-<section class="shadow-card theme-select" style=" padding:20px;margin:10px; border-radius:10px">
+<section style="background-color: #eee;" >
     <div class="row">
         <div class="col-lg-4">
             <div class="card mb-4">
-                <div class="card-body text-center" style="" >
+                <div class="card-body" >
                     <img src="{{ veiculo.image.url }}" alt="avatar"
-                         class="p-12" style="width: 100%; border-radius:10px">
+                         class="p-10" style="width: 100%">
 
                     <div class="btn-group dropleft" style="position: absolute;top: 0; right: 0; center:0;">
                         <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
@@ -21,28 +21,23 @@
             <div class="card mb-4 mb-lg-0">
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush rounded-3">
-                        <li class="bg-trs list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
-                            style="background:transparent">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                             <i class="fas fa-globe fa-lg text-warning"></i>
                             <p class="mb-0">https://mdbootstrap.com</p>
                         </li>
-                        <li class="bg-trs list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
-                            style="background:transparent">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                             <i class="fab fa-github fa-lg" style="color: #333333;"></i>
                             <p class="mb-0">mdbootstrap</p>
                         </li>
-                        <li class="bg-trs list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
-                            style="background:transparent">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                             <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
                             <p class="mb-0">@mdbootstrap</p>
                         </li>
-                        <li class="bg-trs list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
-                            style="background:transparent">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                             <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
                             <p class="mb-0">mdbootstrap</p>
                         </li>
-                        <li class="bg-trs list-group-item d-flex justify-content-between align-items-center p-3 shadow-card"
-                            style="background:transparent">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                             <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
                             <p class="mb-0">mdbootstrap</p>
                         </li>
@@ -63,7 +58,7 @@
 
                         <div class="btn-group dropleft"
                              style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
+                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar</a>
@@ -80,7 +75,7 @@
                         </div>
                         <div class="btn-group dropleft"
                              style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
+                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
@@ -98,7 +93,7 @@
                         </div>
                         <div class="btn-group dropleft"
                              style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
+                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
@@ -115,7 +110,7 @@
                         </div>
                         <div class="btn-group dropleft"
                              style="position: absolute; right: 0; center:0; margin-right: 10px">
-                            <button class="btn bg-transparent btn-outline dropdown text-theme-icon" aria-haspopup="true"
+                            <button class="btn bg-transparent btn-outline dropdown" aria-haspopup="true"
                                     aria-expanded="false" data-toggle="dropdown"><i class="ti-pencil-alt"></i></button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="ti-pencil-alt"> </i> Editar </a>
@@ -125,24 +120,18 @@
                 </div>
             </div>
             <div class="card mb-4">
-                <ul class="nav nav-pills customtab2 nav-justified" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" role="tab">
-                            <span class="hidden-sm-up"><i class="bx bx-notepad icon"></i></span>
-                            <span class="hidden-xs-down">Ordens</span></a>
-                    </li>
-                </ul>
+                <h3>Registros</h3>
                 <div class="card-body">
-                    <ul class="nav nav-tabs nav-pills customtab2 nav-justified" role="tablist">
+                    <ul class="nav nav-tabs customtab2 nav-justified" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">
                                 <span class="hidden-sm-up"><i class="ti-home"></i></span>
-                                <span class="hidden-xs-down">Ordens Criadas</span></a>
+                                <span class="hidden-xs-down">Ativo</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tab2" role="tab">
                                 <span class="hidden-sm-up"> <i class="ti-user"></i> </span>
-                                <span class="hidden-xs-down">Entrou</span></a>
+                                <span class="hidden-xs-down">Finalizado</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tab3" role="tab">
@@ -150,16 +139,70 @@
                                 <span class="hidden-xs-down">Documentos</span></a>
                         </li>
                     </ul>
-
-                    <div class="card tab-content theme-select" style="border-bottom-right-radius:10px;border-bottom-left-radius:10px">
+                    <div class="tab-content">
                         <div class="tab-pane active" id="tab1" role="tabpanel">
                             <div class="p-20">
-                                1
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Solicitante</th>
+                                        <th scope="col">data marcada</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ordem in ordens %}
+                                    {% if ordem.status.id == 2 or ordem.status.id == 4 %}
+                                    <tr>
+                                        <td>{{ ordem.solicitante.full_name }}</td>
+                                        <td>{{ ordem.data_marcada | date:"d/m/Y" }}</td>
+                                        {% if ordem.status.id == 2 %}
+                                        <td><span class="badge badge-success">Em espera</span></td>
+                                        {% endif %}
+                                        {% if ordem.status.id == 4 %}
+                                        <td><span class="badge badge-success">Em curso</span></td>
+                                        {% endif %}
+                                        <td>
+                                            <a class="btn btn-primary"
+                                               href="{% url 'show_ordens_detail' pk=ordem.instituicao.id pk_2=ordem.id %}">
+                                                Detalhes</a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="tab-pane " id="tab2" role="tabpanel">
                             <div class="p-20">
-                                2
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Solicitante</th>
+                                        <th scope="col">Data marcada</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ordem in ordens %}
+                                    {% if ordem.status.id == 1 %}
+                                    <tr>
+                                        <td>{{ ordem.solicitante.full_name }}</td>
+                                        <td>{{ ordem.data_marcada | date:"d/m/Y" }}</td>
+                                        <td><span class="badge badge-success">Concluido</span></td>
+                                        <td>
+                                            <a class="btn btn-primary"
+                                               href="{% url 'show_ordens_detail' pk=ordem.instituicao.id pk_2=ordem.id %}">
+                                                Detalhes</a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="tab-pane " id="tab3" role="tabpanel">
@@ -167,9 +210,10 @@
                                 3
                             </div>
                         </div>
-
-
                     </div>
+                </div>
+                <div class="btn-group dropleft p-10" style="position: absolute;top: 0; right: 0; center:0;">
+                    <a class="btn btn-primary" href="#"> Ver mais <i class="ti-pencil-alt"></i> </a>
                 </div>
             </div>
         </div>
