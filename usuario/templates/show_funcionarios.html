@@ -131,8 +131,8 @@
 {% if messages %}
 {% for message in messages %}
 <script>
-            window.onload = function exampleFunction() {
-            toastr.{{ message.tags }}('{{ message }}','{{ message.tags }}',{
+    $(document).ready(function() {
+        toastr.{{message.tags}}('{{ message }}', '{{ message.tags }}',{
             "positionClass": "toast-top-center",
             timeOut: 5000,
             "closeButton": true,
@@ -149,12 +149,8 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut",
             "tapToDismiss": false
-            })
-        };
-
-
-
-
+        })
+    });
 </script>
 {% endfor %}
 {% endif %}

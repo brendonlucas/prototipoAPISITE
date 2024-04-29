@@ -5,6 +5,7 @@ from instituicao import views
 
 urlpatterns = [
     path('instituicao', views.show_instituicao, name='inst_show'),
+    path('verify_redirect', views.verify_device, name='verify_redirect'),
     path('create_inst', views.create_instituicao, name='create_inst'),
     path('relatorios', views.config_relatorios, name='conf_relatorios'),
 

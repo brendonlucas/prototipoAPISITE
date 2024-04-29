@@ -12,6 +12,19 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 
 <div class="card" style="margin:10px">
@@ -33,68 +46,130 @@
     <div class="tab-content">
         <div class="tab-pane active" id="home7" role="tabpanel">
             <div class="p-20">
-                <!-- Instituições criadas-->
-                {% if instituicao %}
-                {% include 'card_instituicao.html' with instituicao=instituicao %}
-                {% endif %}
+                <div class="card " style="padding:10px;">
+                    <div class="card-title">
+                        <h4>{{ instituicao.nome }}</h4>
+                    </div>
 
-
-                {% if usuario.cargo.id == 1 %}
-                <div><i class="bi bi-plus-circle"></i>
-                    <button type="button" class="btn btn-success btn-square btn-lg" style="width: 100%"
-                            data-toggle="modal" data-target="#MOdalAdicionarinsituicao">
-                        <i class="ti-plus"> </i> Criar
-                    </button>
-                </div>
-
-                <div class="modal fade" data-backdrop="static" id="MOdalAdicionarinsituicao" tabindex="-1" role="dialog"
-                     aria-labelledby="ModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="titlemd">Criar Instituição </h5>
+                    <div class="button-list">
+                        <a class="btn btn-primary" href="{% url 'show_funcionario' pk=instituicao.id %}"
+                           style="width:120px; height:120px;
+                        word-wrap: break-word; padding: 10px; margin: 10px; color:white">
+                            <i class="ti-user" style="font-size:50px"></i>
+                            <br>
+                            <p class="align-bottom"> Funionarios</p>
+                            <div>
                             </div>
-                            <form method="POST" action="{% url 'create_inst' %}">
-                                {% csrf_token %}
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label>Nome</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail5"
-                                               aria-describedby="emailHelp" placeholder=" " required maxlength="100"
-                                               minlength="3" name="NameInst">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                    <button type="submit" class="btn btn-primary">Criar</button>
-                                </div>
-                            </form>
-                        </div>
+                        </a>
+                        <a class="btn btn-success" href="{% url 'veiculos_show' pk=instituicao.id %}"
+                            style="width:120px; height:120px;
+                        word-wrap: break-word; padding: 10px; margin: 10px; color:white">
+                            <i class="ti-car" style="font-size:50px"></i>
+                            <br>
+                            <p class="align-bottom"> Veiculos</p>
+                            <div>
+                            </div>
+                        </a>
+                        <a class="btn btn-warning" href="{% url 'show_ordens' pk=instituicao.id %}"
+                           style="width:120px; height:120px;
+                        word-wrap: break-word; padding: 10px; margin: 10px; color:black">
+                            <i class="ti-clipboard" style="font-size:50px"></i>
+                            <br>
+                            <p class="align-bottom"> Ordens</p>
+                            <div>
+                            </div>
+                        </a>
+                        <a class="btn btn-danger" href="{% url 'conf_relatorios' %}"
+                           style="width:120px; height:120px;
+                        word-wrap: break-word; padding: 10px; margin: 10px; color:white">
+                            <i class="ti-clipboard" style="font-size:50px"></i>
+                            <br>
+                            <p class="align-bottom"> Relatorios</p>
+                            <div>
+                            </div>
+                        </a>
+                        <a class="btn btn-info" data-toggle="modal" data-target="#ModalInfoE{{ instituicao.id }}"
+                           style="width:120px; height:120px;
+                        word-wrap: break-word; padding: 10px; margin: 10px; color:white">
+                            <i class="ti-info-alt" style="font-size:50px"></i>
+                            <br>
+                            <p class="align-bottom"> Informações</p>
+                            <div>
+                            </div>
+                        </a>
 
                     </div>
+
                 </div>
+
+
+                <div class="p-20">
+                    <!-- Instituições criadas-->
+                    {% if instituicao %}
+                    {% include 'card_instituicao.html' with instituicao=instituicao %}
+                    {% endif %}
+
+
+                    {% if usuario.cargo.id == 1 %}
+                    <div><i class="bi bi-plus-circle"></i>
+                        <button type="button" class="btn btn-success btn-square btn-lg" style="width: 100%"
+                                data-toggle="modal" data-target="#MOdalAdicionarinsituicao">
+                            <i class="ti-plus"> </i> Criar
+                        </button>
+                    </div>
+
+                    <div class="modal fade" data-backdrop="static" id="MOdalAdicionarinsituicao" tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="titlemd">Criar Instituição </h5>
+                                </div>
+                                <form method="POST" action="{% url 'create_inst' %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Nome</label>
+                                            <input type="text" class="form-control" id="exampleInputEmail5"
+                                                   aria-describedby="emailHelp" placeholder=" " required
+                                                   maxlength="100"
+                                                   minlength="3" name="NameInst">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Fechar
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Criar</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if usuario.cargo == 1 %}
+            <div class="tab-pane p-20" id="messages7" role="tabpanel">
+                {% if arquivados %}
+                {% for arquivado in arquivados %}
+
+                {% include 'card_instituicao.html' with instituicao=arquivado %}
+
+                {% endfor %}
                 {% endif %}
             </div>
-        </div>
-
-        {% if usuario.cargo == 1 %}
-        <div class="tab-pane p-20" id="messages7" role="tabpanel">
-            {% if arquivados %}
-            {% for arquivado in arquivados %}
-
-            {% include 'card_instituicao.html' with instituicao=arquivado %}
-
-            {% endfor %}
             {% endif %}
         </div>
-        {% endif %}
-    </div>
 
-    {% if messages %}
-    {% for message in messages %}
-    <script>
-            window.onload = function exampleFunction() {
-            toastr.{{ message.tags }}('{{ message }}','{{ message.tags }}',{
+        {% if messages %}
+        {% for message in messages %}
+        <script>
+    $(document).ready(function() {
+        toastr.{{message.tags}}('{{ message }}', '{{ message.tags }}',{
             "positionClass": "toast-top-center",
             timeOut: 5000,
             "closeButton": true,
@@ -111,8 +186,35 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut",
             "tapToDismiss": false
-            })
-        };
+        })
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </script>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <script>
+    $('#normalize').selectize();
+
+
+
+
+
+
+
 
 
 
@@ -120,15 +222,8 @@
 
 
     </script>
-    {% endfor %}
-    {% endif %}
-</div>
 
-<script>
-    $('#normalize').selectize();
-</script>
-
-{% endblock %}
+    {% endblock %}
 
 
 

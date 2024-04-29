@@ -23,6 +23,7 @@ def get_user(request):
 
 def show_instituicao(request):
     # inst = Instituicao.objects.all().filter(funcionarios = get_user(request).id)
+
     try:
         inst = Instituicao.objects.get(funcionarios=get_user(request).id)
     except Instituicao.DoesNotExist:
@@ -31,6 +32,13 @@ def show_instituicao(request):
     print("-------------------------------------------------", inst)
     return render(request, 'inst_options.html',
                   {'user': get_user_logged(request), 'usuario': get_user(request), 'instituicao': inst})
+
+
+def verify_device(request):
+    if request.user_agent.is_pc:
+        return render(request, 'home_page/MobileRedirect.html', {})
+    else:
+        return show_instituicao(request)
 
 
 def create_instituicao(request):

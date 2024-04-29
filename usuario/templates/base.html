@@ -53,12 +53,13 @@
     <link href="{% static 'css/lib/calendar2/pignose.calendar.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/chartist/chartist.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/font-awesome.min.css' %}" rel="stylesheet">
+
     <link href="{% static 'css/lib/themify-icons.css' %}" rel="stylesheet">
+
     <link href="{% static 'css/lib/owl.carousel.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/lib/owl.theme.default.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/lib/weather-icons.css'%}" rel="stylesheet"/>
     <link href="{% static 'css/lib/menubar/sidebar.css' %}" rel="stylesheet">
-
 
     <link href="{% static 'css/lib/helper.css' %}" rel="stylesheet">
     <link href="{% static 'css/lib/toastr/toastr.min.css' %}" rel="stylesheet">
@@ -278,32 +279,24 @@
 
 
 <script src="{% static 'DataTable/datatables.js' %}"></script>
-
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-pt_BR.min.js"></script>
-
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
 
-
 <!-- scripit init-->
 <script src="{% static 'js/dashboard2.js' %}"></script>
-
 <script type="text/javascript" src="{% static 'steps/bs-stepper.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'steps/main.js' %}"></script>
-
 <script type="text/javascript" src="{% static 'js/lib/toastr/toastr.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lib/toastr/toastr.init.js' %}"></script>
+
+
+
 
 <script>
 (function($) {
     "use strict";
-
-
     $(function () {
         for (var nk = window.location, o = $(".nano-content li a").filter(function () {
             return this.href == nk;
@@ -319,22 +312,10 @@
         }
     });
 
-
-    /*
-    ------------------------------------------------
-    Sidebar open close animated humberger icon
-    ------------------------------------------------*/
-
     $(".hamburger").on('click', function() {
         $(this).toggleClass("is-active");
     });
 
-
-
-
-
-    /* TO DO LIST
-    --------------------*/
     $(".tdl-new").on('keypress', function(e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {

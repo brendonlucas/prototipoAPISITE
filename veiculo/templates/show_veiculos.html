@@ -12,6 +12,7 @@
                 data-target="#MOdalAdicionarVeiculo"><i
                 class="ti-plus"></i>Adicionar
         </button>
+
         {% endif %}
         <form method="post" action="#" class="input-group" style="max-width: 300px; margin-left:auto; float:right ">
             {% csrf_token %}
@@ -178,6 +179,33 @@
 </div>
 
 
+{% if messages %}
+{% for message in messages %}
+<script>
+    $(document).ready(function() {
+        toastr.{{message.tags}}('{{ message }}', '{{ message.tags }}',{
+            "positionClass": "toast-top-center",
+            timeOut: 5000,
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "tapToDismiss": false
+        })
+    });
+</script>
+{% endfor %}
+{% endif %}
+
 <script>
 
  function myFunction() {
@@ -196,6 +224,8 @@
     }
   }
 }
+
+
 
 </script>
 
@@ -216,7 +246,10 @@ function displaySelectedImage(event, elementId) {
     }
 }
 
+
+
 </script>
+
 
 {% endblock %}
 

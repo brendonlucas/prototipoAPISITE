@@ -75,7 +75,7 @@
                     </ul>
                 </li>
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'inst_show' %}">{{ user.username }}</a></li>
+                <li><a href="{% url 'verify_redirect' %}">{{ user.username }}</a></li>
                 {% else %}
                 <li><a data-toggle="modal" href="#registerModal">Registrar</a></li>
                 <li><a data-toggle="modal" href="#loginModal" id="lol">Entrar</a></li>
@@ -146,7 +146,7 @@
                     <div class="col-lg-8 text-center text-lg-start">
                         <h1 data-aos="fade-right">Gerencie sua frota com Veicular</h1>
                         <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Uma Solução para o gerenciamento de
-                            veiculos e viajens</p>
+                            veiculos e viagens</p>
                         <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500">
                             <a href="#" class="btn btn-outline-white">começar</a>
                         </p>
@@ -506,11 +506,6 @@
    $(document).ready(function() {
         $('#loginModal').modal('show');
     });
-
-
-
-
-
 </script>
 
 

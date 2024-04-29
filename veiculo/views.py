@@ -5,6 +5,7 @@ from instituicao.models import Instituicao
 from ordem.models import Ordem
 from usuario.models import Usuario
 
+from django.contrib import messages
 from veiculo.VeiculoSerializer import *
 from veiculo.forms import CreateVeiculo
 from veiculo.models import Veiculo, TipoVeiculo
@@ -39,7 +40,9 @@ def add_veiculo(request, pk):
                 tipo = TipoVeiculo.objects.get(id=form.data['tipo'])
                 veiculo = Veiculo(name=form.data['name'], qtd_pessoas=form.data['QtdCarga'], image=image,
                                   placa=form.data['placa'].upper(), tipo=tipo, instituicao=instituicao).save()
+                messages.success(request, 'Criado com sucesso!')
                 return redirect('veiculos_show', pk)
+        messages.error(request, 'Dados Invalidos!')
         return redirect('veiculos_show', pk)
 
 
